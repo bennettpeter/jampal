@@ -37,6 +37,8 @@ clean:
 	rm -rf tmp OS
 	rm -rf build_doc
 	rm -f utility/*.jmp
+	# Files created by Netbeans
+	rm -rf build dist
 
 
 install: 

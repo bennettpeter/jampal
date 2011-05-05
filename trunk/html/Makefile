@@ -24,6 +24,8 @@
 
 all: make_user_doc
 
+web_doc: make_web_doc
+
 make_user_doc: ../man/* *.html cssdef.css favicon.ico images/*
 	# MAN PAGES IN HTML
 	rman -f html -r 'man_%s.html' -l '%s' ../man/jampal.1 > man_jampal.html
@@ -42,7 +44,9 @@ make_user_doc: ../man/* *.html cssdef.css favicon.ico images/*
           $$filename >> user_doc/$$filename ; \
       cat framework_end.html >> user_doc/$$filename ; \
     done ) < buildlist.txt
-	cp -r cssdef.css index.html favicon.ico images user_doc/
+	cp -r cssdef.css index.html favicon.ico user_doc/
+	mkdir -p user_doc/images/
+	cp images/* user_doc/images/
 	echo done > make_user_doc
 
 make_web_doc: make_user_doc
@@ -50,7 +54,9 @@ make_web_doc: make_user_doc
 	cd user_doc && for file in *.html; do \
       sed 's!images/sourceforge.gif!http://sflogo.sourceforge.net/sflogo.php?group_id=107584\&amp;type=15!g' \
       $$file > ../web_doc/$$file ; done
-	cp -r cssdef.css index.html favicon.ico images web_doc/
+	cp -r cssdef.css index.html favicon.ico web_doc/
+	mkdir -p web_doc/images
+	cp  images/* web_doc/images/
 	echo done > make_web_doc
 
 clean: 

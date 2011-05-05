@@ -173,4 +173,4 @@ ls -l jampal-windows-setup-$VERSION.exe \
       jampal-doc-$VERSION.zip \
       jampal-$VERSION.jar \
       jampal-generic-setup-$VERSION.zip \
-      jampal-cygwin-$VERSION.tar.gz
+      jampal-build-*-$VERSION.tar.gz
