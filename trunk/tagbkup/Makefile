@@ -47,14 +47,15 @@ all: tagbkup
 
 tagbkup: tagbkup.cpp nullmp3.cpp mp3tech.c
 	basename `uname -o` > OS
-	$(CC) $(CFLAGS) -D OS_`cat OS` -D CPU_`uname -m` -o tagbkup tagbkup.cpp nullmp3.cpp mp3tech.c $(LIBS)
+	sed -e "s/\*\*UNKNOWN\*\*/`cat ../VERSION`/" tagbkup.cpp > tagbkupxx.cpp
+	$(CC) $(CFLAGS) -D OS_`cat OS` -D CPU_`uname -m` -o tagbkup tagbkupxx.cpp nullmp3.cpp mp3tech.c $(LIBS)
 
 
 #tagbkup: $(OBJS)
 #	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
 
 clean: 
-	$(RM) -f $(OBJS) tagbkup tagbkup.exe core OS libgcc_s_dw2-1.dll
+	$(RM) -f $(OBJS) tagbkup tagbkupxx.cpp tagbkup.exe core OS libgcc_s_dw2-1.dll
 
 distclean: clean
 

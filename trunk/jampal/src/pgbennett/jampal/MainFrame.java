@@ -43,7 +43,7 @@ public class MainFrame implements Runnable, ActionListener, KeyListener,
 WindowListener, ListSelectionListener {
     
     static final String [] AboutText = {
-        "Jampal Version 1.27 (2011/03/01)",
+        "Jampal Version " + Jampal.version,
         "Copyright (c) Peter Bennett, 2004-2011",
         "Jampal comes with ABSOLUTELY NO WARRANTY, " +
         "for details see the file COPYING.",

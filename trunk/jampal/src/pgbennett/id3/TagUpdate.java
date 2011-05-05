@@ -469,7 +469,19 @@ public class TagUpdate {
     }
     
     void printOptions() {
-        System.err.println("TagUpdate Version 1.17 (c) 2006 - 2008 Peter G Bennett");
+        // Get version
+        String version = "UNKNOWN";
+        try {
+            InputStream inStream = ClassLoader.getSystemResourceAsStream("pgbennett/jampal/VERSION");
+            Reader reader = new InputStreamReader(inStream,"UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            version = bufferedReader.readLine();
+            bufferedReader.close();
+        }
+        catch (Exception ex) {
+            version = "UNKNOWN";
+        }
+        System.err.println("TagUpdate Version " + version + "(c) 2006 - 2008 Peter G Bennett");
         System.err.println("Usage: java -cp [path]/jampal.jar pgbennett.id3.TagUpdate options filename [filename] ...");
         System.err.println("Options are as follows:");
         System.err.println("-OPTIONFILE filename");
