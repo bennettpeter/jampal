@@ -1,0 +1,1073 @@
+.\" man page for jampal
+
+.TH JAMPAL 1 "March 8, 2011" jampal "jampal - mp3 library and jukebox"
+.\" Please adjust this date whenever revising the manpage.
+
+.SH NAME
+jampal \- mp3 library and jukebox
+
+.SH SYNOPSIS
+.HP
+\fBjampal open\fP [ \fIlibrary\fP ] ...
+.HP
+\fBjampal cleanup\fP [ \fB-reorder\fP ] \fIlibrary-name\fP [ moved-file-dir ]
+.HP
+\fBjampal playlist\fP  condition [ options ] ...
+.HP
+\fBjampal fieldcodes\fP [ \fIlibrary\fP ]
+.HP
+\fBjampal playlistcd\fP  disknum [ \fIoutput-dir\fP ]
+.HP
+\fBjampal envelope\fP [--artist|--artistalbum|--none] [--nosort] \fIlibrary-name\fP diskser
+description
+.HP
+\fBjampal duplicates\fP [ --NODUP ] [ --NEXTFILES ]
+.HP
+\fBjampal tagbkup\fP  [ bak ]
+.HP
+\fBjampal tagupdate\fP options \fIfilename\fP [ \fIfilename\fP ] ...
+.HP
+\fBjampal mp3lame\fP [ -recode|-recode-even ]
+
+.SH DESCRIPTION
+
+\fBjampal\fP is a cross platform mp3 song library management system.
+\fBjampal\fP stores and organizes a library of 60,000 songs or more. It can be used as a 
+jukebox to play the songs. It performs extensive editing of song tags using ID3v2.
+The library is based on the IDV3V2 standard. The library is extensively customizable.
+Text to speech voice synthesis to announce song names is an option.
+The library is organized and customized by ID3V2 tags, including any 
+number of custom tags you can set up. A utility is provided to back up the
+ID3V2 tags so that your customizations, such as song ratings, are not lost if 
+you have a disk failure. There are utilities to rename and organize the song
+files by album, artist and song, and to generate playlists from criteria you choose.
+Generated play lists can be burned to CD or written to an mp3 player. Song announcements
+can also be added to songs written to CD or player.
+.PP
+
+.SH CYGWIN UNDER WINDOWS
+
+There are some things that have to be done if this is used with Cygwin under Windows.
+To install with cygwin, extract the tar file and run "make install". This
+installs all scripts and programs and adds Jampal to your Start menu in Windows.
+.PP
+Make sure that in the Jampal Customize dialog, under library, the option "Use
+Unix Style Paths" is checked.
+.PP
+All paths must be set up so that the path is compatible with Windows. This means
+creating links for example ln -s C:/Music /Music makes the /Music directory
+compatible. The setup will already handle "Program Files" and the user profile 
+directories. If you store songs in a different directory you will need to 
+set up links. All songs must be accessed from the same drive letter. This can be 
+achieved in windows by creating links, junctions, mounting disks in a directory,
+or simply putting all files on one disk.
+
+.SH OPEN COMMAND
+
+\fBjampal open\fP [ \fIlibrary\fP ] ...
+.PP
+The \fBopen\fP command launches the main \fBjampal\fP GUI application. 
+Detailed documentation can be found by using the 
+Help menu option from the main window.
+.RE
+
+.SH OPEN COMMAND OPTIONS
+
+\fIlibrary\fP
+.RS
+File name and path of library. The library name should have an extension
+of \fI.jampal\fP. If the supplied file name does not end with \fI.jampal\fP
+the extension will be assumed.
+.PP
+If the command is run without any parameters, the last library that you had opened 
+will be opened again. Alternatively you can specify the file name of one or more
+libraries on the command line to open those libraries. The library has a name ending 
+with ".jampal". If no library has been opened before a default library called
+\fI~/Music/library/default.jampal\fP is created. 
+If you have changed the LIBDIR specified in your \fI~./jampal/jampal.conf\fP file, 
+the default library is created there instead.
+If the specified or last opened library cannot
+be opened, an error message is displayed and the default library is opened.
+Normally you will use a GUI based menu to launch this.
+
+.SH CLEANUP COMMAND
+
+\fBjampal cleanup\fP  [ \fB-reorder\fP ] \fIlibrary\fP [ \fImoved-file-dir\fP ]
+
+The \fBcleanup\fP command cleans up your library by moving files and renaming
+them. Make sure that all of your songs are loaded into one library, and that
+library is located in the directory specified by LIBDIR in
+\fI~/.jampal.jampal.conf\fP. The default location is ~/Music/library.
+
+The \fBcleanup\fP command makes sure that all files are named according
+to song and artist and are under a directory named as Album Name.
+See section "\fBSetting up your song files\fP" below for an explanation
+of the directory structure.
+Songs are moved to new directories as required. Songs are never moved to a 
+different Disk Directory. Disk Directories are never renamed or moved.
+Songs are ordered within the album by track number.
+Albums are numbered according to the order they are found on the disk.
+The order of albums in a disk directory is not changed unless you use 
+the \fI-reorder\fP option.
+
+Songs that are marked for deletion in the \fBjampal\fP GUI application
+(by setting the value D in the Jampal frame) are moved to 
+a rejected files directory. By default this is at \fI~/Music/reject\fP. 
+The directory name can be changed 
+by updating the \fI~/.jampal/jampal.conf\fP file.
+
+When you run the command it will not rename any file or make any change without first
+giving you an opportunity to review it. It creates a text file report showing all
+files that will be moved. The report is displayed with "less" and you can 
+use normal paging as used with vi or man pages. Press q when you are finished
+reviewing it. You are then prompted to run the renames, see the report again, or
+abort. 
+
+After running it reminds you to reload the library. If \fBjampal\fP is
+open you must use the "File, Reload Library" menu to reload the library. If you
+forget to do this no harm will result, but trying to access any files that were
+renamed will fail until you either reload or else close \fBjampal\fP and open it
+again.
+
+Never run \fBcleanup\fP against a playlist, temporary library, or any library
+that does not have all of your songs. This would reorganize some files and leave
+others in their old place.
+
+The \fBcleanup\fP command does many checks before running to make sure it will
+succeed. If your directory structure is wrong it will tell you and stop.
+If there are two songs with exactly the same name and artist in the same 
+directory it may give an error message and you will have to rename one.
+
+If \fBcleanup\fP fails or gives any error before you have responded yes to 
+running the renames, nothing has been changed. You can rerun after making 
+any changes you need.
+
+If \fBcleanup\fP fails during the running
+of the renames, or is terminated for some reason, the library will be incorrect.
+No songs will have been lost or corrupted.
+Clear the library (Menu option Edit, Clear Library).
+Then reload the library by dragging the directory or directories containing the songs
+from the file explorer, or using the menu "File, Open" to open the directories.
+If all songs are under a master directory you only have to open that directory.
+Make sure your rejected items directory is not under the directory structure
+that you are opening.
+It will take some time to reload the songs (on a fast machine 15 minutes for 40,000 songs).
+Then you can run \fBcleanup\fP again.
+
+\fBSetting up your song files\fP
+
+.RS
+The first essential is to have all songs set up in the \fBjampal\fP library with
+song titles, album names, artist names, and track numbers.
+.PP
+Your library of mp3 files should be backed up on to CDs or DVDs. Name each CD or
+DVD with a serial number of the form YYMMDD_HHMM_X, using the date and time you
+created it and any character you please instead of X (e.g. you may want to
+identify the CDs with one character representing music type).
+.PP
+If you are starting out and they are not yet on CDs or DVDs, create a directory
+named as described, and put your files in subdirectories under that directory.
+Put up to 700 MB per CD directory or 4.2 GB per DVD directory. You can name the
+subdirectories anything you want, or just put them in one subdirectory.
+.PP
+If you have songs without
+an album name or you have only one or two songs from an album you may not want them 
+put in a separate directory. You can update frame Directory with a directory
+name that overrides the album name when organizing files on disk. The Directory
+frame is a "user defined text information frame" with description "Directory".
+Make sure this frame is listed in "Library Fields" in the customize dialog.
+Also add this field to the tag editor, and select it in the Display Columns. 
+Now you can enter values in the Directory field and those tracks will be placed 
+in a directory named after that field instead of named after the album.
+.PP
+If you have two albums with the same name and different artists in the same 
+Disk Directory, they will get merged into one. Please change the album names 
+so that they are different. This happens with Album titles like "Greatest Hits".
+Call the album something like "Demis Roussos Greatest Hits" to prevent this problem.
+.PP
+In order to use \fBcleanup\fP successfully the files in your library must use the following
+directory structure.
+.PP
+Disk_dir_1
+.RS
+  Album_dir_1
+.RS
+    Song-file-1.mp3
+.br
+    Song-file-2.mp3
+.br
+    Other songs ...
+.RE
+  Album_dir_2
+.RS
+    Song-file-1.mp3
+.br
+    Song-file-2.mp3
+.br
+    Other songs ...
+.RE
+  Other Albums ...
+.RE
+Disk_Dir_2
+.RS
+  Similar structure to disk dir 1...
+.RE
+Other Disk Dirs ...
+.PP
+Each Disk Directory is typically a copy one CD or DVD where you have archived the 
+songs. The design of the system expects that you save your mp3 files on CD or DVD and
+copy them as one directory per CD or DVD.
+It is optional to have multiple disk directories. You can have up to 999
+albums in a single disk directory. Disk directories do not have to all 
+reside under one directory, they can be anywhere on your file systems.
+.PP
+To get started if you have all of your songs under one directory, first move them 
+under a second directory, as follows.
+.PP
+Disk_dir_1
+.RS
+  Temp_Album_dir
+.RS
+    Song-file-1.mp3
+.br
+    Song-file-2.mp3
+.br
+    Other songs ...
+.RE
+.RE
+.PP
+After running \fBcleanup\fP the temporary album directory will be deleted
+and all songs will be under their respective album directories.
+.PP
+If you have moved files around to get them in this directory structure, open 
+the \fBjampal\fP GUI, clear the library, and reload the songs by dragging 
+the disk directories from the file explorer, or using the menu option to 
+open the disk directories.
+
+.SH CLEANUP COMMAND OPTIONS
+
+\fB-reorder\fP
+.RS
+Reorder directories within a disk. This can only be done when there 
+are no other changes pending. The way to make sure of this is to 
+first do a run without the \fI-reorder\fP option. Then open the file called
+\fIZZAlbums.txt\fP which exists in each Disk Directory. This is a text file.
+Move lines up or down into the desired sequence of albums. Save the file.
+Run the \fBcleanup\fP command with the \fI-reorder\fP option.
+.RE
+
+\fIlibrary\fP
+.RS
+File name and path of library. The library name should have an extension
+of \fI.jampal\fP. If the supplied file name does not end with \fI.jampal\fP
+the extension will be assumed. If the library name is given without a path
+it will be assumed to be in your main library directory (defined by the 
+\fBLIBDIR\fP variable in \fI.jampal/jampal.conf\fP).
+.RE
+
+\fImoved-file-dir\fP
+.RS
+In order for the library to be correct, you should not move or rename song files
+on the hard drive (except for the automatic moving and renaming done by
+\fBcleanup\fP). There is an exception to this rule. If you need to move one or more
+directories (albums) from one place to another, you can use this feature. You
+can move any number of directories to a single new directory, then use \fBcleanup\fP with the
+destination directory specified as the moved-file-dir parameter. \fBcleanup\fP will
+adjust the library and rename all the other directories accordingly. This is
+most useful when you are trying to split albums up into groups of 700 MB for
+burning to CD.
+.PP
+If you have moved one or more albums to a new directory you can list the 
+directory here. \fBJampal\fP will automatically find the files in the 
+library and update the library with their new locations. This saves 
+having to remove and re-add them to the library.
+.RE
+
+.SH PLAYLIST COMMAND
+
+\fBjampal playlist\fP criteria [ options ] ...
+
+\fBplaylist\fP generates a playlist based on a variety of selection and 
+sort criteria. 
+Once the playlist is generated the GUI is opened and the playlist can be viewed or played.
+
+Each playlist is placed in a directory named for the current date and time
+and playlist name. These directories are stored in the location identified
+by the PLAYLISTCD parameter in \fI~/.jampal/jampal.conf\fP.
+All prior playlists remain available in the directory until you delete them.
+You can clean up by deleting playlist directories. 
+
+A column in the playlist display identifies a disk, directory and song number sequence
+which is used if you are going to copy the playlist to CD or mp3 player.
+
+After the list is created you are prompted whether you want to copy the songs 
+to a staging directory.
+Depending on the size of your library and the criteria
+there may be enough songs for many disks or many player refills.
+The program prompts you to create as many as you need, one disk full
+at a time. The disks that can be created are identified by numbers within the playlist
+and you are prompted to enter a number to identify which set of files to copy.
+Each disk full is placed in its own directory, so creating more than one
+will not cause overwriting.
+If the songs are not copied immediately they can be copied from the playlist later using
+the \fBplaylistcd\fP command. 
+When you have finished burning to CD or copying to player you should delete
+the staging directories to release the disk space.
+
+In the \fBplaylist\fP options described below, many apply only to the files copied
+to a staging directory. All options apply equally whether you copy when prompted after
+running \fBplaylist\fP or copy later using \fBplaylistcd\fP.
+
+There are some examples of playlist commands in the scripts/examples directory.
+
+.SH PLAYLIST COMMAND OPTIONS
+
+criteria
+.RS
+This defines the criteria for selection of songs for the playlist.
+Any fields that are stored in your library can be used. To find the field codes
+for your library run the \fBfieldcodes\fP command. 
+You can use any expression using awk syntax
+and any fields in the list of fieldcodes. You can add more fields to the library
+by customizing in the GUI.
+You can also set up a table that allows you to prioritize by various values
+af a frame such as Genre. See the section below entitled \fBPLAYLIST
+ENVIRONMENT VARIABLES\fP.
+
+Examples (Quotes as shown are required) :
+.RS 4
+Select all songs with Genre of Country 
+.RS 4
+\'GENRE == "Country"\'
+.RE
+
+If Country may sometimes be written in lowercase, uppercase or mixed case, use 
+.RS 4
+\'tolower(GENRE) == "country"\'
+.RE
+
+Select all songs which contain classic in the Genre somewhere
+.RS 4
+\'match(tolower(GENRE),/classic/)\'
+.RE
+
+Select all songs by John Denver that do not have country in the Genre
+.RS 4
+\'ARTIST == "John Denver" && 
+.br
+! match(tolower(GENRE),/country/)\'
+.RE
+
+Select all songs
+.RS 4
+1
+.RE
+
+Select songs based on a table of preferences (see
+\fBPLAYLIST ENVIRONMENT VARIABLES\fP)
+.RS 4
+\'MySearch[GENRE] > rand()'
+.RE
+
+.RE
+.RE
+.PP
+\fB--sort\fP sort-field
+.RS
+Sort the playlist by the given sort field. If you leave this out the existing 
+sequence in the library is used. This is an
+awk expression for fields that will be used to sort the playlist. 
+You can use 'random' for a random sequence, or else expressions using the fields in
+the field code list.
+.PP
+Example
+.RS 4
+Sort by track within album. This concatenates album name , a blank, a pipe character, 
+track number into a string for sorting.
+.RS 4
+\'ALBUM " |" TRACK\'
+.RE
+Put songs in random sequence. The value 'random' is a very random number of 12 digits.
+.RS 4
+\'random\'
+.RE
+.RE
+.RE
+.PP
+
+\fB--reverse\fP
+.RS
+This will reverse the sort sequence given in the \fB--sort\fP option.
+.RE
+.PP
+
+\fB--announce\fP
+.RS
+This chooses to have audio announcements of song titles included in files
+copied to the staging directory. Synthesized announcements are stored in the 
+front of each mp3 file.
+.RE
+.PP
+
+\fB--tracksperdir\fP nnn
+.RS
+This specifies the maximum number of tracks per directory when copying
+to a staging directory. This is useful if the player only displays 2 digit song
+numbers within a directory. The default is 100. The maximum is 999.
+.RE
+.PP
+
+\fB--startdir\fP nnn
+.RS
+This specifies the starting directory number. The default is 1.
+The maximum is 999 so if you use a number close to that and directory numbering exceeds 999
+you may have problems.
+.RE
+.PP
+
+\fB--library\fP \fIlibrary_name\fP 
+.RS
+File name and path of library. If not specified it defaults to the main library
+which is the value of the MAINLIBNAME parameter in \fI~/.jampal/jampal.conf\fP.
+The library name should have an extension
+of \fI.jampal\fP. If the supplied file name does not end with \fI.jampal\fP
+the extension will be assumed. If the library name is given without a path
+it will be assumed to be in your main library directory (defined by the 
+\fBLIBDIR\fP variable in \fI.jampal/jampal.conf\fP).
+.RE
+.PP
+
+\fB--ann_separate\fP
+.RS
+This will cause announcements to be created as separate mp3 files when copying to 
+a staging directory. The default is to merge the announcement into the mp3 file
+of the song. This is only applicable when the \fB--announce\fP option is selected.
+.RE
+.PP
+
+\fB--speak\fP text
+.RS
+Specifies what will be spoken in the announcement  when copying to 
+a staging directory. The default is \'(TITLE .  ARTIST)\'.
+Any field codes for the library can be included. Additional words can be included 
+by putting them in quotes, for example \'"Presenting " TITLE " by " ARTIST\'. 
+This is only applicable when the \fB--announce\fP option is selected. 
+If there are foreign language songs, including English in the announcement will not be useful.
+.RE
+.PP
+
+\fB--speak_sep\fP
+.RS
+If there are songs that use the "Follow" option, then two songs will be copied 
+to a staging directory with one announcement. This parameter specifies what to say in between, for
+example \'" followed by "\'. Do not use this if there are different language songs. 
+The default is \'". "\', which is a period so that the speech synthesis will 
+insert a pause as if it were the end of a sentence.
+.RE
+.PP
+
+\fB--dirchange\fP condition
+.RS
+The condition is an awk expression using any field codes from the library.
+The same rules apply as for the selection criteria.
+If the expression changes, a new directory will be started. For example specify ARTIST 
+to start a new directory for each artist. Note that if the songs are not sorted
+by this field, it may create a new directory for each song.
+The default is no chenge of directory except when the maximum songs per 
+directory is reached. There is a special value \fBDIRALBUM\fP which will split
+directories the same way as is done by \fBcleanup\fP, album names unless
+a directory name is specified in the "Directory" tag.
+.RE
+.PP
+
+\fB--appendseq\fP
+.RS
+When copying to a staging directory, this option causes the program to
+update the song name in the mp3 tag to have a sequence number in front.
+This is to defeat the sorting of songs by name that some mp3 players do.
+Announcements of the name do not include the sequence number.
+.RE
+.PP
+
+\fB--cdsize\fP nnn
+.RS
+Specifies the size of the CD or mp3 player memory in megabytes. Default is 690.
+Songs will be split into disks according to the size.
+.RE
+.PP
+
+\fB--stagingdir\fP \fIdirectory_name\fP
+.RS
+Gives the name of the staging directory where the songs will be written for burning to CD
+or copying to mp3 player. In the case of an mp3 player you can give a 
+directory name where the player is mounted. If you do not do this it will write 
+to a directory on your hard drive and you can copy to the player afterward.
+The default directory is the one specified by the CDSTAGING 
+parameter in \fI~/.jampal/jampal.conf\fP.
+.RE
+.PP
+
+\fB--filenumberstart\fP nnn
+.RS
+The starting number for numbering files in each directory. Default is 1.
+Maximum is 999.
+.RE
+.PP
+
+\fB--playlistname\fP name
+.RS
+The playlist directory and playlist are named using the current date and time as
+YYMMDD_HHMMSS.
+If you supply a value here it will be appended as YYYYMMDD_HHMMSS_name.
+This is to help you remember the purpose of each playlist you create.
+The default is no name so that the playlist will be named YYMMDD_HHMMSS.
+.RE
+.PP
+
+\fB--tagupdate\fP tag_setting
+.RS
+Here you can supply one or more updates that you want made to ID3 tags when 
+copying to the staging directory. For example if you have an mp3 player 
+that only displays song title and artist but you want to see displayed the rating
+you have given the song in your customized field, you can update the tag to
+have that added to the ARTIST frame. The format of the parameter takes any
+parameter valid for the \fBtagupdate\fP command, and can include any 
+fieldcodes from the library. For example, to add a customized preference
+frame in front of the artist use this:
+.br
+\'"-ARTIST \\"" ID3V2TAGTXXXPeter "/" ARTIST "\\""\'
+.RE
+.PP
+
+\fB--startdisknum\fP nnn
+.RS
+The starting number for numbering disks. The default is 1. Maximum is 999.
+.RE
+
+.SH PLAYLIST ENVIRONMENT VARIABLES
+
+PLAYLIST_SEARCH_SETUP
+.RS
+This variable is used to set up a table which can be used to set priorities for inclusion
+of songs based on a preference. For example
+
+ export PLAYLIST_SEARCH_SETUP='
+   MySearch["Country"]=0.8
+   MySearch["Rock"]=0.5
+   MySearch["Pop"]=0.2
+   MySearch["R&B"]=1'
+
+This sets a criterion so that 80% of Country songs, 50% of Rock songs, 20%
+of Pop songs, 100% of R&B songs, and nothing else are selected.
+The criterion that would be used with this in the \fBplaylist\fP
+command is
+
+ 'MySearch[GENRE] > rand()'
+
+This assumes that Genre values match exactly those values.
+There is another example in the scripts/examples directory.
+.RE
+
+.SH FIELDCODES COMMAND
+
+\fBjampal fieldcodes\fP [ \fIlibrary_name\fP ]
+.PP
+Displays a list of fieldcodes included in the specified library
+
+.SH FIELDCODES COMMAND OPTIONS
+
+\fIlibrary_name\fP
+.RS
+File name and path of library. If not specified it defaults to the main library
+which is the value of the MAINLIBNAME parameter in \fI~/.jampal/jampal.conf\fP.
+The library name should have an extension
+of \fI.jampal\fP. If the supplied file name does not end with \fI.jampal\fP
+the extension will be assumed. If the library name is given without a path
+it will be assumed to be in your main library directory (defined by the 
+\fBLIBDIR\fP variable in \fI.jampal/jampal.conf\fP).
+.RE
+
+.SH PLAYLISTCD COMMAND
+
+\fBjampal playlistcd\fP  disknum [ \fIstaging-dir\fP ]
+.PP
+Copies a playlist disk to a staging directory. This uses an existing playlist
+created by the \fBplaylist\fP command and does the same operation as is 
+done by the last step of that command.
+.PP
+When running this command you must first change directory to the directory
+where the playlist is stored. The directory will be named YYMMDD_HHMM or
+YYMMDD_HHMM_description and will be in the directory identified by the variable
+PLAYLISTCD in \fI~/.jampal/jampal.conf\fP.
+
+.SH PLAYLISTCD COMMAND OPTIONS
+
+disknum
+.RS
+Disk number desired. This is matched to the disk number stored in the playlist,
+where there is one disk per 690 MB of data, or other value requested when
+creating the playlist.
+.RE
+.PP
+
+\fIstaging-dir\fP
+.RS
+This overrides the default staging directory or other staging directory
+specified when creating the playlist. You can use the mount point of
+an mp3 player to store the songs directly on the player.
+.RE
+
+.SH ENVELOPE COMMAND
+
+\fBjampal envelope\fP [ \fB--artist\fP | \fB--artistalbum\fP | \fB--none\fP 
+| \fB--album\fP ] [ \fB--nosort\fP ] \fIlibrary-name\fP diskser description
+.PP
+The \fBenvelope\fP command prints CD or DVD envelopes for your mp3 disks. 
+It also can prints a song list for songs on an mp3 player.
+The program scans the library and creates an openoffice write document with 
+the songs listed and the albums listed on a page configured as an envelope. 
+It then opens the document in openoffice. YOu can make any changes you wish,
+such as typing in headers or your name, then print with openoffice.
+There are instructions in the \fBjampal\fP HTML help with illustrations on
+how to cut and fold the envelop page to make a CD envelope.
+If you are creating a list for an mp3 player just print the list and leave out 
+the envelope page. 
+.PP
+The first pages of the document are an insert listing of tracks. The last page
+is an envelope. If you are making a DVD cover you probably have so many albums
+that the last page does not hold all the names and actually produces several
+pages. In that case, use openoffice to insert columns in the last page,
+sufficient so that it all fits, as follows.
+.PP
+Select menu format, page, columns tab. Select 2 or 3 columns. Then use menu
+format, table. Reduce the column sizes and reduce the left spacing. After this
+you may still need to select the whole table and reduce the font size. You can
+use fractions, such as 6.6 to achieve the correct size so that it fits on one
+page.
+
+.SH ENVELOPE COMMAND OPTIONS
+
+\fB--artist\fP | \fB--artistalbum\fP | \fB--none\fP | \fB--album\fP
+.RS
+These options define headings that appear in the list and the items that appear on 
+the envelope cover. If nothing is specified here the default is album, i.e.
+an album name heading is printed at the top of each album and albums are listed 
+on the cover. Artist groups by artist and artistalbum groups by artist and album.
+None indicates that there are no headings in the list and no titles on the cover.
+This would be used if you had sorted the songs in random order.
+For any of these options to work the songs must be in order of the appropriate
+field. If they are not you could get a heading for each song.
+.RE
+.PP
+
+\fB--nosort\fP
+.RS
+The songs are normally sorted by filename before being printed. This assumes
+you are printing an envelope for a disk that is a copy of directories from 
+your library. The -nosort option will print songs in the order they are stored in the
+library, i.e. the order they are displayed in the \fBjampal\fP GUI. Make sure to save
+the library or close the GUI to make sure the desired ordering is saved.
+.RE
+.PP
+
+\fIlibrary-name\fP
+.RS
+Specifies the path and file name of the library from which songs are to be listed.
+The library name should have an extension
+of \fI.jampal\fP. If the supplied file name does not end with \fI.jampal\fP
+the extension will be assumed. If the library name is given without a path
+it will be assumed to be in your main library directory (defined by the 
+\fBLIBDIR\fP variable in \fI.jampal/jampal.conf\fP).
+.RE
+.PP
+
+diskser
+.RS
+This is used to select the songs to be selected.
+If you are printing from a playlist generated by the \fBplaylist\fP command this
+specifies the disk number (3 digits starying at 001).
+If you are printing from another library or playlist this is used to match
+of the full file name.
+If this is an empty string all songs in the library are selected.
+.RE
+.PP
+
+description
+.RS
+This is any text that you want printed at the top of each page.
+.RE
+
+.SH DUPLICATES COMMAND
+
+\fBjampal duplicates\fP [ \fB--NODUP\fP ] [ \fB--NEXTFILES\fP ]
+.PP
+The \fBduplicates\fP command searched for potential duplicate songs in the main library.
+It scans your main library (specified in \fI~/.jampal/jampal.conf\fP) and creates a new library
+called \fIduplicate\fP that contains all of the songs that it suspects are duplicates, sorted
+so that the potential duplicates are together. 
+.PP
+The first column of the library contains a DUMMY column with two numbers. First
+is a numeric sequence of the song number identified as a possible duplicate.
+Second is a number identifying which duplicate it is. This makes up the sort
+sequence, so if you change the order of songs in the duplicate library you can
+click on this column header and get it back to the initial sequence.
+.PP
+Look at the library and decide if the songs are real duplicates or not. If they
+are duplicates and you do not want to keep both copies, mark one as rejected. If
+you want to keep two or more copies mark each with a number in the Dup column.
+Then in future these will not be shown as duplicates.
+.PP
+Mark a song as rejected by putting D in the Jampal frame (User defined text with 
+description "jampal"). Then running \fBcleanup\fP will move those files to
+your rejected directory and remove them from the library.
+.PP
+You can fix the duplicates by:
+.PP
+.RS 4
+Accepting the duplicates by typing a different number in each "Dup" column. The
+"dup" column is a "user defined text information frame" with description "Dup".
+Add this to your library fields to use this feature.
+.PP
+Marking some files for deletion by typing D in the "Jampal" column.
+.PP
+Combining one or more versions into one file using the "Combine Duplicates" menu.
+This is used if the same song is found on two or more albums. You can save disk
+space by keeping only one copy of the song on your disk, and still have it show
+up under each of the albums and track numbers.
+This will create "Alternative Albums" for all the duplicates in one copy of a song, and flag the extra
+copies for deletion. Songs marked for deletion are moved when you run the \fBcleanup\fP
+command. See the online documenattion for more deatils on "Edit, Combine
+Duplicates".
+.RE
+
+.SH DUPLICATES COMMAND OPTIONS
+
+\fB--NODUP\fP
+.RS
+You can use the "Dup" tag to indicate duplicate song names you wish to keep or to indicate
+that these are actually different versions of the song and should not be reported as duplicate.
+If you specify --NODUP this will be ignored and the songs will be reported as duplicates.
+.RE
+.PP
+
+\fB--NEXTFILES\fP
+.RS
+Normally the \fBduplicates\fP command ignores songs in the directory specified by
+NEXTFILES in \fI~/.jampal/jampal.conf\fP. Specifying this flag will also include 
+that directory in the check.
+.RE
+
+.SH TAGBKUP COMMAND
+
+\fBjampal tagbkup\fP  [ bak ]
+.PP
+The \fBtagbkup\fP command uses the tagbkup program to keep a backup of your mp3 file tags.
+This assumes that you have the actual mp3 files backed up somewhere, on CD DVD or 
+hard drive. After you make changes to files by editing the tags you will want to backup
+the files so that you do not lose the changes. \fBJampal\fP allows you to store lots
+of information in the tag, including your personal preferences, which could change at 
+any time. Taking a backup of the entire mp3 file every time you change tags will take 
+a lot of backup space. The \fBtagbkup\fP command takes a backup of the tags of your
+main library and stores them in a directory identified by the TAGBKUP entry in 
+\fI~/.jampal/jampal.conf\fP. Make sure you backup that directory regularly.
+Running \fBtagbkup\fP on a large library can take some time. The command shows its
+progress in number of files read on the console. Also it shows details of all files
+changed since the last tagbkup.
+At the end of a run the program displays the
+results and asks whether to remove tag backups of files that
+you have removed.
+To restore a CD use the following commands (assuming /r is the location of your cdrom and
+000904_1758_rest is the location you want to restore the CD to).
+.RS 2
+ . /usr/jampal/scripts/mp3.profile
+ cd /r
+ mkdir -p $MAINDIR/000904_1758_rest
+ tagbkup -v -r -x -d $MAINDIR/000904_1758_rest /r/*/*.mp3 $TAGBKUP/tagbkup
+.RE
+This restores mp3 files from the CD to your hard drive, at the same time restoring
+the tags from the tag backup.
+
+.SH TAGBKUP COMMAND OPTIONS
+
+bak
+.RS
+This indicates that the backup must be run. If this is not specified the program displays the
+results of the prior tag backup and asks whether to remove tag backups of files that
+you have removed.
+.RE
+
+.SH TAGUPDATE COMMAND
+
+\fBjampal tagupdate\fP options \fIfilename\fP [ \fIfilename\fP ] ...
+
+General purpose command line program to update or display ID3V1 and ID3V2 tags
+on mp3 files.
+
+Many files can be updated at once, to update selected values on each file.
+
+This does not interface with your library. If you update tags using this command
+for songs that are in a library, please open the library, select the songs that 
+were updated and select the menu "Edit, Validate tracks" to refresh the
+information in the library. If you are not sure which ones you changed you can
+select all the songs in the library and validate them, but this will take
+longer.
+.PP
+In the utility directory are some openoffice.org spreadsheets which can be used
+for updating songs if you have some complicated change that is easier by
+updating a spreadsheet. The spreadsheet produces a file that can be used as input
+to \fBtagupdate\fP.
+
+.SH TAGUPDATE COMMAND OPTIONS
+
+\fB-OPTIONFILE\fP optfilename
+.RS
+This supplies a file name from which options are read after all options
+on the command line are exhausted.
+.RE
+.PP
+
+\fB-ENCODING\fP encoding
+.RS
+This supplies encoding for the option file.
+.RE
+.PP
+
+\fB-DISPLAY\fP
+.RS
+This displays the tags and file information. If it is specified before
+update options it displays values before the update. If it is specified after
+or between update options it displays the value after the updates
+that appear before it.
+.RE
+.PP
+
+\fB-SHORTDISPLAY\fP
+.RS
+This displays the title, artist and album, tab separated. If it is specified before
+update options it displays values before the update. If it is specified after
+or between update options it displays the value after the updates
+that appear before it.
+.RE
+.PP
+
+\fB-NOUPDATE\fP
+.RS
+This suppresses writing the updates to the file. It can be specified anywhere
+in the options list.
+.RE
+.PP
+
+\fB-TITLE\fP title
+.RS
+Update title on both ID3V1 and ID3V2 tags. 
+.RE
+.PP
+
+\fB-ARTIST\fP artist-name
+.RS
+Update artist name on both ID3V1 and ID3V2 tags. 
+.RE
+.PP
+
+\fB-ALBUM\fP album-name
+.RS
+Update album name on both ID3V1 and ID3V2 tags. 
+.RE
+.PP
+
+\fB-YEAR\fP year
+.RS
+Update year on both ID3V1 and ID3V2 tags. 
+.RE
+.PP
+
+\fB-COMMENT\fP comment
+.RS
+Update comment on both ID3V1 and ID3V2 tags. 
+.RE
+.PP
+
+\fB-TRACK\fP track-number
+.RS
+Update track number on both ID3V1 and ID3V2 tags. 
+.RE
+.PP
+
+\fB-GENRE\fP genre-name
+.RS
+Update genre on both ID3V1 and ID3V2 tags. If the name supplied 
+is not one of the supported ID3V1 names, the ID3V1 tag value will
+be left unchanged. There is a list of supported ID3V1 names
+in the tables section of the html help.
+.RE
+.PP
+
+\fB-ID3V2TAG\fP frame-id value
+.RS
+Update ID3V2 tag.
+.PP
+frame-id is one of the following
+.RS 4
+XXXX for frames that take no language or description
+.br
+XXXXlll for frames that take a language
+.br
+XXXXllldddddd for frames that take a language and a description
+.br
+XXXXdddddd for frames that take only a description
+.br
+APICxxddddd for picture frames
+.RE
+
+Language code is always exactly 3 lower-case letters.  
+
+Picture type is two hexadecimal digits.  
+
+Description can be any length. If it includes spaces it must be quoted. It must
+not be a multi-line value.
+
+Data can be a string or @filename to read from a file  
+
+For pictures @filename must be used and the extension of the file must be a
+recognized image file type (jpg, jpe, jpeg, bmp, png, gif)
+
+If values include spaces or newlines they can be quoted. Multi-line values can
+be used in Linux, Cygwin or Unix. With Windows, multiline values cannot be used
+on the command line. To supply multi-line values in Windows either (1) use
+@filename and store the value in a file or (2) Install Cygwin and run the
+program from the Cygwin command line.
+
+If any values are specified as empty (i.e. two quotes with nothing between), the
+frame is deleted from the tag
+
+When updating files, any existing frames not explicitly updated are left
+unchanged.
+
+All text values are trimmed (blanks, tabs, new-lines are deleted from the front
+and end).
+
+The PRIV frame cannot be updated, except to delete it. The program does not
+cater for updating binary data in this case.
+
+.RE
+.PP
+
+\fB-SYNCHRONIZE\fP
+.RS
+This copies values from id3v2 tags to id3v1 if they are present in id3v2
+otherwise copies id3v1 values to id3v2.
+To synchronize updates performed in the same run this should be at the
+end of the options list. It is performed in sequence with the other operations.
+.RE
+
+\fIfilename\fP
+.RS
+File name of mp3 file. Wild cards can be used to update multiple files, or 
+several file names can be provided on the command line. 
+.RE
+
+.SH MP3LAME COMMAND
+
+\fBjampal mp3lame\fP [ -recode|-recode-even ]
+
+Converts files in a directory to mp3 using lame or re-encodes mp3 files. 
+If you use no input option, it encodes all wave files in the current directory
+that have extension wav. It encodes to 128K mp3.
+
+This command checks the number of CPUs in your system and runs many files at one time, 
+so that if you have two or more CPUs it can
+finish in the shortest time.
+
+When either of the recode options is used, the ID3V2 tag is copied to the new
+file after the recoding is done.
+
+If the songs were in a library, you should delete them and re-add them to the
+library after doing this.
+
+.SH MP3LAME COMMAND OPTIONS
+
+-recode
+.RS
+Re-encodes mp3 files in the current directory, but only if they have higher
+than 128K bit settings. It puts the re-encoded files in a subdirectory called
+recode.
+.RE
+.PP
+
+-recode-even
+.RS
+Re-encodes all mp3 files in the current directory, regardless of their bit
+settings. It puts the re-encoded files in a subdirectory called recode.
+.RE
+
+.SH FILES
+
+.IR ~/Music/library/default.jampal ", " ~/Music/library/playlist.jampal ", ..."
+.RS
+The default library and playlist that are created the first time \fBjampal\fP is run.
+Other libraries created by the user are put here unless the user requests otherwise.
+.RE
+.PP
+
+.IR ~/Music/library/default.jmp ", " ~/Music/library/playlist.jmp ", ..."
+.RS
+Tab separated text files that contain the song details for each song 
+in the default library and default playlist.
+Also files for other libraries created by the user.
+.RE
+.PP
+
+.I ~/.jampal/jampal_initial.properties
+.RS
+Customization settings for the GUI program. These are set by the 'Options Customize'
+menu in the \fBjampal\fP user interface. These should not be directly edited.
+.RE
+.PP
+
+\fIZZAlbums.txt\fP
+.RS
+This file is placed in each Disk Directory by the \fBcleanup\fP command.
+It is a text file with each Album name in sequence, one per line.
+Using the \fi-reorder\fP option you can use this file with the \fBcleanup\fP
+command to reorder albums.
+.RE
+.PP
+
+\fI~/.jampal/jampal.conf\fP
+.RS
+Default settings for directories and program locations. To change where files are 
+stored or certain programs are found (e.g. OpenOffice), edit this file.
+If you want to use the same settings for multiple users you can move this file to 
+\fI/etc/jampal/jampal.conf\fP. Each user's own file in \fI~/.jampal/jampal.conf\fP will
+take precedence over the one in /etc/jampal.
+.RE
+
+.SH ENVIRONMENT
+
+mp3lib_skip
+.RS
+When running \fBcleanup\fP, set to a 3-digit number to cause the program to skip some 
+numbers when naming directories.
+.RE
+
+.SH DIAGNOSTICS
+
+Library needs to be saved: file-name
+.RS
+This means you have made some updates to the library through the GUI but the library has not 
+been saved. The file name of one song that has been changed is listed. 
+Go to the GUI and select the menu item "Library, Save", or else close the GUI.
+This could also happen if the GUI was terminated unexpectedly. In that case, re-open the GUI 
+and either save the library or close the GUI again.
+.RE
+
+.SH SEE ALSO
+
+.BR tagbkup (1)
+
+.SH WEB
+
+http://jampal.sourceforge.net
+
+
+

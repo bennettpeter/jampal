@@ -1,0 +1,713 @@
+          <b>Customizing Jampal</b>
+          <p>
+            The easiest customization is done by creating your library from one
+            of the predefined templates. By using the "New Library" menu you
+            can select a template for the library type you want.
+          </p>
+          <p>
+            You can create extra playlists just be using Library Open,
+            specifying a new file name and selecting Basic Playlist as the
+            template. Playlists can be customized the same way that libraries
+            can be.
+          </p>
+          <p>
+            Further customization of your library and of the system can be done
+            from the "Edit", "Customize" menu.
+          </p>
+          <p>
+            <b>General Tab</b>
+          </p>
+          <p>
+            <img src="images/customize_general.jpg" alt="General Tab" hspace=
+            "10">
+          </p>
+          <p>
+            <i>Audio Gain</i><br>
+            This is a percentage value that is applied to the default java
+            sound level. If you find that the sound level is too low or too
+            high adjust this. To check the level, play a song with your system
+            default player (e.g. Windows media player) and play the same song
+            with Jampal. In the system media player set the volume to maximum
+            and adjust to a good listening volume with the master volume
+            control of your system. If jampal plays at a lower volume use a
+            higher value in Audio Gain, and if it plays louder use a lower
+            Audio Gain. Valid values are 1 to 2500.
+          </p>
+          <p>
+            <i>Look and Feel</i><br>
+            This is a list box that selects how the program windows display on
+            your system. The list box contains the names of the standard
+            options that come with java, and some third party looks form
+            various sources. See <a href="license.html">License &amp;
+            acknowledgements</a>. The standard Java looks are at the top of the
+            list. The selection will vary depending on your hardware, software
+            and the version of Java. The "Napkin" look is intended to look like
+            it was scribbled on a napkin and to get this effect it is best to
+            reset the font selection. If you have selected a font, select
+            "Edit", "Reset Font" to see the scribbled font that comes with
+            "Napkin".
+          </p>
+          <p>
+            You can download you own Java Look from the internet. If you do
+            this, install the jar file for the look-and-feel in your java
+            jre/lib/ext directory, and type the name of the class into the
+            "look-and-feel" listbox.
+          </p>
+          <p>
+            Please be aware that in many cases downloaded or non standard looks
+            may be CPU intensive or may cause problems. In some cases they may
+            cause skipping during playback. If this happens or the system
+            behaves erratically try switching back to a standard Java look.
+            Please let me know if this happens or you have any problems.
+          </p>
+          <p>
+            <i>Mixer Name</i><br>
+            You can select which mixer java uses for playing songs. Normally
+            "Java Sound Audio Engine" provides the best quality. If this
+            setting does not work or provides poor quality, you can select a
+            different option from among the available mixers.
+          </p>
+          <p>
+            <i>Speech Rate</i><br>
+            Specifies how fast the announcer speaks. 0 is the default, to speak
+            slower use a negative number from -1 to -10. To speak faster use a
+            positive number from 1 to 10.
+          </p>
+          <p>
+            <i>Mbrola Program</i><br>
+            If you wish to use mbrola voices with eSpeak, enter here the name
+            of the mbrola program (normally mbrola). If it is not on the path
+            the full program file path must be included. The mbrola program 
+            is needed. The programs supplied with "mbrola tools for 
+            windows" do not work.
+          </p>
+          <p>
+            If you use mbrola voices with FreeTTS, the mbrola program must be
+            at the Mbrola Path (next field) and must have a program name of
+            mbrola.
+          </p>
+          <p>
+            <i>Mbrola Path</i><br>
+            If you wish to use mbrola voices with FreeTTS or eSpeak, enter here
+            the path where mbrola is installed. Voices must be installed in
+            subdirectories of that path. Mbrola and voices can be downloaded
+            free of charge from the <a href=
+            "http://tcts.fpms.ac.be/synthesis/mbrola.html">MBROLA Project</a>
+            To use mbrola with FreeTTS you must also copy the mbrola.jar file
+            as described on the <a href=
+            "http://freetts.sourceforge.net">FreeTTS Web Site</a>.
+          </p>
+          <p>
+            <i>Cepstral Path</i><br>
+            If you use Cepstral as a speech engine for any languages, you must
+            enter the path where it is installed.
+          </p>
+          <p>
+            <i>ESpeak Program</i><br>
+            If you use ESpeak as a speech engine for any languages, you must
+            enter the program name. If it is not on the path the full program
+            file path must be included.
+          </p>
+          <p>
+            <i>espeak-data Path</i><br>
+            If you use ESpeak as a speech engine for any languages, you must
+            enter the location of the espeak-data directory.
+          </p>
+          <p>
+            <b>Voices Tab</b>
+          </p>
+          <p>
+            <img src="images/customize_voices.jpg" alt="Voices Tab" hspace=
+            "10">
+          </p>
+          <p>
+            <i>Language</i><br>
+            Here you can select voices for announcements in each language in
+            which a song may be sung. The voice is selected based on the
+            "Languages" tag of the song. More than one langauage can be
+            selected for a song. The last language in the list is used for the
+            announcement. You can also select a voice for songs with no
+            language selected (select blank) and a voice for songs with other
+            languages (select "other").
+          </p>
+          <p>
+            <i>Speech Engine</i><br>
+            Here you can select from Microsoft, FreeTTS, Cepstral, eSpeak, or
+            none. This specifies which speech engine will be used for song
+            announcements.
+          </p>
+          <p>
+            <i>ESpeak</i> This is a free speech system which can be downloaded
+            from <a href="http://espeak.sourceforge.net">sourceforge</a>. It
+            supports a large number of languages and many voices, including
+            mbrola voices. It runs on Microsoft Windows, Linux and other
+            environments. Some Linux systems install it automatically.
+          </p>
+          <p>
+            <i>Microsoft</i> This only works on Microsoft Windows systems with
+            Microsoft TTS installed. Windows XP and above has this pre-installed. 
+            You can adjust the voice and speeed in the Windows Control
+            Panel. You can purchase or download voices that support Microsoft
+            speech systems. Normally one or two voices come built in with
+            Microsoft systems. Microsoft speech engine will currently not
+            work with 64bit java. It will work with 64bit windows running 32bit Java.
+          </p>
+          <p>
+            <i>FreeTTS</i> This is a free java speech system. This works on all
+            platforms. Please go to the <a href=
+            "http://freetts.sourceforge.net">FreeTTS Web Site</a> to download
+            and install FreeTTS. For FreeTTS to work with jampal it must be
+            installed in a directory called "freetts" that is next to the
+            jampal install directory. (Or you can create a directory soft link
+            at that location). For example if jampal is installed in c:\Program
+            Files\Jampal, freetts must be installed in c:\Program
+            Files\FreeTTS. On Linux if Jampal is installed in /usr/local/jampal
+            you can create a link /usr/local/freetts to the directory where
+            FreeTTS is installed. (Tip - to create a directory soft link under
+            Windows, use the JUNCTION program from <a href=
+            "http://www.sysinternals.com/Utilities/Junction.html">SysInternals</a>.
+            You can also use Mbrola voices with FreeTTS on all platforms. See
+            mbrola path description above. FreeTTS only supports English with a
+            few voices of mediocre quality.
+          </p>
+          <p>
+            <i>Cepstral</i> This is a commercial speech synthesis system
+            available for many platforms and many languages. You can download a
+            trial voice and purchase a license from <a href=
+            "www.cepstral.com">Cepstral</a>. This works on Windows, Linux and
+            Macintosh. The voices are high quality than the other speech
+            engines. Please test the trial version to make sure it works to
+            your satisfaction before purchasing any voices.
+          </p>
+          <p>
+            <i>Voice</i><br>
+            Depending on which speech engine you selected, this displays a list
+            of available voices. If you want to select a default voice, select
+            blank. If the engine you selected is eSpeak and the voice you
+            selected is blank, a voice will automatically be selected based on
+            the language. eSpeak voices that start mb- are mbrola voices. These
+            only display here if you have installed them and given the correct
+            value for the mbrola directory.
+          </p>
+          <p>
+            <i>Speech Volume</i><br>
+            Specifies the volume as a percentage of normal (i.e. 100 is
+            normal). With some engines you can go above 100% but if you go too
+            high the sound will be distorted. With others any value above 100
+            is treated the same as 100. Mbrola voices are rather faint so you
+            may need to specify 500 or 1000 to get a good volume. Mbrola voices
+            with eSpeak will support values here up to the java maximum (2500
+            or 1000 depending on the mixer selected). Non-mbrola eSpeak voices
+            are rather loud. Non-mbrola eSpeak voices will not support any
+            value above 200.
+          </p>
+          <p>
+            <i>Test</i><br>
+            You can test the currently selected row. It will read the text from
+            the input area next to the test button. If the selected row has
+            language "other" it will assume no language.
+          </p>
+          <p>
+            <b>Library Tab</b>
+          </p>
+          <p>
+            <img src="images/customize_library.jpg" alt="Library Tab" hspace=
+            "10">
+          </p>
+          <p>
+            Settings for the current library are changed here.
+          </p>
+          <p>
+            <i>Announcement Template</i><br>
+            This provides a template for the song announcements. This defaults
+            to "(TITLE). (ARTIST)", but can be changed to include any values
+            that are present in the tag. You can type words to be spoken but if
+            you have more than one song language do not include any words here.
+            They will be pronounced incorrectly in other languages. Anything
+            specified within parentheses () must be the name of a field or
+            frame. The same abbreviations are used as are used for <a href=
+            "tagupdate.html">TagUpdate</a>. For ID3V2TAG frames use a space and
+            the frame identifier, for example (ID3V2TAG COMMengMy Comment) to
+            announce the comments frame that is English with the description
+            "My Comment". Additionally any of the values specified below for
+            the type column of the "Library Fields" tab can be used, except
+            DUMMY.
+          </p>
+          <p>
+            <i>Speech Replacement</i><br>
+            You can further modify the announcement by specifying one or more
+            regular expressions with replacements. The first box can have one
+            or more regular expressions separated by slashes. The second box
+            has the same number of strings separated by slashes. In sequence,
+            each regular expression will be replaced by its substitute before
+            the song is announced.
+          </p>
+          <p>
+            <i>Use Unix Style Paths</i><br>
+            If this is checked, the library will store all file names
+            unix-style, with no drive letter and with forward slashes. If you
+            are running Windows, this only makes sense if all your music files
+            are on the same logical drive. As long as your startup shortcut has
+            the startup directory on that same drive this will work. Advantages
+            of using this are: (1) You can use a dual-boot windows and Linux
+            system and have your library on a drive accessible to both. (2) You
+            can share your library over a network where the drive may be linked
+            with a different drive letter on different machines. (3) You can
+            use the mp3 file management shell scripts under CYGWIN. If you are
+            running Linux, Unix or Macintosh, this parameter will be ignored.
+          </p>
+          <p>
+            <i>Mp3 File Names Are Case Sensitive</i><br>
+            In Windows, file names are not case sensitive. If you try to create
+            have two files named "RAY OF LIGHT.mp3" and "ray of light.mp3" in
+            the same directory, the system will not allow you to do that, the
+            second file will overwrite the first. In Unix, however, you can
+            have these two files plus "Ray of light.mp3", "Ray Of Light.mp3"
+            and other combinations, and all are different files. Jampal assumes
+            that when running Unix that file names are case sensitive, and when
+            running other operating systems they are not. However, if you are
+            running Linux and have a FAT file system mounted, the file names
+            will not be case sensitive and you should change this parameter.
+          </p>
+          <p>
+            Values are "Yes" (file names are case sensitive), "No", (they are
+            not), and "Default" which will use the operating system default
+            (Yes for Unix, No for Windows and others).
+          </p>
+          <p>
+            This value is only used if you are adding to the library a file
+            which differs only in case from a file already in the library.
+            Jampal uses this to determine whether the new file is additional or
+            replacing the previous file.
+          </p>
+          <p>
+            <i>Library Type</i><br>
+            This identifies whether this is a Playlist or a Library.
+            Differences are:<br>
+            <b>Playlist:</b> When playing songs and reaching the end of a song
+            it skips to the next song. Also takes into account the "follow"
+            option (See <a href="playlist.html">Playlist Window</a>).<br>
+            <b>Library:</b> Asks for confirmation before clearing library or
+            deleting tracks.<br>
+          </p>
+          <p>
+            <i>Library Index Data File Name</i><br>
+            This is the name of the file where the actual track data is stored.
+            It is normally set to the name of the library, followed by ".jmp".
+            You can specify any other name if you wish. Normally the file will
+            be stored in the same directory as the library, however you can
+            specify a directory name here if you wish to store it elsewhere.
+          </p>
+          <p>
+            When you change the name, Jampal will not attempt to move the data
+            to the new library data file. If that file already exists it will
+            be loaded into Jampal. If it does not yet exist, Jampal will show
+            an empty list.
+          </p>
+          <p>
+            You can have two libraries pointing to the same list of tracks by
+            using the same file name for both. This will only work if the
+            library fields are the same (see the Library Fields tab below).
+          </p>
+          <p>
+            <i>Playlist Name</i><br>
+            This is the name of the playlist that is used when you use the
+            "open playlist" or "add tracks to playlist" menus. This must be the
+            name of a valid jampal library or else you will get an error when
+            trying to open the playlist. You can create a new playlist and then
+            enter its name here to make it the default playlist. Note that you
+            can have as many playlists as you wish, and open them with the
+            "open library" menu. The "Playlist name" option only controls which
+            one is opened with the "open playlist" menu.
+          </p>
+          <p>
+            <i>Window Style for this Library</i><br>
+            If you specify "Normal" there is space allowed for displaying a
+            track name in the top of the window to the left of the slider and
+            the slider is larger. If you specify "Compact" the slider is
+            smaller and the track playing name is only displayed in the title
+            bar. By default libraries have "normal" and playlists have
+            "compact".
+          </p>
+          <p>
+            <i>Resize Mode</i><br>
+            This is a list of options which control what happens to column
+            sizes if you resize the window or resize a column. The default is
+            "off" which does not automatically resize columns and provides a
+            horizontal scroll bar. If you don't like that behaviour try the
+            other options until you find one you like.
+          </p>
+          <p>
+            <b>Library Fields Tab</b>
+          </p>
+          <p>
+            <img src="images/customize_libraryfields.jpg" alt=
+            "Library Fields Tab" hspace="10">
+          </p>
+          <p>
+            This page controls the field values that are stored on the library
+            index data file. The file is a tab delimited text file. This means
+            you can load it into a spreadsheet program to manipulate a list of
+            your tracks. You can select fields from the track tags to be stored
+            in your library. Any values that you want displayed on the screen
+            in the library grid must be included here, but not all values here
+            need to be displayed.
+          </p>
+          <p>
+            Some of the columns show list boxes when you click them. If some
+            names in the list box are cut short you can either make the column
+            larger by dragging its border in the title, or you can make the
+            window wider by dragging its edge.
+          </p>
+          <p>
+            <i>Type</i><br>
+            There is a list box of valid types here. These are the values and
+            explanations.
+          </p>
+          <table border="1">
+            <tr>
+              <th>
+                Type
+              </th>
+              <th>
+                Explanation
+              </th>
+            </tr>
+            <tr>
+              <td>
+                FILENAME
+              </td>
+              <td>
+                mp3 File name.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                ID3V2TAG
+              </td>
+              <td>
+                Value from an ID3v2 tag. The frame and other details must be
+                specified in the following columns.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                BITRATE
+              </td>
+              <td>
+                mp3 Bit Rate in kb.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                PLAYINGTIME
+              </td>
+              <td>
+                Playing time in minutes and seconds.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                FILESIZE
+              </td>
+              <td>
+                mp3 File Size.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                MPEGVERSION
+              </td>
+              <td>
+                Mpeg version.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                PLAYINGTIMEMS
+              </td>
+              <td>
+                Playing time in milliseconds.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                SAMPLERATE
+              </td>
+              <td>
+                Sample rate in samples per second.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                CHANNELMODE
+              </td>
+              <td>
+                Channel Mode
+              </td>
+            </tr>
+            <tr>
+              <td>
+                COPYRIGHTED
+              </td>
+              <td>
+                Is Copyright indicator set?
+              </td>
+            </tr>
+            <tr>
+              <td>
+                ORIGINAL
+              </td>
+              <td>
+                Is Original Indicator Set?
+              </td>
+            </tr>
+            <tr>
+              <td>
+                CRC
+              </td>
+              <td>
+                Is there a CRC?
+              </td>
+            </tr>
+            <tr>
+              <td>
+                EMPHASIS
+              </td>
+              <td>
+                Is there Emphasis?
+              </td>
+            </tr>
+            <tr>
+              <td>
+                PRIVATEBIT
+              </td>
+              <td>
+                Is the Private Bit Set?
+              </td>
+            </tr>
+            <tr>
+              <td>
+                VBR
+              </td>
+              <td>
+                Is it Variable Bit Rate?
+              </td>
+            </tr>
+            <tr>
+              <td>
+                TITLE
+              </td>
+              <td>
+                Track Title from ID3v2 or ID3v1 tag.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                ARTIST
+              </td>
+              <td>
+                Artist from ID3v2 or ID3v1 tag.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                ALBUM
+              </td>
+              <td>
+                Album from ID3v2 or ID3v1 tag.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                YEAR
+              </td>
+              <td>
+                Year from ID3v2 or ID3v1 tag.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                COMMENT
+              </td>
+              <td>
+                Comment from ID3v2 or ID3v1 tag.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                TRACK
+              </td>
+              <td>
+                Track Number from ID3v2 or ID3v1 tag.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                GENRE
+              </td>
+              <td>
+                Genre from ID3v2 or ID3v1 tag.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                DUMMY
+              </td>
+              <td>
+                Field not stored in the tag.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                FRAMES
+              </td>
+              <td>
+                This includes in the library a list of other frames found in
+                the tag (frames not already in the library). For a list of the
+                meanings of frames look in the <a href="tables.html">Tables</a>
+                and <a href="frames.html">ID3 Frame Descriptions</a> sections
+                of the help. The frames are surrounded by spaces, so that if
+                you want to search for tracks with a particular frame, surround
+                the serach field by spaces (e.g. use " APIC" to search for
+                tracks with a picture).
+              </td>
+            </tr>
+            <tr>
+              <td>
+                *FOLLOW
+              </td>
+              <td>
+                Field for Jampal "Follow" tag. This field holds the letter F to
+                indicate that when playing the song in a playlist, the
+                following track of that album should also be played.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                *ALTERNATE
+              </td>
+              <td>
+                Field for Alternate Albums. This allows multiple albums to be
+                associated with a track. This can only be selected in the tag
+                editor. In the Library Fields, the alternate albums are
+                automatically inserted into the album column. You should make
+                sure ALBUM is one of the selected columns if you are using this
+                feature.
+              </td>
+            </tr>
+          </table>If you specify DUMMY fields in your library, these can be
+          displayed in the library or playlist window. You can type any value
+          you wish into these fields and use them for sorting. The values will
+          not be stored on the mp3 file. I do not recommend this for important
+          information as it will be lost if your library is deleted or
+          corrupted. For important information use a text field as described
+          below as a custom field. Dummy fields could be used for a temporary
+          sort key or similar.
+          <p>
+            <i>Frame</i><br>
+            If you select type ID3V2TAG, you can select a frame name here.
+            There are many frames that can be stored on an mp3 file. Select
+            which you want stored in the library.
+          </p>
+          <p>
+            <a href="tables.html#frame_table">" See list of supported
+            frames.</a>
+          </p>
+          <p>
+            Note that Images (Attached Picture) cannot be selected for storage
+            in the library. Also if you select a multiple line text field, only
+            the first line is stored in the library.
+          </p>
+          <p>
+            <i>Language</i><br>
+            Some frames require a language code. When a frame includes a
+            language code you can have many frames with that name and different
+            languages. For example you can have comments in English, plus
+            comments in French plus comments in Spanish etc.
+          </p>
+          <p>
+            You will have a list box of languages to select from if the frame
+            requires a language.
+          </p>
+          <p>
+            <i>Description</i><br>
+            Some frames allow a description. In that case you can have many
+            frames with that name and different descriptions, for example you
+            can have user-defined text with description John for John's rating
+            of the song, and user-defined text with description Mary for Mary's
+            rating of the song.
+          </p>
+          <p>
+            In cases where there are both a language and a description the
+            possibilities are endless, you can have each description repeated
+            with each language to create an endless number of values in your
+            song.
+          </p>
+          <p>
+            <i>Title</i><br>
+            This is the title you want displayed if this value is displayed in
+            the library window.
+          </p>
+          <p>
+            <i>Add Button</i><br>
+            Adds an entry to the table, after the currently selected row, or at
+            the end if no row is selected. Initially it is shown as "user
+            defined text", but you can change it to any desired frame type.
+          </p>
+          <p>
+            <i>Delete Button</i><br>
+            Deletes the current selected row.
+          </p>
+          <p>
+            <i>Move Up and Move Down Button</i><br>
+            Moves the currently selected row. This changes how the data are
+            stored on the library because they are stored in the same sequence
+            on the library as in this table. Moving items here does not affect
+            how they are displayed, that is selected in the "Display Columns"
+            tab.
+          </p>
+          <p>
+            <b>Display Columns Tab</b>
+          </p>
+          <p>
+            <img src="images/customize_displaycols.jpg" alt=
+            "Display Columns Tab" hspace="10">
+          </p>
+          <p>
+            All of the entries in the previous tab are shown here. Here you can
+            rearrange the order in which they are displayed in Jampal when you
+            open the library, and select which entries from the library are
+            displayed.
+          </p>
+          <p>
+            The only options here are to move the selected row up or down, and
+            to check or uncheck each row. Rows that are checked are displayed
+            in the library window.
+          </p>
+          <p>
+            <b>Tag Editor Tab</b>
+          </p>
+          <p>
+            <img src="images/customize_tagedit.jpg" alt="Tag Editor Tab"
+            hspace="10">
+          </p>
+          <p>
+            This page defines what values are automatically displayed on the
+            tag editor page. Note that the tag editor page always displays all
+            values that already exist on the mp3 tag. The fields that you
+            select on this page are always displayed for you to edit, even if
+            there is no existing value in the mp3 file.
+          </p>
+          <p>
+            If there are some fields that you use often, you can include them
+            here so that it is easy to fill them in. Even if you did not select
+            a field here, you can still add any field you wish, using the
+            "Create Additional Frame" button. You should always include the
+            basic fields, title, album, artist. For information on how to
+            complete the fields on this page please refer to the description of
+            the Library tab above. On this page you can select images, which
+            cannot be selected in the Library tab. You cannot include
+            information types such as bit rate, because these cannot be
+            updated.
+          </p>
