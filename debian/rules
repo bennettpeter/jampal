@@ -1,0 +1,69 @@
+#!/usr/bin/make -f
+
+# This is set up so as to run with the parent as the working directory
+
+package = jampal
+htmldir = debian/tmp/usr/share/doc/jampal/html
+docdir = debian/tmp/usr/share/doc/jampal
+DESTDIR := $(shell pwd)/debian/tmp
+export DESTDIR
+DEBIAN_BUILD = Y
+export DEBIAN_BUILD
+
+# default target throws an error
+default_target:
+	echo $(DESTDIR)
+	false
+
+# clean target: to clean all compiled, generated, and useless files in the build-tree. (required)
+clean: checkdir
+	make clean
+	rm -rf debian/tmp
+
+# build target: to build the source into compiled programs and formatted documents in 
+# the build-tree. (required)
+build: checkdir
+	make all
+
+# install target: to install files into a file tree for each binary package under the debian 
+# directory. If defined, binary* targets effectively depend on this target. (optional)
+
+
+# binary target: to create all binary packages (effectively combination of binary-arch 
+# and binary-indep targets). (required)
+binary: binary-arch binary-indep
+
+# binary-arch target: to create arch-dependent (Architecture: any) binary packages 
+# in the parent directory. (required)
+binary-arch: checkdir checkroot
+	install -d debian/tmp/DEBIAN $(htmldir) debian/tmp/usr/share/man/man1
+#	install -m 755 debian/postinst debian/prerm debian/tmp/DEBIAN
+	make install
+#	cd debian/tmp && mv usr/info usr/man usr/share
+#	cp -a NEWS debian/copyright $(docdir)
+	cp -a debian/copyright $(docdir)
+	cp -a debian/changelog $(docdir)/changelog
+#	###cp -a ChangeLog $(docdir)/changelog
+	cd $(docdir) && gzip -9 changelog
+	dpkg-shlibdeps debian/tmp/usr/bin/tagbkup
+	dpkg-gencontrol -isp
+	chown -R root:root debian/tmp
+	chmod -R u+w,go=rX debian/tmp
+	dpkg --build debian/tmp ..
+
+# binary-indep target: to create arch-independent (Architecture: all) binary 
+# packages in the parent directory. (required)
+binary-indep:
+
+# get-orig-source target: to obtain the most recent version of the original source package 
+# from upstream archive site. (optional)
+
+# check if we are logged in as root
+checkroot:
+	test $$(id -u) = 0
+
+# We must be in the parent directory. This checks that.
+checkdir:
+	test -d jampal/src -a -f debian/rules
+
+
