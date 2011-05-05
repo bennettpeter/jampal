@@ -47,7 +47,7 @@ all: tagbkup
 
 tagbkup: tagbkup.cpp nullmp3.cpp mp3tech.c
 	basename `uname -o` > OS
-	sed -e "s/\*\*UNKNOWN\*\*/`cat ../VERSION`/" tagbkup.cpp > tagbkupxx.cpp
+	sed -e "s/\*\*UNSTABLE\*\*/`cat ../VERSION`/" tagbkup.cpp > tagbkupxx.cpp
 	$(CC) $(CFLAGS) -D OS_`cat OS` -D CPU_`uname -m` -o tagbkup tagbkupxx.cpp nullmp3.cpp mp3tech.c $(LIBS)
 
 
