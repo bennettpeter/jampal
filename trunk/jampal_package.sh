@@ -99,14 +99,14 @@ cp -p misc/mbrola*.txt $package/
 cp -p misc/COPYING $package/
 
 cp -upr html/user_doc/* $package/doc/
-rm -rf `find $package/doc -name 'CVS'`
+rm -rf `find $package/doc -name 'CVS' -o -name '.svn'`
 
 mkdir -p $package/scripts/examples
 # cp -up scripts/mp3.profile scripts/mp3_base.profile
 #cp -up scripts/* $package/scripts
 cp -upr scripts/* $package/scripts
 #rm -f $package/scripts/*.frag
-rm -rf `find $package/scripts -name 'CVS'`
+rm -rf `find $package/scripts -name 'CVS' -o -name '.svn'`
 
 #cp -up scripts/examples/* $package/scripts/examples
 #rm -f $package/scripts/mp3.profile
