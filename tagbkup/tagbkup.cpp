@@ -101,7 +101,7 @@ int main(int argc, char *argv[], char * /*envp*/ []) {
     int i;      
     char fileName[512];
                    
-    fprintf(stderr,"tagbkup Version 1.26 (c) 2004-2010 Peter G. Bennett\n");
+    fprintf(stderr,"tagbkup Version **UNKNOWN** (c) 2004-2010 Peter G. Bennett\n");
 #ifdef __CYGWIN32__
 	fprintf(stderr,"Cygwin version, ");
 #endif

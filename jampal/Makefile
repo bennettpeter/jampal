@@ -60,9 +60,10 @@ make_basic: src/*/*/*.java src/*/*/*/*.java src/*/*/*/*/*.java
 	rm -f src/pgbennett/jampal/*.jmp
 	# Copy Source
 	cp -r src/* build/classes
+	# Version
+	cp -f ../VERSION build/classes/pgbennett/jampal/
 	# remove CVS directories
-	rm -rf `find build -name 'CVS'`
-	rm -rf `find build -name 'cvs'`
+	rm -rf `find build -name 'CVS' -o -name '.svn'`
 	# java compile
 	# Note it may seem we are just building 5 classes but in fact the java 
 	# compiler will pull in needed other modules from the source tree and compile
