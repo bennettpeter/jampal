@@ -58,9 +58,9 @@ install:
 	install -d ${DESTDIR}/usr/share/jampal/utility/
 	rm -f utility/*.jmp
 	install -m644 -p utility/* ${DESTDIR}/usr/share/jampal/utility/
-#	remove CVS directories
-	rm -rf `find ${DESTDIR}/usr/share/doc/jampal -name 'CVS'`
-	rm -rf `find ${DESTDIR}/usr/share/jampal -name 'CVS'`
+#	remove CVS / svn directories
+	rm -rf `find ${DESTDIR}/usr/share/doc/jampal -name 'CVS' -o -name '.svn'`
+	rm -rf `find ${DESTDIR}/usr/share/jampal -name 'CVS' -o -name '.svn'`
 #	MISC
 	install -m644 misc/COPYING ${DESTDIR}/usr/share/jampal/
 #	If not building a debian package add the looks files
