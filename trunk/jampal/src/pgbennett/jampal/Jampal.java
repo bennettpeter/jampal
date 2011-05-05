@@ -41,6 +41,7 @@ public class Jampal {
     static String exceptionMsg="";
     public static HashMap <String, String[]> voiceSettings;
     static String baseDirectory = null;
+    static String version = "UNKNOWN";
 
     // debug java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000 -jar "C:\Program Files\Jampal\jampal.jar"
 
@@ -175,14 +176,19 @@ public class Jampal {
                 (new FileOutputStream(jampalDirectory+"jampal_err.txt"));
                 System.setErr(err);
             }
-            
+            // Get version
+            InputStream inStream = ClassLoader.getSystemResourceAsStream("pgbennett/jampal/VERSION");
+            Reader reader = new InputStreamReader(inStream,"UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            version = bufferedReader.readLine();
+            bufferedReader.close();
             // Load voice Settings
             File voiceFile = new File(jampalDirectory,"voices.txt");
             voiceSettings = new HashMap <String, String[]>();
             if (voiceFile.canRead()) {
-                InputStream inStream = new FileInputStream(voiceFile);
-                Reader reader = new InputStreamReader(inStream,"UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(reader);
+                inStream = new FileInputStream(voiceFile);
+                reader = new InputStreamReader(inStream,"UTF-8");
+                bufferedReader = new BufferedReader(reader);
                 String inLine = "";
                 while (inLine != null) {
                     inLine = bufferedReader.readLine();
@@ -196,6 +202,7 @@ public class Jampal {
                             voiceSettings.put(fields[0], new String[] {fields[1],fields[2],fields[3]});
                     }
                 }
+                bufferedReader.close();
             }            
             
             String lookAndFeel = initialProperties.getProperty("look-and-feel");
