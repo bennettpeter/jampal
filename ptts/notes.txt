@@ -1,0 +1,95 @@
+VB Speech to text 
+
+
+Const SVSFlagsAsync = 1 
+const SVSFPurgeBeforeSpeak = 2 
+
+Dim Speech
+Dim FSO
+
+CreateObjects
+Main
+DestroyObjects
+Quit
+
+Sub Main
+        Dim sText
+        sText = InputBox("Enter the text you want the computer to say", "Text2Speech")
+        sText = Trim(sText)
+        If sText <> "" Then
+                SpeakText sText
+        End If
+End Sub
+
+Sub SpeakText(sText)
+        On Error Resume Next
+        Speech.Speak sText, SVSFlagsAsync + SVSFPurgeBeforeSpeak
+        Do
+                Sleep 100
+        Loop Until Speech.WaitUntilDone(10)
+End Sub
+
+Sub StopSpeaking()
+        On Error Resume Next
+        Speech.Speak vbNullString, SVSFPurgeBeforeSpeak
+        Set Speech = Nothing
+End Sub
+
+Sub CreateObjects
+        Set Speech = CreateObject("SAPI.SpVoice")
+        Set FSO = CreateObject("Scripting.FileSystemObject")
+End Sub
+
+Sub DestroyObjects
+        Set Speech = Nothing
+        Set FSO = Nothing
+End Sub
+
+Sub Sleep(nTimeout)
+        WScript.Sleep nTimeout
+End Sub
+
+Sub Quit
+        WScript.Quit
+End Sub
+
+
+To wav file 
+
+
+'Create Object
+Set objVoice = CreateObject("SAPI.SpVoice")
+
+Const SVSFlagsAsync = 1
+Const SSFMCreateForWrite = 3
+
+
+'Basic speech
+objVoice.Speak "Hello I am talking to you"
+
+'Speech while continuing with the rest of the script.
+'(warning, if the script finished before the speech, the speech will stop)
+objVoice.Speak "You should see a message box, while I am talking", SVSFlagsAsync
+MsgBox "This is the message box that I mentioned."
+
+
+'List voices that are installed.
+For Each strVoice in objVoice.GetVoices
+    Wscript.Echo strVoice.GetDescription
+Next
+
+
+'Change voice (these may not work if you don't have these voices installed).
+Set objVoice.Voice = objVoice.GetVoices("Name=Microsoft Anna").Item(0)
+objVoice.Speak "Hi, this is Microsoft Anna."
+
+Set objVoice.Voice = objVoice.GetVoices("Name=Microsoft Sam").Item(0)
+objVoice.Speak "And this is Microsoft Sam"
+
+
+'Record speech to a WAV file
+Set objFile = CreateObject("SAPI.SpFileStream.1")
+objFile.Open "C:\Record.wav", SSFMCreateForWrite
+Set objVoice.AudioOutputStream = objFile
+objVoice.Speak "This text will be recorded to be played back later"
+
