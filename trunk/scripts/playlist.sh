@@ -338,7 +338,7 @@ BEGIN {
     filename=filepart[count]
     cdname=filepart[count-2]
     accept=0
-    sortextc=""
+    sortextc="x00"
 
     if (follow && prevaccept) {
         if (ALBUM==prevAlbum) {
@@ -347,7 +347,7 @@ BEGIN {
             if (TRACK==prevTrack+1) {
                 accept=1
                 sortext+=1
-                sortextc = sprintf(":%2.2d", sortext)
+                sortextc = sprintf("x%2.2d", sortext)
             }
         }
     }
