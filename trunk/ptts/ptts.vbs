@@ -54,15 +54,6 @@ For Each arg in argv
     ElseIf needChannels Then
         channels=CInt(arg)
         needChannels=0
-'    ElseIf needWord Then
-'        pWord=arg
-'        needWord=0
-'        If doLexiconAdd Then
-'            needPron=1
-'        End If
-'    ElseIf needPron Then
-'        pPron=arg
-'        needPron=0
     ElseIf needVoice Then
         pVoice=arg
         needVoice=0
@@ -95,9 +86,6 @@ For Each arg in argv
         needChannels=1
     ElseIf arg = "-u" Then
         needUnicodeFileName=1
-'    ElseIf arg = "-la" Then
-'        doLexiconAdd=1
-'        needWord=1
     ElseIf arg = "-vl" Then
         doListVoices=1
     ElseIf arg = "-voice" Then
@@ -126,7 +114,12 @@ if IsOK And doListVoices then
     '     fwprintf(stdout,L"%s",ppszDescription[ix])    
     ' }
 End If
-
+if IsOK And pFileName <> Null Then
+    If Len(pFileName) > 4 _
+        And LCase(Mid(pFileName,Len(pFilename) -3)) = ".wav" Then
+        pFileName = Mid(pFileName,1,Len(pFilename) -4)
+    End If
+End If
 If IsOK Then
     IsOK = doit
 Else 
@@ -176,110 +169,114 @@ Function doit
     ' pBuffer = (wchar_t*)malloc(BUFFER_SIZE * sizeof (wchar_t));
     ' int bufferUsed=0;
     ' int prevBufferUsed=0;
-    ' int eof=0;
+    eof=0
     ' int waveSeq=0;
-    ' int hSpeaker=0;
-    ' int IsOK=1;
+    hSpeaker = Null
+    IsOK=1
     ' FILE *pInFile;
     ' wchar_t fileMode[256];
 ' 
 ' 
-    ' if (!doMultWaveFiles) {
-        ' if (pFileName == 0)
-            ' hSpeaker = createSpeaker(0);
-        ' else {
-            ' swprintf(fileName,L"%s.wav",pFileName);
-            ' hSpeaker = createSpeaker(fileName);
-        ' }
-        ' if (hSpeaker == 0) {
-            ' fprintf(stderr,"hSpeaker is 0.\n");
-            ' return 0;
-        ' }
-        ' else {
-            ' if (rate != -999)
-                ' IsOK=setRate(hSpeaker, rate);
-            ' if (IsOK && volume != -999)
-                ' IsOK=setVolume(hSpeaker, volume);
-            ' if (!IsOK) {
-                ' fprintf(stderr,"Set rate %d or volume %d failed.\n",rate,volume);
-                ' return 0;
-            ' }
-            ' if (IsOK && pVoice != NULL)
-                ' setVoice(hSpeaker,pVoice);
-        ' }
-    ' }
-' 
-    ' if (pUnicodeFileName != 0) {
-        ' wcscpy(fileMode,L"r, ccs=");
-        ' if (pEncoding == 0) 
-            ' wcscat(fileMode, L"UNICODE");
-        ' else
-            ' wcscat(fileMode, pEncoding);
-        ' pInFile = _wfopen(pUnicodeFileName, fileMode);
-        ' if (pInFile==0) {
-            ' wprintf(L"Unable to open input file %s\n",pUnicodeFileName);
-            ' return 0;
-        ' }
-    ' }
-    ' else
-        ' pInFile=stdin;
-' 
-    ' while (!eof) {
-        ' bufferUsed=0;
-        ' prevBufferUsed=0;
-        ' wchar_t* endBufferUsed;
-        ' while(bufferUsed<BUFFER_SIZE) {
-            ' pBuffer[bufferUsed]=0;
-            ' wchar_t *ret = fgetws(pBuffer+bufferUsed,BUFFER_SIZE-bufferUsed,pInFile);
-            ' endBufferUsed = wcschr(pBuffer, L'\n');
-            ' if (endBufferUsed == 0) 
-                ' endBufferUsed = wcschr(pBuffer, L'\0');
-            ' if (endBufferUsed == 0 || ret == 0) {
-                ' eof=1;
-                ' break;
-            ' }
-            ' // replace newline with space
-            ' if (*endBufferUsed == L'\n')
-                ' *endBufferUsed=L' ';
-            ' prevBufferUsed = bufferUsed;
-            ' bufferUsed = endBufferUsed - pBuffer;
-            ' if (bufferUsed==prevBufferUsed)
-                ' break;
-            ' bufferUsed++;
-        ' }
-        ' // Check if there is anything to say
-        ' wchar_t *pChar=pBuffer;
-        ' while (!iswalnum(*pChar)&&*pChar!=0)
-            ' pChar++;
-        ' if (*pChar==0)
-            ' continue;
-        ' // We now have something to say
-        ' if (doMultWaveFiles) {
-            ' swprintf(fileName,L"%s%5.5d.wav",pFileName,++waveSeq);
-            ' hSpeaker = createSpeaker(fileName);
-            ' if (hSpeaker == 0)
-                ' return 0;
-            ' else {
-                ' if (rate != -999)
-                   ' IsOK=setRate(hSpeaker, rate);
-                ' if (IsOK && volume != -999)
-                    ' IsOK=setVolume(hSpeaker, volume);
-                ' if (!IsOK)
-                    ' return 0;
-            ' }
-        ' }
-        ' Speak(hSpeaker,pBuffer);
-        ' if (doMultWaveFiles) {
-            ' closeSpeaker(hSpeaker);
-            ' hSpeaker=0;
-        ' }
-    ' }
-    ' if (hSpeaker) {
-        ' closeSpeaker(hSpeaker);
-        ' hSpeaker=0;
-    ' }
-' 
-    ' closeDown();
-    ' return 1;
+    if  Not doMultWaveFiles Then
+        if pFileName = Null Then
+            hSpeaker = createSpeaker(Null)
+        else
+            hSpeaker = createSpeaker(fileName & ".wav");
+        End If
+        if hSpeaker = Null Then
+            printErr("hSpeaker is Null");
+            doit = 0
+            Exit Function
+        else 
+            if rate <> -999 Then
+                IsOK=setRate(hSpeaker, rate)
+            End If
+            if IsOK And volume <> -999 Then
+                IsOK=setVolume(hSpeaker, volume)
+            End If
+            if Not IsOK Then
+                printErr("Set rate " & rate & _
+                    " or volume " & volume " failed.")
+                doit = 0
+                Exit Function
+            End If
+            if IsOK And pVoice <> Null Then
+                setVoice(hSpeaker,pVoice)
+            End If
+        End If
+    End If
+
+    if pUnicodeFileName <. Null Then
+        wcscpy(fileMode,L"r, ccs=");
+        if (pEncoding == 0) 
+            wcscat(fileMode, L"UNICODE");
+        else
+            wcscat(fileMode, pEncoding);
+        pInFile = _wfopen(pUnicodeFileName, fileMode);
+        if (pInFile==0) {
+            wprintf(L"Unable to open input file %s\n",pUnicodeFileName);
+            return 0;
+        }
+    }
+    else
+        pInFile=stdin;
+
+    while (!eof) {
+        bufferUsed=0;
+        prevBufferUsed=0;
+        wchar_t* endBufferUsed;
+        while(bufferUsed<BUFFER_SIZE) {
+            pBuffer[bufferUsed]=0;
+            wchar_t *ret = fgetws(pBuffer+bufferUsed,BUFFER_SIZE-bufferUsed,pInFile);
+            endBufferUsed = wcschr(pBuffer, L'\n');
+            if (endBufferUsed == 0) 
+                endBufferUsed = wcschr(pBuffer, L'\0');
+            if (endBufferUsed == 0 || ret == 0) {
+                eof=1;
+                break;
+            }
+            // replace newline with space
+            if (*endBufferUsed == L'\n')
+                *endBufferUsed=L' ';
+            prevBufferUsed = bufferUsed;
+            bufferUsed = endBufferUsed - pBuffer;
+            if (bufferUsed==prevBufferUsed)
+                break;
+            bufferUsed++;
+        }
+        // Check if there is anything to say
+        wchar_t *pChar=pBuffer;
+        while (!iswalnum(*pChar)&&*pChar!=0)
+            pChar++;
+        if (*pChar==0)
+            continue;
+        // We now have something to say
+        if (doMultWaveFiles) {
+            swprintf(fileName,L"%s%5.5d.wav",pFileName,++waveSeq);
+            hSpeaker = createSpeaker(fileName);
+            if (hSpeaker == 0)
+                return 0;
+            else {
+                if (rate != -999)
+                   IsOK=setRate(hSpeaker, rate);
+                if (IsOK && volume != -999)
+                    IsOK=setVolume(hSpeaker, volume);
+                if (!IsOK)
+                    return 0;
+            }
+        }
+        Speak(hSpeaker,pBuffer);
+        if (doMultWaveFiles) {
+            closeSpeaker(hSpeaker);
+            hSpeaker=0;
+        }
+    }
+    if (hSpeaker) {
+        closeSpeaker(hSpeaker);
+        hSpeaker=0;
+    }
+
+    closeDown();
+    return 1;
 
 End Function
