@@ -14,6 +14,7 @@ tables.html         Tables
 man_tagbkup.html    Tag Backup (man page)
 trouble.html        Trouble Shooting
 whats_new.html      What's New?
+release_notes.html  Release Notes
 envelope.html       Making an envelope
 ptts.html           Text to Speech
 XXX                 Marks end of the list

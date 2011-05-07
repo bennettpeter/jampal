@@ -31,6 +31,11 @@ make_user_doc: ../man/* *.html cssdef.css favicon.ico images/*
 	rman -f html -r 'man_%s.html' -l '%s' ../man/jampal.1 > man_jampal.html
 	rman -f html -r 'man_%s.html' -l '%s' ../man/tagbkup.1 > man_tagbkup.html
 	# HTML DOCUMENTATION
+	cat release_notes_base.html installation_base.html > installation.html
+	sed "s@</body>@<!--body@;s@</html>@/html-->@;s@XX\.XX\.XX@`cat ../VERSION`@" \
+        release_notes_base.html > release_notes.html
+	sed 's@<!DOCTYPE[^>]*>@<!--DOCTYPE-->@;s@<html>@<!--html@;s@<body[^>]*>@body-->@;' \
+        whats_new.html >> release_notes.html
 	mkdir -p user_doc
 	( set -e ; while [ true ] ; do \
       read filename description ; \
@@ -40,10 +45,12 @@ make_user_doc: ../man/* *.html cssdef.css favicon.ico images/*
           framework_start.html > user_doc/$$filename ; \
       sed 's@<!DOCTYPE[^>]*>@<!--DOCTYPE-->@;'\
 's@<html>@<!--html@;s@<body[^>]*>@body-->@;'\
-'s@</body>@<!--body@;s@</html>@/html-->@' \
+'s@</body>@<!--body@;s@</html>@/html-->@;'\
+"s@XX\.XX\.XX@`cat ../VERSION`@" \
           $$filename >> user_doc/$$filename ; \
       cat framework_end.html >> user_doc/$$filename ; \
     done ) < buildlist.txt
+	cp release_notes.html user_doc/
 	cp -r cssdef.css index.html favicon.ico user_doc/
 	mkdir -p user_doc/images/
 	cp images/* user_doc/images/
@@ -54,6 +61,7 @@ make_web_doc: make_user_doc
 	cd user_doc && for file in *.html; do \
       sed 's!images/sourceforge.gif!http://sflogo.sourceforge.net/sflogo.php?group_id=107584\&amp;type=15!g' \
       $$file > ../web_doc/$$file ; done
+	cp release_notes.html user_doc/
 	cp -r cssdef.css index.html favicon.ico web_doc/
 	mkdir -p web_doc/images
 	cp  images/* web_doc/images/
