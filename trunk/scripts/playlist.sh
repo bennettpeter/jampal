@@ -557,19 +557,6 @@ echo "Launching jampal ..."
 
 "$scriptpath/jampal.sh" open "$newlib"
 
-cd "$diskdir"
-
-disknum=X
-while [[ "$disknum" != "" ]]; do
-    echo " "
-    echo To create a disk, type the number, to exit press enter
-    read -e disknum
-    if [[ "$disknum" != "" ]]; then
-        playlistcd.sh $disknum
-        echo "Disk Create complete"
-    fi
-done
-
 if [[ "$DEBUG" = Y ]]; then
     mv "$libsort" "${libsort}_XXXX"
     mv "$extract" "${extract}_XXXX"
@@ -586,3 +573,16 @@ fi
 
 rm -f $TEMPDIR/$libname.profile $TEMPDIR/$libname.awkset $TEMPDIR/$libname.awkset2
 rm -f $TEMPDIR/$template.profile $TEMPDIR/$template.awkset $TEMPDIR/$template.awkset2
+
+cd "$diskdir"
+
+disknum=X
+while [[ "$disknum" != "" ]]; do
+    echo " "
+    echo To create a disk, type the number, to exit press enter
+    read -e disknum
+    if [[ "$disknum" != "" ]]; then
+        playlistcd.sh $disknum
+        echo "Disk Create complete"
+    fi
+done
