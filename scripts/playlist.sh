@@ -550,6 +550,7 @@ END {
     fi
     cp -f "$cdsource" "$LIBRARYDATANAME"
 #     echo cdsource="'"$LIBRARYDATANAME"'" >> "$diskdir/cdparms.profile"
+#   cdsource is kept as a backup in case somebody messes up the playlist
 
 )
 echo "results in $diskdir"
