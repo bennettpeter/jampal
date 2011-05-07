@@ -69,7 +69,8 @@ make_web_doc: make_user_doc
 
 clean: 
 	rm -rf make_user_doc user_doc \
-      man_jampal.html man_tagbkup.html make_web_doc web_doc
+      man_jampal.html man_tagbkup.html make_web_doc web_doc \
+      installation.html release_notes.html
 
 install: make_user_doc
 #	HTML DOCUMENTATION
