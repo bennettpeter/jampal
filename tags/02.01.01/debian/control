@@ -1,0 +1,27 @@
+Source: jampal
+Section: sound
+Priority: optional
+Maintainer: Peter Bennett <pgbennett@users.sourceforge.net>
+Build-Depends: openjdk-6-jdk, rman, rsync
+Standards-Version: 3.8.4.0
+Homepage: http://jampal.sf.net
+
+Package: jampal
+Architecture: any
+Depends:  ${shlibs:Depends}, openjdk-6-jre | java-virtual-machine, java6-runtime,
+ sox, gawk, lame
+Recommends: openoffice.org-writer, openoffice.org-calc
+Suggests: mbrola
+Description: Cross platform mp3 song library management system written in java.
+ Jampal stores and organizes a library of 40,000 songs or more. It can be used
+ as a jukebox to play the songs. It performs extensive editing of song tags
+ using ID3v2. The library is based on the IDV3V2 standard. The library is
+ extensively customizable. Text to speech voice synthesis to announce song names
+ is an option. The library is organized and customized by ID3V2 tags, including
+ any number of custom tags you can set up. A utility is provided to back up the
+ ID3V2 tags so that your customizations, such as song ratings, are not lost if
+ you have a disk failure. There are utilities to rename and organize the song
+ files by album, artist and song, and to generate playlists from criteria you
+ choose. Generated play lists can be burned to CD or written to an mp3 player.
+ Song announcements can also be added to songs written to CD or player.
+

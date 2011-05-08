@@ -1,0 +1,42 @@
+
+# To use freetts you need to rebuild jampal.jar and set this
+export FREETTS_HOME="/opt/freetts"
+# If you purchase CEPSTRAL voices set this
+export CEPSTRAL_HOME="/opt/swift"
+
+# Do not change these settings unless you have special requirements
+export OPENOFFICE="soffice"
+export JAVA_COMMAND=java
+# JAMPAL_HOME is set up by the caller
+# export JAMPAL_HOME="/usr/share/jampal"
+export MBROLA_HOME="/usr/share/mbrola/voices"
+export MBROLA_PROGRAM="mbrola"
+export CDROM=/cdrom
+export ESPEAK_PROGRAM="espeak"
+export JAMPAL_USER_DIR=$HOME/.jampal
+
+# Specify here the base location for your music files if different from above
+basedir="$HOME/Music"
+
+# The following settings can be left as is or customized
+
+# Location for your jampal library files
+export LIBDIR="$basedir/library"
+# Location for new music files (optional)
+export NEXTFILES="$basedir/next"
+# Customize here with the name of your main library. It should reside in 
+# LIBDIR specified above.
+export MAINLIBNAME=default
+# Location for temporary files for play list CDs
+export TEMPDIR="$basedir/temp"
+# Location for music files
+export MAINDIR="$basedir/CD"
+# Playlists are generated here
+export PLAYLISTCD="$LIBDIR/playlists"
+# Playlist CD images are created here
+export CDSTAGING="$TEMPDIR/playlist-cd"
+# Tag bakups are stored here by tagbkup
+export TAGBKUP="$basedir/tagbkup"
+# Rejected songs are stored here
+export REJECTPATH="$basedir/reject"
+
