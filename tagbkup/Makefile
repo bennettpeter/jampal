@@ -47,8 +47,8 @@ all: tagbkup
 
 unix: all
 	mkdir -p ../unix_build/tagbkup
-	cp -rp Makefile tagbkup \
-      ../unix_build/tagbkup
+	cp -p Makefile tagbkup \
+      ../unix_build/tagbkup/
 	cd ../unix_build/tagbkup && touch --date=19990101 dummy.cpp dummy.c
 
 

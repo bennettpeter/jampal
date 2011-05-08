@@ -28,8 +28,8 @@ web_doc: make_web_doc
 
 unix: all
 	mkdir -p ../unix_build/html/images
-	cp -rp Makefile user_doc make_user_doc \
-        ../unix_build/html
+	rsync -aC Makefile user_doc make_user_doc \
+        ../unix_build/html/
 	cd ../unix_build/html && touch --date=19990101 \
         dummy.html dummy.css dummy.ico images/dummy
 
@@ -57,10 +57,10 @@ make_user_doc: ../man/* *.html *.css *.ico images/*
           $$filename >> user_doc/$$filename ; \
       cat framework_end.html >> user_doc/$$filename ; \
     done ) < buildlist.txt
-	cp release_notes.html user_doc/
-	cp -r cssdef.css index.html favicon.ico user_doc/
+	cp -p release_notes.html user_doc/
+	cp -p cssdef.css index.html favicon.ico user_doc/
 	mkdir -p user_doc/images/
-	cp images/* user_doc/images/
+	cp -p images/* user_doc/images/
 	echo done > make_user_doc
 
 make_web_doc: make_user_doc
@@ -68,8 +68,8 @@ make_web_doc: make_user_doc
 	cd user_doc && for file in *.html; do \
       sed 's!images/sourceforge.gif!http://sflogo.sourceforge.net/sflogo.php?group_id=107584\&amp;type=15!g' \
       $$file > ../web_doc/$$file ; done
-	cp release_notes.html user_doc/
-	cp -r cssdef.css index.html favicon.ico web_doc/
+	cp -p release_notes.html user_doc/
+	cp -p cssdef.css index.html favicon.ico web_doc/
 	mkdir -p web_doc/images
 	cp  images/* web_doc/images/
 	echo done > make_web_doc
@@ -83,7 +83,7 @@ clean:
 install: make_user_doc
 #	HTML DOCUMENTATION
 	install -d ${DESTDIR}/usr/share/doc/jampal/html/
-	cp -pr user_doc/* ${DESTDIR}/usr/share/doc/jampal/html/
+	rsync -aC user_doc/* ${DESTDIR}/usr/share/doc/jampal/html/
 
 uninstall:
 	rm -rf ${DESTDIR}/usr/share/doc/jampal/html

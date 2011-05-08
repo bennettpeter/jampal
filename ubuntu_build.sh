@@ -13,13 +13,15 @@ echo Copy new version of jampal $VERSION from host to local
 
 make source
 mkdir -p ~/proj/local/jampal/jampal-$VERSION
-cp jampal-$VERSION.tar.gz ~/proj/local/jampal
+cp package/source/jampal-$VERSION.tar.gz ~/proj/local/jampal/
 rm -rf ~/proj/local/jampal/jampal-$VERSION/*
 cd ~/proj/local/jampal/jampal-$VERSION
 tar xvf ../jampal-$VERSION.tar.gz
 
 dpkg-buildpackage
 
-cp ~/proj/local/jampal/jampal_$VERSION* $scriptpath
+dirname=$scriptpath/package/ubuntu-`arch`
+mkdir -p $dirname
+cp ~/proj/local/jampal/jampal_$VERSION* $dirname
 
 
