@@ -45,7 +45,14 @@ CFLAGS =  -O2 -Wall ${option}
 
 all: tagbkup
 
-tagbkup: tagbkup.cpp nullmp3.cpp mp3tech.c
+unix: all
+	mkdir -p ../unix_build/tagbkup
+	cp -rp Makefile tagbkup \
+      ../unix_build/tagbkup
+	cd ../unix_build/tagbkup && touch --date=19990101 dummy.cpp dummy.c
+
+
+tagbkup: *.cpp *.c
 	basename `uname -o` > OS
 	sed -e "s/\*\*UNSTABLE\*\*/`cat ../VERSION`/" tagbkup.cpp > tagbkupxx.cpp
 	$(CC) $(CFLAGS) -D OS_`cat OS` -D CPU_`uname -m` -o tagbkup tagbkupxx.cpp nullmp3.cpp mp3tech.c $(LIBS)
@@ -56,6 +63,7 @@ tagbkup: tagbkup.cpp nullmp3.cpp mp3tech.c
 
 clean: 
 	$(RM) -f $(OBJS) tagbkup tagbkupxx.cpp tagbkup.exe core OS libgcc_s_dw2-1.dll
+	rm -rf ../unix_build/tagbkup
 
 distclean: clean
 
