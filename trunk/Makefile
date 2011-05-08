@@ -94,7 +94,8 @@ distclean: clean
 	cd html && make distclean
 
 source: clean get_version
-	tar -c -z --exclude-vcs -f  jampal-$(VERSION).tar.gz html jampal man \
+	mkdir -p package/source
+	tar -c -z --exclude-vcs -f  package/source/jampal-$(VERSION).tar.gz html jampal man \
       nbproject ptts scripts tagbkup debian utility looks \
       Makefile jampal_package.sh nbbuild.xml misc VERSION
 
@@ -104,11 +105,12 @@ unix:
 	cd jampal && make unix
 	cd tagbkup && make unix
 	cd html && make unix
-	cp -rp man scripts utility looks \
-        Makefile misc unix_build
+	rsync -aC man scripts utility looks \
+        Makefile misc unix_build/
 	basename `uname -o` > OS
+	mkdir -p package/generic
 	cd unix_build && tar -c -z --exclude-vcs \
-        -f  ../jampal-build-`cat ../OS`-`arch`-`cat ../VERSION`.tar.gz *
+        -f  ../package/generic/jampal-build-`cat ../OS`-`arch`-`cat ../VERSION`.tar.gz *
 
 get_version:
 	grep "Jampal Version" jampal/src/pgbennett/jampal/MainFrame.java

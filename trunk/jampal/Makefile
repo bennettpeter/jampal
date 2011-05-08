@@ -14,7 +14,7 @@ distclean: clean
 
 unix: all
 	mkdir -p ../unix_build/jampal
-	cp -rp Makefile jampal.jar make_basic \
+	cp -p Makefile jampal.jar make_basic \
       jampal.ico jampal_environment.properties_unix \
       jampal_initial.properties_unix jampal_initial.properties_windows \
       ../unix_build/jampal/
@@ -49,7 +49,7 @@ install: all
 	install -d ${DESTDIR}/usr/share/mime/packages/
 	install -m644 desktop/mime/jampal.xml \
         ${DESTDIR}/usr/share/mime/packages/
-	cp -r  desktop/icons ${DESTDIR}/usr/share/icons
+	rsync -aC desktop/icons/* ${DESTDIR}/usr/share/icons/
 	chmod 644 `find ${DESTDIR}/usr/share/icons -name 'application-jampal.png'`
 
 uninstall:
@@ -74,10 +74,9 @@ make_basic: src/*/*/*.java src/*/*/*/*.java src/*/*/*/*/*.java
 	mkdir -p build/classes
 	rm -f src/pgbennett/jampal/*.jmp
 	# Copy Source
-	# cp -r src/* build/classes
 	rsync -aC src/* build/classes/
 	# Version
-	cp -f ../VERSION build/classes/pgbennett/jampal/
+	cp -p ../VERSION build/classes/pgbennett/jampal/
 	# java compile
 	# Note it may seem we are just building 5 classes but in fact the java 
 	# compiler will pull in needed other modules from the source tree and compile

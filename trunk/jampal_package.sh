@@ -167,7 +167,15 @@ zip -Dr $base/jampal-generic-setup-$VERSION.zip jampal \
 cd $base
 
 make unix
+mkdir -p package/generic
 
+mv -f jampal-windows-setup-$VERSION.exe \
+      jampal-$VERSION.tar.gz \
+      jampal-doc-$VERSION.zip \
+      jampal-$VERSION.jar \
+      jampal-generic-setup-$VERSION.zip \
+      package/generic
+cd package/generic
 ls -l jampal-windows-setup-$VERSION.exe \
       jampal-$VERSION.tar.gz \
       jampal-doc-$VERSION.zip \
