@@ -2,7 +2,7 @@ Source: jampal
 Section: sound
 Priority: optional
 Maintainer: Peter Bennett <pgbennett@users.sourceforge.net>
-Build-Depends: openjdk-6-jdk, rman
+Build-Depends: openjdk-6-jdk, rman, rsync
 Standards-Version: 3.8.4.0
 Homepage: http://jampal.sf.net
 

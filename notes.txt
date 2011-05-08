@@ -392,6 +392,11 @@ previously only this many
     -rwxrwx--- 1 root vboxsf 3162824 2011-04-17 09:37 playlist-cd.jmp
 Excessive zombies from playlistcd.sh
 
+uploading package
+dput ppa:pgbennett/ppa name.changes
+Need to name version of package for each distro
+e.g. 
+
 Future
 Document how to convert wma to mp3
 document convert_asx.sh
