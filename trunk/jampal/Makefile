@@ -8,14 +8,26 @@ clean:
 	rm -rf build
 	rm -f jampal.jar make_basic OS
 	rm -f src/pgbennett/jampal/*.jmp
+	rm -rf ../unix_build/jampal
 
 distclean: clean
+
+unix: all
+	mkdir -p ../unix_build/jampal
+	cp -rp Makefile jampal.jar make_basic \
+      jampal.ico jampal_environment.properties_unix \
+      jampal_initial.properties_unix jampal_initial.properties_windows \
+      ../unix_build/jampal/
+	rsync -aC desktop ../unix_build/jampal/
+	mkdir -p ../unix_build/jampal/src/dummy/dummy/dummy/dummy
+	cd ../unix_build/jampal && touch --date=19990101 \
+        src/dummy/dummy/dummy.java \
+        src/dummy/dummy/dummy/dummy.java \
+        src/dummy/dummy/dummy/dummy/dummy.java
 
 install: all
 	basename `uname -o` > OS
 	install -d ${DESTDIR}/usr/share/jampal ${DESTDIR}/usr/bin
-#	LINK for executable
-	ln -fs ../share/jampal/scripts/jampal.sh ${DESTDIR}/usr/bin/jampal
 	install -m644 jampal.jar ${DESTDIR}/usr/share/jampal/
 	install -m644 -T jampal_environment.properties_unix \
 	    ${DESTDIR}/usr/share/jampal/jampal_environment.properties
@@ -30,11 +42,13 @@ install: all
 	install -m644 desktop/jampal.xpm ${DESTDIR}/usr/share/pixmaps/
 	install -m644 desktop/jampal.png ${DESTDIR}/usr/share/pixmaps/
 	install -d ${DESTDIR}/usr/share/applications/
-	install -m644 desktop/jampal.desktop ${DESTDIR}/usr/share/applications/
+	install -m644 desktop/jampal.desktop \
+        ${DESTDIR}/usr/share/applications/
 	install -d ${DESTDIR}/usr/share/menu/
 	install -m644 desktop/menu/jampal ${DESTDIR}/usr/share/menu/
 	install -d ${DESTDIR}/usr/share/mime/packages/
-	install -m644 desktop/mime/jampal.xml ${DESTDIR}/usr/share/mime/packages/
+	install -m644 desktop/mime/jampal.xml \
+        ${DESTDIR}/usr/share/mime/packages/
 	cp -r  desktop/icons ${DESTDIR}/usr/share/icons
 	chmod 644 `find ${DESTDIR}/usr/share/icons -name 'application-jampal.png'`
 
@@ -53,17 +67,17 @@ jampal.jar: make_basic
 	rm -f `find build -name '*.java'`
 	# Create jampal.jar
 	rm -f jampal.jar
-	cd build/classes && "${JAVA_PATH}"jar cmf META-INF/MANIFEST.MF "../../jampal.jar" *
+	cd build/classes && "${JAVA_PATH}"jar cmf META-INF/MANIFEST.MF \
+        "../../jampal.jar" *
 
 make_basic: src/*/*/*.java src/*/*/*/*.java src/*/*/*/*/*.java
 	mkdir -p build/classes
 	rm -f src/pgbennett/jampal/*.jmp
 	# Copy Source
-	cp -r src/* build/classes
+	# cp -r src/* build/classes
+	rsync -aC src/* build/classes/
 	# Version
 	cp -f ../VERSION build/classes/pgbennett/jampal/
-	# remove CVS directories
-	rm -rf `find build -name 'CVS' -o -name '.svn'`
 	# java compile
 	# Note it may seem we are just building 5 classes but in fact the java 
 	# compiler will pull in needed other modules from the source tree and compile

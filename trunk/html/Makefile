@@ -26,7 +26,14 @@ all: make_user_doc
 
 web_doc: make_web_doc
 
-make_user_doc: ../man/* *.html cssdef.css favicon.ico images/*
+unix: all
+	mkdir -p ../unix_build/html/images
+	cp -rp Makefile user_doc make_user_doc \
+        ../unix_build/html
+	cd ../unix_build/html && touch --date=19990101 \
+        dummy.html dummy.css dummy.ico images/dummy
+
+make_user_doc: ../man/* *.html *.css *.ico images/*
 	# MAN PAGES IN HTML
 	rman -f html -r 'man_%s.html' -l '%s' ../man/jampal.1 > man_jampal.html
 	rman -f html -r 'man_%s.html' -l '%s' ../man/tagbkup.1 > man_tagbkup.html
@@ -71,6 +78,7 @@ clean:
 	rm -rf make_user_doc user_doc \
       man_jampal.html man_tagbkup.html make_web_doc web_doc \
       installation.html release_notes.html
+	rm -rf ../unix_build/html
 
 install: make_user_doc
 #	HTML DOCUMENTATION

@@ -37,6 +37,7 @@ clean:
 	rm -rf tmp OS
 	rm -rf build_doc
 	rm -f utility/*.jmp
+	rm -rf unix_build
 	# Files created by Netbeans
 	rm -rf build dist
 
@@ -56,13 +57,12 @@ install:
 	install -m644 -p scripts/examples/*.* ${DESTDIR}/usr/share/jampal/scripts/examples/
 	chmod 755 ${DESTDIR}/usr/share/jampal/scripts/*.sh \
       ${DESTDIR}/usr/share/jampal/scripts/examples/*.sh
+#	LINK for executable
+	ln -fs ../share/jampal/scripts/jampal.sh ${DESTDIR}/usr/bin/jampal
 #	UTILITY
 	install -d ${DESTDIR}/usr/share/jampal/utility/
 	rm -f utility/*.jmp
 	install -m644 -p utility/* ${DESTDIR}/usr/share/jampal/utility/
-#	remove CVS / svn directories
-	rm -rf `find ${DESTDIR}/usr/share/doc/jampal -name 'CVS' -o -name '.svn'`
-	rm -rf `find ${DESTDIR}/usr/share/jampal -name 'CVS' -o -name '.svn'`
 #	MISC
 	install -m644 misc/COPYING ${DESTDIR}/usr/share/jampal/
 #	If not building a debian package add the looks files
@@ -94,19 +94,21 @@ distclean: clean
 	cd html && make distclean
 
 source: clean get_version
-	tar -c -v -z --exclude-vcs -f  jampal-$(VERSION).tar.gz html jampal man \
+	tar -c -z --exclude-vcs -f  jampal-$(VERSION).tar.gz html jampal man \
       nbproject ptts scripts tagbkup debian utility looks \
       Makefile jampal_package.sh nbbuild.xml misc VERSION
 
-unix: all
+unix:
 #	Create cygwin or generic unix installer.
+	mkdir -p unix_build
+	cd jampal && make unix
+	cd tagbkup && make unix
+	cd html && make unix
+	cp -rp man scripts utility looks \
+        Makefile misc unix_build
 	basename `uname -o` > OS
-	tar -c -v -z --exclude-vcs -f  jampal-build-`cat OS`-`arch`-$(VERSION).tar.gz \
-      jampal/Makefile jampal/jampal.jar \
-      jampal/jampal.ico jampal/jampal_environment.properties_unix \
-      jampal/jampal_initial.properties_unix jampal/desktop \
-      man scripts tagbkup/tagbkup utility looks \
-      Makefile misc html/Makefile html/user_doc html/make_user_doc
+	cd unix_build && tar -c -z --exclude-vcs \
+        -f  ../jampal-build-`cat ../OS`-`arch`-`cat ../VERSION`.tar.gz *
 
 get_version:
 	grep "Jampal Version" jampal/src/pgbennett/jampal/MainFrame.java
