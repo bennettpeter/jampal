@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-echo use option -S to build source only
 
 scriptname=`readlink -e "$0"`
 scriptpath=`dirname "$scriptname"`
@@ -20,14 +19,9 @@ rm -rf  ~/proj/local/jampal/jampal_$VERSION*
 cd ~/proj/local/jampal/jampal-$VERSION
 tar xvf ../jampal-$VERSION.tar.gz
 
-dpkg-buildpackage $1
+dpkg-buildpackage
 
-if [[ "$1" == "-S" ]] ; then
-    arch=source
-else
-    arch=`arch`
-fi
-
+arch=`arch`
 dirname=$scriptpath/package/ubuntu-$arch
 mkdir -p $dirname
 cp ~/proj/local/jampal/jampal_$VERSION* $dirname
