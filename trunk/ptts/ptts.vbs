@@ -61,7 +61,7 @@ For Each arg in argv
         pEncoding=arg
         needEncoding=0
         pEncoding = UCase(pEncoding)
-        If pEncoding <> "UTF-8" And pEncoding <> "UTF-16LE" Then
+        If pEncoding <> "ASCII" And pEncoding <> "UTF-16LE" Then
             IsOK=0
         End If
     ElseIf arg = "-w" Then
@@ -175,8 +175,7 @@ Function doit
     IsOK=1
     ' FILE *pInFile;
     ' wchar_t fileMode[256];
-' 
-' 
+
     if  Not doMultWaveFiles Then
         if pFileName = Null Then
             hSpeaker = createSpeaker(Null)
@@ -206,12 +205,15 @@ Function doit
         End If
     End If
 
-    if pUnicodeFileName <. Null Then
-        wcscpy(fileMode,L"r, ccs=");
-        if (pEncoding == 0) 
-            wcscat(fileMode, L"UNICODE");
-        else
-            wcscat(fileMode, pEncoding);
+    if pUnicodeFileName <> Null Then
+        Set fso = CreateObject("Scripting.FileSystemObject")
+        If pEncoding = "UTF-16LE" Then
+            fileMode = -1
+        ElseIf pEncoding = "ASCII" Then
+            fileMode = 0
+        Else
+            fileMode = -2 'System Default
+        Set pInFile = fso.OpenTextFile("c:\testfile.txt", ForReading)
         pInFile = _wfopen(pUnicodeFileName, fileMode);
         if (pInFile==0) {
             wprintf(L"Unable to open input file %s\n",pUnicodeFileName);
