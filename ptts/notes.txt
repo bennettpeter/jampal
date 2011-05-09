@@ -420,5 +420,7 @@ Windows script host -
 http://msdn.microsoft.com/en-us/library/9bbdkx3k(v=VS.85).aspx
 Speech API
 http://msdn.microsoft.com/en-us/library/ee125663(VS.85).aspx
+File system object
+http://msdn.microsoft.com/en-us/library/hww8txat.aspx
 
 Wscript.StdOut.WriteLine 
