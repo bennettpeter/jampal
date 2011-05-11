@@ -399,6 +399,8 @@ e.g. ppa1~intrepid1
 use date -R to get date
 use ppa00~lucid maverick natty oneiric
 
+lintian -i -I --show-overrides jampal_02.01.01-01_amd64.changes
+
 
 Future
 Document how to convert wma to mp3
