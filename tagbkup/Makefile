@@ -47,7 +47,9 @@ all: tagbkup
 
 unix: all
 	mkdir -p ../unix_build/tagbkup
-	cp -p Makefile tagbkup \
+	install -p -m 644 Makefile \
+      ../unix_build/tagbkup/
+	install -p -m 755 tagbkup \
       ../unix_build/tagbkup/
 	cd ../unix_build/tagbkup && touch --date=19990101 dummy.cpp dummy.c
 
@@ -69,7 +71,8 @@ distclean: clean
 
 install: tagbkup
 # do not strip per GNU standard
-#	$(STRIP) tagbkup
+# Do strip as required by debian
+	$(STRIP) --remove-section=.comment --remove-section=.note tagbkup
 	$(INSTALL) -d $(bindir)
 	$(INSTALL) tagbkup $(bindir)/tagbkup
 

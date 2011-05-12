@@ -1,18 +1,18 @@
 Source: jampal
 Section: sound
 Priority: optional
-Maintainer: Peter Bennett <pgbennett@users.sourceforge.net>
+Maintainer: Peter Bennett <pgbennett@comcast.net>
 Build-Depends: openjdk-6-jdk, rman, rsync
 Standards-Version: 3.8.4.0
 Homepage: http://jampal.sf.net
 
 Package: jampal
 Architecture: any
-Depends:  ${shlibs:Depends}, openjdk-6-jre | java-virtual-machine, java6-runtime,
- sox, gawk, lame
+Depends:  ${shlibs:Depends}, openjdk-6-jre | java-virtual-machine, 
+ openjdk-6-jre | java6-runtime, sox, gawk, lame
 Recommends: openoffice.org-writer, openoffice.org-calc
 Suggests: mbrola
-Description: Cross platform mp3 song library management system written in java.
+Description: Cross platform mp3 song library management system written in java
  Jampal stores and organizes a library of 40,000 songs or more. It can be used
  as a jukebox to play the songs. It performs extensive editing of song tags
  using ID3v2. The library is based on the IDV3V2 standard. The library is
