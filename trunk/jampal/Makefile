@@ -1,3 +1,25 @@
+#   Makefile for jampal
+#
+#   Copyright 2006-2011 Peter G Bennett
+#
+#   This file is part of Jampal.
+#
+#   Jampal is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   Jampal is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with Jampal.  If not, see <http://www.gnu.org/licenses/>.
+#
+# ***************************************************************************
+#
+#
 
 # FREETTS is only used in Cygwin builds or non-debian unix
 FREETTS_HOME=/opt/freetts
@@ -14,7 +36,7 @@ distclean: clean
 
 unix: all
 	mkdir -p ../unix_build/jampal
-	cp -p Makefile jampal.jar make_basic \
+	install -p -m 644 Makefile jampal.jar make_basic \
       jampal.ico jampal_environment.properties_unix \
       jampal_initial.properties_unix jampal_initial.properties_windows \
       ../unix_build/jampal/
@@ -76,7 +98,7 @@ make_basic: src/*/*/*.java src/*/*/*/*.java src/*/*/*/*/*.java
 	# Copy Source
 	rsync -aC src/* build/classes/
 	# Version
-	cp -p ../VERSION build/classes/pgbennett/jampal/
+	install -p -m 644 ../VERSION build/classes/pgbennett/jampal/
 	# java compile
 	# Note it may seem we are just building 5 classes but in fact the java 
 	# compiler will pull in needed other modules from the source tree and compile

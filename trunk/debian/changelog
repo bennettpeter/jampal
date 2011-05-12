@@ -1,10 +1,4 @@
-jampal (02.01.01ubuntu1) lucid; urgency=low
-
-  * Packaged for ubuntu
-
- -- Peter Bennett <pgbennett@comcast.net>  Sun, 08 May 2011 13:56:22 -0400
-
-jampal (02.01.01) unstable; urgency=low
+jampal (02.01.01)
 
   * Packaged for Debian / Ubuntu
 

@@ -37,10 +37,10 @@ fi
 for distro in $list ; do
     if [[ "$distro" == unstable ]] ; then
         distrosuffix=
-        versionsuffix="-"
+        versionsuffix=
         reason=debian
     else
-        versionsuffix=ubuntu1ppa
+        versionsuffix=ubuntu1ppa`printf %02d $ppaversion`
         distrosuffix="~$distro"
         reason=ppa
     fi
@@ -48,7 +48,7 @@ for distro in $list ; do
     rm -rf ../jampal_$VERSION*
     tar xf ../jampal-$VERSION.tar.gz
     cd debian
-    echo "jampal (${VERSION}${versionsuffix}`printf %02d $ppaversion`$distrosuffix) $distro; urgency=low" > changelogxxx
+    echo "jampal (${VERSION}${versionsuffix}$distrosuffix) $distro; urgency=low" > changelogxxx
     echo >> changelogxxx
     echo "  * Build for $reason" >> changelogxxx
     echo >> changelogxxx

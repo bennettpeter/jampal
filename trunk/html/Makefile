@@ -57,10 +57,10 @@ make_user_doc: ../man/* *.html *.css *.ico images/*
           $$filename >> user_doc/$$filename ; \
       cat framework_end.html >> user_doc/$$filename ; \
     done ) < buildlist.txt
-	cp -p release_notes.html user_doc/
-	cp -p cssdef.css index.html favicon.ico user_doc/
+	install -p -m 644 release_notes.html user_doc/
+	install -p -m 644 cssdef.css index.html favicon.ico user_doc/
 	mkdir -p user_doc/images/
-	cp -p images/* user_doc/images/
+	install -p -m 644 images/* user_doc/images/
 	echo done > make_user_doc
 
 make_web_doc: make_user_doc
@@ -68,10 +68,10 @@ make_web_doc: make_user_doc
 	cd user_doc && for file in *.html; do \
       sed 's!images/sourceforge.gif!http://sflogo.sourceforge.net/sflogo.php?group_id=107584\&amp;type=15!g' \
       $$file > ../web_doc/$$file ; done
-	cp -p release_notes.html user_doc/
-	cp -p cssdef.css index.html favicon.ico web_doc/
+	install -p -m 644 release_notes.html user_doc/
+	install -p -m 644 cssdef.css index.html favicon.ico web_doc/
 	mkdir -p web_doc/images
-	cp  images/* web_doc/images/
+	install -p -m 644  images/* web_doc/images/
 	echo done > make_web_doc
 
 clean: 
