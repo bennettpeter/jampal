@@ -37,12 +37,14 @@ binary: binary-arch binary-indep
 # in the parent directory. (required)
 binary-arch: checkdir checkroot
 	install -d debian/tmp/DEBIAN $(htmldir) debian/tmp/usr/share/man/man1
-#	install -m 755 debian/postinst debian/prerm debian/tmp/DEBIAN
+	install -m 755 debian/postinst debian/postrm debian/tmp/DEBIAN
 	make install
 #	cd debian/tmp && mv usr/info usr/man usr/share
 #	cp -a NEWS debian/copyright $(docdir)
 	cp -a debian/copyright $(docdir)
 	cp -a debian/changelog $(docdir)/changelog
+	mkdir -p debian/tmp/usr/share/doc-base
+	cp -a debian/jampal.doc-base debian/tmp/usr/share/doc-base/
 #	###cp -a ChangeLog $(docdir)/changelog
 	cd $(docdir) && gzip -9 changelog
 	dpkg-shlibdeps debian/tmp/usr/bin/tagbkup

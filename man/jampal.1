@@ -10,7 +10,7 @@ jampal \- mp3 library and jukebox
 .HP
 \fBjampal open\fP [ \fIlibrary\fP ] ...
 .HP
-\fBjampal cleanup\fP [ \fB-reorder\fP ] \fIlibrary-name\fP [ moved-file-dir ]
+\fBjampal cleanup\fP [ \fB\-reorder\fP ] \fIlibrary-name\fP [ moved-file-dir ]
 .HP
 \fBjampal playlist\fP  condition [ options ] ...
 .HP
@@ -18,16 +18,16 @@ jampal \- mp3 library and jukebox
 .HP
 \fBjampal playlistcd\fP  disknum [ \fIoutput-dir\fP ]
 .HP
-\fBjampal envelope\fP [--artist|--artistalbum|--none] [--nosort] \fIlibrary-name\fP diskser
+\fBjampal envelope\fP [\-\-artist|\-\-artistalbum|\-\-none] [\-\-nosort] \fIlibrary-name\fP diskser
 description
 .HP
-\fBjampal duplicates\fP [ --NODUP ] [ --NEXTFILES ]
+\fBjampal duplicates\fP [ \-\-NODUP ] [ \-\-NEXTFILES ]
 .HP
 \fBjampal tagbkup\fP  [ bak ]
 .HP
 \fBjampal tagupdate\fP options \fIfilename\fP [ \fIfilename\fP ] ...
 .HP
-\fBjampal mp3lame\fP [ -recode|-recode-even ]
+\fBjampal mp3lame\fP [ \-recode|\-recode-even ]
 
 .SH DESCRIPTION
 
@@ -55,7 +55,7 @@ Make sure that in the Jampal Customize dialog, under library, the option "Use
 Unix Style Paths" is checked.
 .PP
 All paths must be set up so that the path is compatible with Windows. This means
-creating links for example ln -s C:/Music /Music makes the /Music directory
+creating links for example ln \-s C:/Music /Music makes the /Music directory
 compatible. The setup will already handle "Program Files" and the user profile 
 directories. If you store songs in a different directory you will need to 
 set up links. All songs must be accessed from the same drive letter. This can be 
@@ -92,7 +92,7 @@ Normally you will use a GUI based menu to launch this.
 
 .SH CLEANUP COMMAND
 
-\fBjampal cleanup\fP  [ \fB-reorder\fP ] \fIlibrary\fP [ \fImoved-file-dir\fP ]
+\fBjampal cleanup\fP  [ \fB\-reorder\fP ] \fIlibrary\fP [ \fImoved-file-dir\fP ]
 
 The \fBcleanup\fP command cleans up your library by moving files and renaming
 them. Make sure that all of your songs are loaded into one library, and that
@@ -108,7 +108,7 @@ different Disk Directory. Disk Directories are never renamed or moved.
 Songs are ordered within the album by track number.
 Albums are numbered according to the order they are found on the disk.
 The order of albums in a disk directory is not changed unless you use 
-the \fI-reorder\fP option.
+the \fI\-reorder\fP option.
 
 Songs that are marked for deletion in the \fBjampal\fP GUI application
 (by setting the value D in the Jampal frame) are moved to 
@@ -246,14 +246,14 @@ open the disk directories.
 
 .SH CLEANUP COMMAND OPTIONS
 
-\fB-reorder\fP
+\fB\-reorder\fP
 .RS
 Reorder directories within a disk. This can only be done when there 
 are no other changes pending. The way to make sure of this is to 
-first do a run without the \fI-reorder\fP option. Then open the file called
+first do a run without the \fI\-reorder\fP option. Then open the file called
 \fIZZAlbums.txt\fP which exists in each Disk Directory. This is a text file.
 Move lines up or down into the desired sequence of albums. Save the file.
-Run the \fBcleanup\fP command with the \fI-reorder\fP option.
+Run the \fBcleanup\fP command with the \fI\-reorder\fP option.
 .RE
 
 \fIlibrary\fP
@@ -372,7 +372,7 @@ Select songs based on a table of preferences (see
 .RE
 .RE
 .PP
-\fB--sort\fP sort-field
+\fB\-\-sort\fP sort-field
 .RS
 Sort the playlist by the given sort field. If you leave this out the existing 
 sequence in the library is used. This is an
@@ -395,13 +395,13 @@ Put songs in random sequence. The value 'random' is a very random number of 12 d
 .RE
 .PP
 
-\fB--reverse\fP
+\fB\-\-reverse\fP
 .RS
-This will reverse the sort sequence given in the \fB--sort\fP option.
+This will reverse the sort sequence given in the \fB\-\-sort\fP option.
 .RE
 .PP
 
-\fB--announce\fP
+\fB\-\-announce\fP
 .RS
 This chooses to have audio announcements of song titles included in files
 copied to the staging directory. Synthesized announcements are stored in the 
@@ -409,7 +409,7 @@ front of each mp3 file.
 .RE
 .PP
 
-\fB--tracksperdir\fP nnn
+\fB\-\-tracksperdir\fP nnn
 .RS
 This specifies the maximum number of tracks per directory when copying
 to a staging directory. This is useful if the player only displays 2 digit song
@@ -417,7 +417,7 @@ numbers within a directory. The default is 100. The maximum is 999.
 .RE
 .PP
 
-\fB--startdir\fP nnn
+\fB\-\-startdir\fP nnn
 .RS
 This specifies the starting directory number. The default is 1.
 The maximum is 999 so if you use a number close to that and directory numbering exceeds 999
@@ -425,7 +425,7 @@ you may have problems.
 .RE
 .PP
 
-\fB--library\fP \fIlibrary_name\fP 
+\fB\-\-library\fP \fIlibrary_name\fP 
 .RS
 File name and path of library. If not specified it defaults to the main library
 which is the value of the MAINLIBNAME parameter in \fI~/.jampal/jampal.conf\fP.
@@ -437,26 +437,26 @@ it will be assumed to be in your main library directory (defined by the
 .RE
 .PP
 
-\fB--ann_separate\fP
+\fB\-\-ann_separate\fP
 .RS
 This will cause announcements to be created as separate mp3 files when copying to 
 a staging directory. The default is to merge the announcement into the mp3 file
-of the song. This is only applicable when the \fB--announce\fP option is selected.
+of the song. This is only applicable when the \fB\-\-announce\fP option is selected.
 .RE
 .PP
 
-\fB--speak\fP text
+\fB\-\-speak\fP text
 .RS
 Specifies what will be spoken in the announcement  when copying to 
 a staging directory. The default is \'(TITLE .  ARTIST)\'.
 Any field codes for the library can be included. Additional words can be included 
 by putting them in quotes, for example \'"Presenting " TITLE " by " ARTIST\'. 
-This is only applicable when the \fB--announce\fP option is selected. 
+This is only applicable when the \fB\-\-announce\fP option is selected. 
 If there are foreign language songs, including English in the announcement will not be useful.
 .RE
 .PP
 
-\fB--speak_sep\fP
+\fB\-\-speak_sep\fP
 .RS
 If there are songs that use the "Follow" option, then two songs will be copied 
 to a staging directory with one announcement. This parameter specifies what to say in between, for
@@ -466,7 +466,7 @@ insert a pause as if it were the end of a sentence.
 .RE
 .PP
 
-\fB--dirchange\fP condition
+\fB\-\-dirchange\fP condition
 .RS
 The condition is an awk expression using any field codes from the library.
 The same rules apply as for the selection criteria.
@@ -480,7 +480,7 @@ a directory name is specified in the "Directory" tag.
 .RE
 .PP
 
-\fB--appendseq\fP
+\fB\-\-appendseq\fP
 .RS
 When copying to a staging directory, this option causes the program to
 update the song name in the mp3 tag to have a sequence number in front.
@@ -489,14 +489,14 @@ Announcements of the name do not include the sequence number.
 .RE
 .PP
 
-\fB--cdsize\fP nnn
+\fB\-\-cdsize\fP nnn
 .RS
 Specifies the size of the CD or mp3 player memory in megabytes. Default is 690.
 Songs will be split into disks according to the size.
 .RE
 .PP
 
-\fB--stagingdir\fP \fIdirectory_name\fP
+\fB\-\-stagingdir\fP \fIdirectory_name\fP
 .RS
 Gives the name of the staging directory where the songs will be written for burning to CD
 or copying to mp3 player. In the case of an mp3 player you can give a 
@@ -507,14 +507,14 @@ parameter in \fI~/.jampal/jampal.conf\fP.
 .RE
 .PP
 
-\fB--filenumberstart\fP nnn
+\fB\-\-filenumberstart\fP nnn
 .RS
 The starting number for numbering files in each directory. Default is 1.
 Maximum is 999.
 .RE
 .PP
 
-\fB--playlistname\fP name
+\fB\-\-playlistname\fP name
 .RS
 The playlist directory and playlist are named using the current date and time as
 YYMMDD_HHMMSS.
@@ -524,7 +524,7 @@ The default is no name so that the playlist will be named YYMMDD_HHMMSS.
 .RE
 .PP
 
-\fB--tagupdate\fP tag_setting
+\fB\-\-tagupdate\fP tag_setting
 .RS
 Here you can supply one or more updates that you want made to ID3 tags when 
 copying to the staging directory. For example if you have an mp3 player 
@@ -535,11 +535,11 @@ parameter valid for the \fBtagupdate\fP command, and can include any
 fieldcodes from the library. For example, to add a customized preference
 frame in front of the artist use this:
 .br
-\'"-ARTIST \\"" ID3V2TAGTXXXPeter "/" ARTIST "\\""\'
+\'"\-ARTIST \\"" ID3V2TAGTXXXPeter "/" ARTIST "\\""\'
 .RE
 .PP
 
-\fB--startdisknum\fP nnn
+\fB\-\-startdisknum\fP nnn
 .RS
 The starting number for numbering disks. The default is 1. Maximum is 999.
 .RE
@@ -619,8 +619,8 @@ an mp3 player to store the songs directly on the player.
 
 .SH ENVELOPE COMMAND
 
-\fBjampal envelope\fP [ \fB--artist\fP | \fB--artistalbum\fP | \fB--none\fP 
-| \fB--album\fP ] [ \fB--nosort\fP ] \fIlibrary-name\fP diskser description
+\fBjampal envelope\fP [ \fB\-\-artist\fP | \fB\-\-artistalbum\fP | \fB\-\-none\fP 
+| \fB\-\-album\fP ] [ \fB\-\-nosort\fP ] \fIlibrary-name\fP diskser description
 .PP
 The \fBenvelope\fP command prints CD or DVD envelopes for your mp3 disks. 
 It also can prints a song list for songs on an mp3 player.
@@ -647,7 +647,7 @@ page.
 
 .SH ENVELOPE COMMAND OPTIONS
 
-\fB--artist\fP | \fB--artistalbum\fP | \fB--none\fP | \fB--album\fP
+\fB\-\-artist\fP | \fB\-\-artistalbum\fP | \fB\-\-none\fP | \fB\-\-album\fP
 .RS
 These options define headings that appear in the list and the items that appear on 
 the envelope cover. If nothing is specified here the default is album, i.e.
@@ -660,11 +660,11 @@ field. If they are not you could get a heading for each song.
 .RE
 .PP
 
-\fB--nosort\fP
+\fB\-\-nosort\fP
 .RS
 The songs are normally sorted by filename before being printed. This assumes
 you are printing an envelope for a disk that is a copy of directories from 
-your library. The -nosort option will print songs in the order they are stored in the
+your library. The \-nosort option will print songs in the order they are stored in the
 library, i.e. the order they are displayed in the \fBjampal\fP GUI. Make sure to save
 the library or close the GUI to make sure the desired ordering is saved.
 .RE
@@ -699,7 +699,7 @@ This is any text that you want printed at the top of each page.
 
 .SH DUPLICATES COMMAND
 
-\fBjampal duplicates\fP [ \fB--NODUP\fP ] [ \fB--NEXTFILES\fP ]
+\fBjampal duplicates\fP [ \fB\-\-NODUP\fP ] [ \fB\-\-NEXTFILES\fP ]
 .PP
 The \fBduplicates\fP command searched for potential duplicate songs in the main library.
 It scans your main library (specified in \fI~/.jampal/jampal.conf\fP) and creates a new library
@@ -742,15 +742,15 @@ Duplicates".
 
 .SH DUPLICATES COMMAND OPTIONS
 
-\fB--NODUP\fP
+\fB\-\-NODUP\fP
 .RS
 You can use the "Dup" tag to indicate duplicate song names you wish to keep or to indicate
 that these are actually different versions of the song and should not be reported as duplicate.
-If you specify --NODUP this will be ignored and the songs will be reported as duplicates.
+If you specify \-\-NODUP this will be ignored and the songs will be reported as duplicates.
 .RE
 .PP
 
-\fB--NEXTFILES\fP
+\fB\-\-NEXTFILES\fP
 .RS
 Normally the \fBduplicates\fP command ignores songs in the directory specified by
 NEXTFILES in \fI~/.jampal/jampal.conf\fP. Specifying this flag will also include 
@@ -781,8 +781,8 @@ To restore a CD use the following commands (assuming /r is the location of your 
 .RS 2
  . /usr/jampal/scripts/mp3.profile
  cd /r
- mkdir -p $MAINDIR/000904_1758_rest
- tagbkup -v -r -x -d $MAINDIR/000904_1758_rest /r/*/*.mp3 $TAGBKUP/tagbkup
+ mkdir \-p $MAINDIR/000904_1758_rest
+ tagbkup \-v \-r \-x \-d $MAINDIR/000904_1758_rest /r/*/*.mp3 $TAGBKUP/tagbkup
 .RE
 This restores mp3 files from the CD to your hard drive, at the same time restoring
 the tags from the tag backup.
@@ -819,20 +819,20 @@ to \fBtagupdate\fP.
 
 .SH TAGUPDATE COMMAND OPTIONS
 
-\fB-OPTIONFILE\fP optfilename
+\fB\-OPTIONFILE\fP optfilename
 .RS
 This supplies a file name from which options are read after all options
 on the command line are exhausted.
 .RE
 .PP
 
-\fB-ENCODING\fP encoding
+\fB\-ENCODING\fP encoding
 .RS
 This supplies encoding for the option file.
 .RE
 .PP
 
-\fB-DISPLAY\fP
+\fB\-DISPLAY\fP
 .RS
 This displays the tags and file information. If it is specified before
 update options it displays values before the update. If it is specified after
@@ -841,7 +841,7 @@ that appear before it.
 .RE
 .PP
 
-\fB-SHORTDISPLAY\fP
+\fB\-SHORTDISPLAY\fP
 .RS
 This displays the title, artist and album, tab separated. If it is specified before
 update options it displays values before the update. If it is specified after
@@ -850,50 +850,50 @@ that appear before it.
 .RE
 .PP
 
-\fB-NOUPDATE\fP
+\fB\-NOUPDATE\fP
 .RS
 This suppresses writing the updates to the file. It can be specified anywhere
 in the options list.
 .RE
 .PP
 
-\fB-TITLE\fP title
+\fB\-TITLE\fP title
 .RS
 Update title on both ID3V1 and ID3V2 tags. 
 .RE
 .PP
 
-\fB-ARTIST\fP artist-name
+\fB\-ARTIST\fP artist-name
 .RS
 Update artist name on both ID3V1 and ID3V2 tags. 
 .RE
 .PP
 
-\fB-ALBUM\fP album-name
+\fB\-ALBUM\fP album-name
 .RS
 Update album name on both ID3V1 and ID3V2 tags. 
 .RE
 .PP
 
-\fB-YEAR\fP year
+\fB\-YEAR\fP year
 .RS
 Update year on both ID3V1 and ID3V2 tags. 
 .RE
 .PP
 
-\fB-COMMENT\fP comment
+\fB\-COMMENT\fP comment
 .RS
 Update comment on both ID3V1 and ID3V2 tags. 
 .RE
 .PP
 
-\fB-TRACK\fP track-number
+\fB\-TRACK\fP track-number
 .RS
 Update track number on both ID3V1 and ID3V2 tags. 
 .RE
 .PP
 
-\fB-GENRE\fP genre-name
+\fB\-GENRE\fP genre-name
 .RS
 Update genre on both ID3V1 and ID3V2 tags. If the name supplied 
 is not one of the supported ID3V1 names, the ID3V1 tag value will
@@ -902,7 +902,7 @@ in the tables section of the html help.
 .RE
 .PP
 
-\fB-ID3V2TAG\fP frame-id value
+\fB\-ID3V2TAG\fP frame-id value
 .RS
 Update ID3V2 tag.
 .PP
@@ -952,7 +952,7 @@ cater for updating binary data in this case.
 .RE
 .PP
 
-\fB-SYNCHRONIZE\fP
+\fB\-SYNCHRONIZE\fP
 .RS
 This copies values from id3v2 tags to id3v1 if they are present in id3v2
 otherwise copies id3v1 values to id3v2.
@@ -968,7 +968,7 @@ several file names can be provided on the command line.
 
 .SH MP3LAME COMMAND
 
-\fBjampal mp3lame\fP [ -recode|-recode-even ]
+\fBjampal mp3lame\fP [ \-recode|\-recode\-even ]
 
 Converts files in a directory to mp3 using lame or re-encodes mp3 files. 
 If you use no input option, it encodes all wave files in the current directory
@@ -986,7 +986,7 @@ library after doing this.
 
 .SH MP3LAME COMMAND OPTIONS
 
--recode
+\-recode
 .RS
 Re-encodes mp3 files in the current directory, but only if they have higher
 than 128K bit settings. It puts the re-encoded files in a subdirectory called
@@ -994,7 +994,7 @@ recode.
 .RE
 .PP
 
--recode-even
+\-recode\-even
 .RS
 Re-encodes all mp3 files in the current directory, regardless of their bit
 settings. It puts the re-encoded files in a subdirectory called recode.
@@ -1028,7 +1028,7 @@ menu in the \fBjampal\fP user interface. These should not be directly edited.
 .RS
 This file is placed in each Disk Directory by the \fBcleanup\fP command.
 It is a text file with each Album name in sequence, one per line.
-Using the \fi-reorder\fP option you can use this file with the \fBcleanup\fP
+Using the \fi\-reorder\fP option you can use this file with the \fBcleanup\fP
 command to reorder albums.
 .RE
 .PP
