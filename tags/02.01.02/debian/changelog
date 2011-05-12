@@ -1,0 +1,902 @@
+jampal (02.01.01)
+
+  * Packaged for Debian / Ubuntu
+
+    Debian source and install packages, ready for inclusion in the Debian 
+    or Ubuntu repository, or download from sourceforge.
+
+  * Documentation
+
+    Created man pages. Generate html documentation from man pages.
+    Automatic generation of html pages from fragments.
+
+  * Debian support
+
+    Consolidated scripts under the jampal command and created man page 
+    documentation for them
+    Enabled compilation without freetts, since freetts is not available in a
+    Debian package.
+    Changed build process to use make instead of shell scripts.
+    Player can now support a sound system that does not allow master gain control
+    Default libraries support columns needed for command line commands.
+    Support for help file in a different place in the directory structure,
+    using environment properties file.
+    Support for relative directories in environment files.
+    Default library is now in directory specified in configuration file.
+    Improved naming of some menu items.
+    Fixed to support the directory structure that is used by mbrola
+    under debian.
+
+  * Windows build
+
+    Removed unix scripts from Windows install.
+    Added a cygwin install. This includes scripts.
+    Included mbrola.exe in windows and cygwin builds, since it is no 
+    longer on the mbrola web site.
+
+  * General
+
+    Removed some junk files from source distribution.
+
+ -- Peter Bennett <pgbennett@comcast.net>  Wed, 02 Mar 2011 18:27:57 -0500
+
+jampal (1.26)
+
+ * Tagbkup
+
+   Fixed problem where -f option only works on a unix-formatted file,
+   even in Windows.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.25)
+
+ * Copy / Paste
+   Fixed problem where paste menu option was not working.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.24)
+
+ * 64 Bit Linux Support
+
+   A 64 bit linux version of tagbkup is now included. Both 32 bit and 64
+   bit versions are in the install package so that it can be installed
+   on 32 bit or 64 bit Linux systems. The same java versions of the
+   jampal program work in 32 bit or 64 bit Linux.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.23)
+
+ * 64 Bit Support
+
+   The install script is updated so that Jampal will support a 32bit or
+   64bit version of Java on 64bit Windows systems. If a 64bit Java is
+   used, announcements using the Microsoft speech engine currently will
+   not work. Other speech options will work.
+
+ * Icons and files
+
+   There is a new icon for Jampal. Also jampal libraries will show the
+   icon in Windows explorer, and you can open the library by double
+   clicking the library icon.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.22)
+
+ * Track Editor
+
+   The track editor window
+
+    Can now be minimized or maximized. 
+    Takes up less space on the screen. 
+    Is no longer forced to be in front of the library window. 
+    Can be made smaller or bigger without creating a horizontal scroll bar. 
+    If images are large, will resize images on the screen to fit without
+      a horizontal scroll bar. 
+    Supports drag and drop of images from Firefox web browser. 
+
+ * Combine Duplicates
+
+   Short cut menu for combining a track that is on multiple albums into
+   one file with "Alternate Albums".
+
+ * Strike-out
+
+   Tracks which are logically deleted by entering a D in the "Jampal"
+   field are shown struck out.
+
+ * Look and Feel
+
+   Java looks from various sources are included.
+
+ * Setup
+
+   Setup is upgraded to Inno Setup 5. I have consolidated the windows
+   2000 setup, the XP setup and the compact setup into one windows
+   setup. The Windows speech engine and Microsoft Mike and Mary voices
+   are no longer included. This should not be a problem as versions of
+   Windows from XP onwards already include it.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.21)
+
+ * Slow Saving Library
+
+   Saving a large library or closing window with large library over a
+   network was slow. (i.e. using a library on a network shared drive).
+   This has been fixed.
+
+ * Frames column type
+
+   In the library you can select and display a new column type "FRAMES".
+   This includes in the library a list of other frames found in the tag
+   (frames not already in the library). For a list of the meanings of
+   frames look in the Tables and ID3 Frame Descriptions sections of the
+   help. The frames are surrounded by spaces, so that if you want to
+   search for tracks with a particular frame, surround the serach field
+   by spaces (e.g. use " APIC" to search for tracks with a picture).
+
+ * Improved Status Line
+
+   In the status line at the bottom of the library or playlist it shows
+   number of tracks selected, playing time and total file size. In the
+   case where files were selected twice, once for their primary album
+   and once for alternate album, or because they were in a playlist
+   twice, they were being included twice, giving a misleading file size
+   total. Now a new value is added ("Files"), which shows the number of
+   files with duplicates excluded. The total size is also adjusted to
+   exclude duplicates. The number of tracks and playing time still
+   includes the duplicates.
+
+ * Preserve Selected Row
+
+   After sorting tracks the selected row will remain selected and be
+   scrolled into view.
+
+ * Shuffle
+
+   After shuffle tracks the first row will be scrolled into view and
+   selected.
+
+ * Validate Tracks
+
+   The "Validate Tracks" option has been enhanced to refresh track data
+   from the disk if it has changed, as well as finding files that have
+   been renamed.
+
+ * Find
+
+   Find can search on a specific column without first sorting on the
+   column. There is an option to search on the selected column instead
+   of the sorted column. When searching on all columns but not for all
+   occurrences, it now selects the column in which the string is found.
+
+ * Track Properties
+
+   The Track Properties window now includes a list of frames in the
+   track. This displays all frames in the track, unlike the library
+   which only displays the id's of frames not already shown in the
+   library. For a list of the meanings of frames look in the Tables and
+   ID3 Frame Descriptions sections of the help. Also if the Track
+   Properties window is open and you change the track selection, the
+   track properties window will dynamically update to show the new
+   selected track.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.20)
+
+ * Validate Song
+
+   Fixed a bug which was preventing validating songs from the menu or
+   when playing.
+
+ * "Follow" Option
+
+   Fixed a bug where song names were announced once at the start of the
+   list of connected songs, and again before each song. They should only
+   be announced at the start of the sequence of songs, so as to avoid an
+   interruption.
+
+ * Null Ponter Exception
+
+   A null pointer exception happened when setting the language to blank
+   in the grid.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.19)
+
+ * Deleting of Frames
+
+   Fixed a bug which could cause an exception message when deleting a
+   frame that is not supported or that has an error. These frames can
+   now be deleted successfully.
+
+ * Tag editor Window
+
+   Changed so that the tag editor window will not move or resize when
+   moving from one song to another. This makes it easier to arrange
+   windows on the screen when updating many songs.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.18)
+
+ * ESpeak
+
+   Jampal now supports the ESpeak speech engine in Windows, Linux and
+   any other environment that supports ESpeak. It also supports mbrola
+   voices when used with espeak.
+
+ * Multi Language Announcements 
+
+   You can now announce your song titles in the language that matches
+   the song name. There is a new Voices tab in the configuration dialog
+   that allows you to select voices to be used with each song language.
+   You can select for each language which engine and voice will be used.
+
+ * Multi Language Songs
+
+   You can now assign more than one language to a song. This will be
+   useful if the language for the announcement should be different from
+   the main laguange for the song. Announcements use the last language
+   in the list.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.17)
+
+ * Unicode
+
+   Jampal now supports full use of unicode character sets. There is a
+   font menu option so that if you are using non-English characters you
+   can select an appropriate font to display them.
+
+   This also fixes a problem where if an ID3V2.4 tag with UTF-8 font was
+   edited, an incorrect ID3V2.3 tag was created that caused Microsoft
+   media player to refuse to play the file.
+
+ * Help Menu
+
+   Added a Help menu item to display the online help pages.
+
+ * Compiler Upgrades
+
+   Jampal now requires Java version 6.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.16)
+
+ * Most Recently Used list
+
+   Open menu includes a list of the libraries opened recently to save
+   time when opening libraries.
+
+ * Alternate Album
+
+   Custom tag for the case where one song is on two or more albums. You
+   can record additional albums in a comments tag. The additional
+   entries will be added to the library so that when sorting by album
+   you can see the song in both albums although only one copy of the
+   song exists on your hard drive.
+
+ * Duplicate entries in playlist
+
+   You can now have multiple copies of a track in a playlist. This is
+   regardless of the alternate album setting. If you want to play the
+   same song 100 times, just add it to the playlist 100 times.
+
+ * Library save Improvement
+
+   When saving a library using the File, Save Library option, save
+   settings such as last song playing, selection, window size.
+
+ * Compiler Upgrades
+
+   Jampal now requires Java version 5.
+   ptts is now compiled with Microsoft Visual C++ 2005 (V8).
+   tagbkup for windows is now compiled with g++ (GCC) 3.4.5
+   tagbkup for cygwin is now compiled with gcc g++ (GCC) 3.3.3
+   tagbkup for linux is compiled with g++ (GCC) 4.1.3
+
+ * Sound Quality
+
+   In some environments, sound quality was degraded. To avoid this an
+   extra customization parameter has been added for mixer name. In most
+   cases selecting the mixer "Java Sound Audio Engine" will provide best
+   quality, but you can now try different options in case the sound does
+   not work or is poor quality.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.14)
+
+ * Validate Tracks
+
+   After a "Validate Tracks" operation, tracks which could not be
+   validated or repaired remain selected.
+
+ * Enhanced Status line
+
+   The status line at the bottom of the window shows the number of songs
+   that have been selected. It is now enhanced to also show the total
+   playing time in days, hours, minutes, seconds, as well as the total
+   file size in megabytes. These only work if the playing time and file
+   size are selected in the library fields in the customization dialog.
+
+ * Missing files in source zip
+
+   Some files that were needed to build the program were missing from
+   the source zip. These have been added.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.13)
+
+ * Java versions 5 and 6
+
+   Minor changes (see below) have been made to ensure the program runs
+   well with the latest versions of Java.
+
+ * Cell Selection Display
+
+   With the Java version 5 and 6 default table behaviour, it is very
+   difficult to see which is the current selected cell. A very thin gray
+   border is painted on a blue background. To make it possible to see
+   the currently selected cell, Jampal now paints the selected cell in
+   "unselected" colors. This makes it easier to see where you are before
+   using "Edit Cell".
+
+ * Automatic Cell Editing
+
+   Added the "Automatic Cell Editing" checkbox and menu item.
+
+ * Bug with sorting and moving columns
+
+   If you moved some columns to new positions then sorted on columns, in
+   some cases the sort indicator was not removed when the sort no longer
+   applied.
+
+ * Sound Distortion
+
+   Java versions 5 and 6 use a different default volume setting. The
+   sound from Jampal would be distorted unless you adjusted the "audio
+   gain" in the customization page. With this version the audio gain
+   will default to 0 if you are running java 5 or 6.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.12)
+
+ * Announcements
+
+   Enhanced the announcements feature so that any information from the
+   tag can be used in the announcement.
+
+ * Validate Tracks
+
+   New "Validate Tracks" menu which scans selected tracks in a library
+   or playlist, fixes invalid filenames where possible and reports back
+   which ones could not be found. Previously this validation only
+   occurred when playing a song.
+
+ * Fix Case
+
+   "Fix Case" option did not work correctly where a word started with a
+   special character, for example parenthesis or quote.
+
+ * Album Sort
+
+   Album sort did not work where you had a disk number in parentheses ,
+   for example (Disk 1) (Disk 2) for the same album, disks 1 and 2 were
+   intermingled. Now fixed.
+
+ * Follow option
+
+   Some bugs were fixed in the operation of the "follow" logic.
+
+ * Track Number
+
+   If you used a three digit track number (i.e. greater than 99) the
+   sort by track would not work correctly. Now fixed.
+
+ * mp3 Management Scripts
+
+   Added more documentation. Also some bug fixes and minor enhancements.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.11)
+
+ * mp3 Management
+
+   A suite of shell scripts to organize your mp3 files, create
+   playlists, create CDs, find duplicates, manage backups. Currently
+   beta test and requires some understanding of shell scripts.
+
+   Rename your files into directories per album and name the files with 
+     song titles and artists. 
+   Create a printed envelope for CDs with a printed track listing insert. 
+   Detect duplicate songs and with an easy interface decide which ones 
+     to remove and which ones to keep. 
+   Create playlists based on any number of parameters you specify. 
+     Arrange these playlists into mp3 CDs, mp3 DVDs, or write them 
+     directly to an mp3 player. Optionally include song announcements on 
+     your mp3 CDs or mp3 player. 
+   Encode mp3 files with lame, or re-encode to a new bitrate keeping 
+     tags intact. 
+   Backup your tags with a script. 
+   Compare what is on your hard drive with what is on CD/DVD to make 
+     sure everything is backed up on CD/DVD. 
+   If you lose your hard drive, you can restore your files from CD, at 
+     the same time restoring tag updates that were done after the files 
+     were put to CD. 
+   ptts command line speech script that works with any of 3 speech 
+     engines. 
+
+ * Unicode
+
+   Fixed bug which caused unicode encoded tags to display incorrectly
+
+ * Linux support
+
+   Now supports dropping files from the Nautilus file manager on to
+   Jampal. Also dropping pictures from the Nautilus file manager or
+   Epiphany web browser on to the tag editor. Dropping files from Jampal
+   on to the Nautilus file manager does not work.
+
+ * Drag and drop, copy
+
+   If you drag files from jampal to a text editor you can get a list of
+   file names. You can also drag a list of file names from a text editor
+   to jampal and those files will be added to the library.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.10)
+
+ * Linux Support
+
+   Improved Linux support includes a version of tagbkup compiled for
+   Linux and a zip install with shell script to install on Linux. Also
+   support for speech on Linux.
+
+ * New Speech Engines
+
+   The Announcement feature adds support for two new speech engines:
+   FreeTTS and Cepstral, so that speech can be used on non-Microsoft
+   systems, and better quality speech can be used on all systems. Also
+   adds extra voice related customizations.
+
+ * Other
+
+   TagUpdate has a new "SHORTDISPLAY" option.
+
+   If you launch a new instance of Jampal it will bring to the front the
+   existing instance. This ensures that libraries are kept in sync.
+
+   When using Unix Path option, prevent adding files to the library from
+   the wrong drive letter. (Previously this would work but the files
+   could not be played).
+
+   When using Unix Path option, allow files with UNC paths to be added.
+
+   Added Splash screen when opening a library. 
+
+   Fixed bug where adding a Language frame caused screen corruption. 
+
+   When Pasting a large number of tracks, if one fails it will still
+   paste the rest.
+
+   There are some new options for the ptts text to speech program
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.09)
+
+ * New Customize Feature
+
+   New Customize feature allows the user to customize the library and
+   many options. These are customized with a Graphical interface where
+   previously they could only be customized by editing a file. Also some
+   new options have been added.
+
+ * New Command Line Tag Update Program
+
+   A new program, TagUpdate, is for users who wish to update tags from a
+   command line program. It offers all of the updating features
+   available in the Graphical Program.
+
+ * New look and feel option
+
+   A new option in the Customize dialog allows you to select your look
+   and feel. To accomodate different looks, the last-playing track is
+   now highlighted in bold instead of in red.
+
+ * New resize option
+
+   A new option in the Customize dialog allows you to select how your
+   table will be treated when resizing the window or the columns.
+
+ * Tagbkup -x option
+
+   Added a new option (-x) to cater for file system limitations of 16384
+   files per directory.
+
+ * Unix / Linux settings
+
+   Added a new library option on the customize page to enable easier
+   sharing of files between unix/linux and windows.
+
+ * Slider Operation
+
+   Fixed the bug where adjusting the slider during play sometimes caused
+   the play position to jump.
+
+ * Saved Settings
+
+   The file library_saved.properties is no longer used. Settings are
+   save in library.jampal instead.
+
+ * Status Line
+
+   Changed the status line to show the row number selected when only 1
+   row is selected.
+
+ * Tag Editor Resize
+
+   If you make the tag editor window wider, the space for entering
+   values will increase.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.08)
+
+ * Interruption in play
+
+   Made a change to reduce the chance of a brief gap between two songs
+   being played continuously in a playlist. This affects albums where
+   songs run into each other in continuous fashion.
+
+ * Slider Operation
+
+   Fixed problem where occasionally operating the slider to move to
+   another place in the song would stop the play of that song.
+
+ * SUN Java mp3 Plugin
+
+   Changed so that if you have the SUN Java MP3 plugin installed, jampal
+   will play using that plugin instead of the "tritonus" mp3 decoder
+   included in jampal. The SUN Java MP3 plugin can be downloaded and
+   installed for free. Jampal writes a trace message in the
+   .jampal/jampal_err.txt file in your home directory to indicate which
+   plugin is being used.
+
+ * Fix Case
+
+   You can now use the super tagging feature to correct song titles or
+   other values which were typed in UPPER CASE or lower case without
+   retyping the names. Also a new "Fix Case" checkbox added to tag
+   update page.
+
+ * Find
+
+   Many new and advanced features added to the Find Dialog.
+
+ * Sort
+
+   Fixed so sort field takes into account spaces.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.07)
+
+ * Fixed bug loading m3u files
+
+   m3u playlist files could not be loaded with version 1.06.
+
+ * Variable bit rate problem
+
+   If you had a file with variable bit rate and no xing header, the
+   bitrate and playing time were incorrect.
+
+ * Playlist with duplicate songs
+
+   If you loaded a playlist from an m3u or m3j file and there were
+   duplicate songs you could get a java error message (Row index out of
+   range), although the playlist was loaded successfully.
+
+ * Playlist directory
+
+   When you load a playlist from a file, the program will start from the
+   directory you last used for loading a playlist.
+
+ * Missing files
+
+   If a file in a playlist is missing the program will display a message
+   and continue with the next one, up to 5 files. This was not working
+   due to a shortcoming in the "Follow" enhancement from the previous
+   version.
+
+ * Track Properties Display
+
+   There is a new menu option from the Edit menu and the library context
+   menu. This displays technical data about the mp3 file.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.06)
+
+ * Find bug fixed
+
+   If you used "Find" with the option of searching the sort columns and
+   you typed two words, the search failed.
+
+ * Follow
+
+   A new feature of Jampal allows you to specify that multiple tracks
+   must be played together. See the Follow option.
+
+ * Play bug fixed
+
+   If you selected another song for play while the announcement was
+   still playing, an error message was displayed after 30 seconds. (The
+   Song that is Playing will not end).
+
+ * Search for renamed files
+
+   If a file has been renamed in the library, but the playlist has the
+   old name or any wrong name, it searches the library and it it finds
+   the song it will play it and update the play list.
+
+ * Improved continuous option
+
+   With the continuous option, the song could be overlapped with the
+   previous song. This will no longer happen.
+
+ * Read-only library or playlist
+
+   If the "jmp" file is read-only, you can play the songs and reorder
+   the library. Any attempt to update a tag or the library will give an
+   error message that the library is read-only.
+
+ * Dummy Columns in the Library or playlist
+
+   You can add "dummy" columns to a library or playlist. You can type
+   anything you like into these and they will be stored in the library
+   but not on the mp3 song tag.
+
+ * Fixed Header Resize Cursor Bug
+
+   If you clicked the table header in the library or playlist while the
+   resize cursor is displayed, It would sort the library and after that
+   the resize cursor vanished until you shut down the program.
+
+ * Search Enhancements
+
+   When searching the search string is now displayed in the status bar
+   at the bottom of the window. Also the search now supports the
+   backspace key.
+
+ * Cell Edit Enhancement
+
+   When editing a field in the summary list the value will be initially
+   selected so that you can easily overtype it with a complete new
+   value.
+
+   Fixed the bug where a cell that was being edited was displayed as
+   blank if you press escape to cancel the editing.
+
+ * Playback Volume
+
+   Java sound by default reduces the volume level of sounds. Added an
+   entry to the library parameter file to supply a gain value to
+   counteract this.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.05)
+
+ * Playing Song Flagged
+
+   The song that is currently playing or last played is shown in red in
+   the library or playlist. A new menu option clears the highlight.
+
+ * Play options
+
+   If no song is selected when starting play, either the one shown in
+   red is played or if there is none shown in red, play starts at the
+   top.
+
+ * Add to Playlist option
+
+   When adding to playlist, the new songs are selected, also the one
+   shown in red, so you can continue playing from the same place more
+   easily.
+
+ * Shuffle, sort and play
+
+   If shuffle or sort is done while playing, the next song played
+   becomes the new one that follows the current song in the playlist.
+
+ * File read errors
+
+   If a file read error occurs during playback (the most common error is
+   "file not found" because the file has been removed or renamed),
+   playback does not stop. In the playlist it continues to play the next
+   song, but stops after five such errors occur.
+
+ * Play Menu
+
+   Added a play menu with keyboard shortcuts for play commands.
+
+ * Pause / Stop
+
+   Fixed bug where pressing stop after pause did not reset slider and
+   song position.
+
+ * Default button
+
+   Set the "Update Tags" button as default on tag editor window, so
+   pressing enter can update the tags.
+
+ * Tag Updater Window
+
+   Changed so that it uses the screen size as the maximum window size.
+   No longer using the "dialog-max-height" property. Also changed to
+   move the window onscreen if it becomes larger and starts to overlap
+   the edge of the screen.
+
+ * Default Track title
+
+   If a file has no tag or the track title is empty, the file name
+   (without the mp3 extension) will be displayed as the track title.
+   Also if any field is updated on the tag and the tag title is missing,
+   the file name will be put there. The file name is edited according to
+   the same rules as for super tagging.
+
+ * Super Tagging underscore
+
+   Added underscore as a character substituted during super tagging.
+
+ * Windows shut down or logoff
+
+   Closes jampal if you log off or shut down Windows.
+
+ * Continuous Option
+
+   A new "Continuous" option in the "Play" menu to avoid a gap between
+   one track and the next. It also overlaps announcements with the
+   music.
+
+ * m3j type playlist
+
+   A new type of saved playlist file, the m3j file saves just the song
+   title and artist name, and searches the library for the matching file
+   at the time of playing. So if files are renamed or moved the playlist
+   still works. The search excludes special characters and parenthesized
+   parts to make it easier to find a match.
+
+ * Changes to Search
+
+   When searching for a song by typing the sort key value, special
+   characters and parenthesized parts are excluded.
+
+ * Blank Window
+
+   Fixed bug where a blank window could be left on screen if you tried
+   to open a library then canceled the operation.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.04)
+
+ * Additional Frames
+
+   Displays the "Private" frame and any Unicode text that may be
+   associated with it. If the frame is 4 bytes long displays an integer
+   value assuming the integer is stored in Microsoft format. This frame
+   cannot be updated.
+
+   These changes allow you to see the values put there by the windows
+   media player. Note that Microsoft is using the private frame
+   incorrectly, the description is supposed to be a URL or email
+   address, and text ought to be stored in a comments frame or user
+   defined text frame, not the user defined binary frame.
+
+ * "Delete Frame" Bug fixed
+
+   Frames that cannot be edited should be able to be deleted. This was
+   causing a Class Cast Exception error message.
+
+ * Internet Explorer Problem Fix
+
+   When viewing the documentation, Internet Explorer in Windows XP after
+   security patches displays a warning about Active Content. Changed the
+   shortcut to avoid this.
+
+ * Tag Backup multiple id3v1 tags
+
+   When copying the id3v1 tag to an mp3 file that already has more than
+   1 id3v1 tag, removes the extra tags before copying.
+
+ * Tag Backup copy music
+
+   Fixed bug where the -cm (copy music) option copied the id3v1tag also.
+
+ * Jampal and multiple id3v1 tags
+
+   If a file has more than one id3v1 tag, when updating the tag, excess
+   tags will be removed so that only 1 id3v1 tag remains.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>
+
+jampal (1.03)
+
+ * New Find option
+
+   A new option on the edit menu, "Find" searches the library for a
+   string. Unlike the existing search, it is not limited to the
+   beginning of the field.
+
+ * Ignore diacritics
+
+   When sorting or searching diacritics in the library are ignored.
+   Diacritics are the marks on letters mainly used in foreign languages
+   and heavy metal band names, for example Motley Crue.
+
+ * Text to Speech - Update Lexicon
+
+   When the speech engine mispronounces a name, the ptts program now
+   gives you the ability to update the lexicon to correct it.
+
+ * Language Tag
+
+   Improved support for the language tag allows you to select from a
+   list box.
+
+ * Play Count Tag
+
+   The play count can now be viewed and updated.
+
+ * Drop Pictures
+
+   Use drag and drop to add a picture to a song tag.
+
+ * Pictures in editor
+
+   Include a picture frame with the default editor fields to make it
+   easier to add pictures to songs that do not have them.
+
+ * Tag Backup - extract file parts
+
+   Extract and copy parts of files. This enables you to combine two or
+   more mp3 files into one.
+
+ * Fixed bug in text to speech
+
+   An initialization problem caused ptts to exit without processing any
+   input when used with windows XP sp2.
+
+ * Player does not stop when re-sorting
+
+   When sorting or shuffling the library or playlist, the song currently
+   playing will continue.
+
+ * Hourglass cursor
+
+   Certain long operations now display the hourglass cursor to provide
+   feedback that the program is busy.
+
+ * Splash page
+
+   While jampal is starting up it displays a blank page to show that
+   something is happening.
+
+ -- Peter Bennett <pgbennett@users.sourceforge.net>

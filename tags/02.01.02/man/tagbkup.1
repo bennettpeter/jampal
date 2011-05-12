@@ -1,0 +1,200 @@
+.\" man page for tagbkup
+.TH TAGBKUP 1 "April 5, 2011" tagbkup "tagbkup \- back up and restore mp3 tags"
+.\" Please adjust this date whenever revising the manpage.
+
+.SH NAME
+
+tagbkup \- back up and restore mp3 tags
+
+.SH SYNOPSIS
+.HP
+\fBtagbkup\fP [ options ] \fIfilename\fP ... \fIbackupdir\fP
+
+.SH DESCRIPTION
+If you have a lot of information in your mp3 tags, you want to protect it
+against accidental deletion. You could back up your mp3 files every time you
+update the tags but that will take a lot of disks. Using \fBtagbkup\fP 
+you can back up just the tags from your mp3 files and restore them into the
+files at any time.
+.PP
+\fBtagbkup\fP can restore tags to your mp3 files even if the mp3 files have been
+renamed or moved to different directories.
+.PP
+To back up your tags, create a separate directory where your tag backup will be
+stored on your hard drive. Running \fBtagbkup\fP will copy all of the
+tags from your mp3 files into files in that directory.
+.PP
+You can run \fBtagbkup\fP again and use the same backup directory to update your
+backup with files whose tags have changed. Do this on a regular basis to make
+sure you have backed up the most current data.
+.PP
+Include your tag backup directory in the list of directories backed up with your
+regular backup process.
+.PP
+\fBtagbkup\fP also includes an option to copy tags from one mp3 to another or to
+copy them to empty mp3 files of the same name in another directory. You can also
+strip the tags off a file (use the \-cm option, see below).
+
+.SH OPTIONS
+
+\fB\-b\fP
+.RS
+Backup tags from mp3 files to the directory that is mentioned in the last
+parameter. Any tags that are already up to date in that directory are not copied.
+.RE
+
+\fB\-r\fP
+.RS
+Restore tags from the directory that is mentioned in the last parameter to the
+mp3 files listed before it. Any mp3 file whose tag was not backed up to that
+directory will not be restored.
+.RE
+
+\fB\-c\fP
+.RS
+Copy tags from mp3 files to like named mp3 files in backupdir or copy tags from
+an mp3 file to another mp3 file, where the output mp3 file name is supplied
+instead of backupdir.
+.RE
+
+\fB\-c1\fP
+.RS
+Append ID3V1 tag from mp3 file to output file.
+.RE
+
+\fB\-c2\fP
+.RS
+Copy ID3V2 tag from mp3 file to output file, overwriting existing file.
+.RE
+
+\fB\-cm\fP
+.RS
+Append mp3 data without tags from mp3 file to output file. If the output file
+does not exist it is created. This can be used to strip tags off a file.
+.RE
+
+\fB\-d\fP \fIdir\fP
+.RS
+Copy restored mp3 files to this directory. Since restoring tags always involves
+copying the whole mp3 file you can save time here. If you have your mp3 files on
+a cd and want to restore them to the hard drive and restore their tags you can
+do this at the same time. In this case the file listing of mp3 files would be
+the contents of the CD and the desired hard drive place would be in the '\-d'
+parameter.
+.RE
+
+\fB\-t\fP
+.RS
+Test \- no copying of data. This is useful to get a preview of what will be done
+in a backup or restore.
+.RE
+
+\fB\-v\fP
+.RS
+Verbose. This lists every input file and whether it was backed up, restored, etc.
+.RE
+
+\fB\-u\fP
+.RS
+Report updates done. This lists only the files that were backed up. In cases
+where the latest data was already in the output directory they are not listed.
+.RE
+
+\fB\-n\fP
+.RS
+No overwriting of backup files, append log file. If this option is selected and
+the tag data is already backed up in the output directory an additional copy of
+it is created. This is useful if you are creating a first backup with several
+runs of tagbkup. If you are creating a second backup of updated tags it will
+start creating files with _001, _002 and these files are never restored when
+running a restore.
+.RE
+
+\fB\-f\fP \fIfilename\fP
+.RS
+Input filename list is in file \fIfilename\fP. If you have a large number of mp3 files,
+create a file with the names in it first and use this option. For example dir
+/b/s *.mp3 > listfile (under windows), or find . \-name '*.mp3' > listfile under
+unix or cygwin
+.RE
+
+\fB\-y\fP
+.RS
+Continue if there are errors, skipping failed files. If you are doing a restore
+and you know that a lot of your tags were not backed up, this saves time.
+.RE
+
+\fB\-s\fP
+.RS
+File signature based on front part of file instead of end. The program creates a
+backup file name for the tag based on the contents of the music near the end of
+the file. Using this option changes it to base the backup file name on the music
+near the start of the file. If this option is used for backup it must also be
+used for restore. Use this option if you have faulty tag updating software that
+corrupts the end of the file. My experience is that faulty tag editing software
+is more likely to corrupt the start of the file. Note that these corruptions of
+the file do not normally affect the listening experiencing because they only
+delete a couple of thousandths of a second from the start or end of the file. I
+recommend using Jampal as your tag editor because it does not corrupt the
+beginning or end of the file.
+.RE
+
+\fB\-x\fP
+.RS
+Tags in 256 subdirectories. The tag backup files will be placed in
+subdirectories named 00,01, ... up to ff, (256 in all). This has the following
+advantages: 
+
+.HP
+(1) It overcomes a limitation in the FAT32 file system of 16384
+files per directory, so if you have more than that number of mp3 files and you
+are using FAT32 you will have to use the \-x option. 
+
+.HP
+(2) It makes it easier for
+File Managers \- If you click on a directory with 16000 files in it, 
+the system can hang for a minute or so while it retrieves the information. If you
+use the \-x option when creating a backup, you must use it when restoring tags
+and also when updating the backup. I recommend using the \-x option even if you
+are using a file system that handles such large directories, beacuse the smaller
+directories are more manageable.
+.RE
+
+.SH EXAMPLES
+tagbkup \-v \-r \-x \-d $MAINDIR/000904_1758_rest /cdrom/*/*.mp3 $TAGBKUP/tagbkup
+
+.RS
+Restore files from a cdrom in a directory structure than includes album
+directories. While restoring them copy the tags from the tag bakup in 
+directory $TAGBKUP/tagbkup. Any files that have no tag backup are not copied.
+.RE
+
+.SH FILES
+
+.IR tag_xxxxxxxxxxxxxxxx_000.mp3
+.RS
+When creating a backup, the program creates files with names like
+tag_486c9c23c09d87c8_000.mp3. The long string of hexadecimal digits identifies a
+checksum of the actual mp3 sound data. This tag file is a real mp3 file
+containing a few milliseconds of silence, you can examine it with a tag editing
+program (e.g. load it into the jampal library). In some systems you can display
+the song titles, artists, etc. in the backup files by selecting options on the
+title bar.
+.RE
+.PP
+
+.IR tagbkup.log
+.RS
+This is created in the backup directory.
+This contains a list of the
+backup file names and the original files they came from.
+.RE
+
+.SH SEE ALSO
+.BR jampal (1)
+
+.SH WEB
+http://jampal.sourceforge.net/tagbkup.html
+
+
+

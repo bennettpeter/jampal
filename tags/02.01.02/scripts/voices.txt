@@ -1,0 +1,13 @@
+# voices.txt
+# This is found in scripts as well as jampal home.
+# jampal home version overrides scripts version
+# Jampal home version is updated by the customize dialog
+# Language|Engine|Voice|
+# Language: 3 char code, blank for songs without lang code, "other" for others not in list
+# Engines: eSpeak, Microsoft, Cepstral, FreeTTS, None
+# Voices: if blank for eSpeak uses default for language, for others uses default
+# For espeak if the voice starts with mb- it uses mbrola
+#|eSpeak||
+other|eSpeak||
+|eSpeak|mb-en1
+eng|eSpeak|mb-en1

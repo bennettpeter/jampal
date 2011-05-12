@@ -1,0 +1,426 @@
+VB Speech to text 
+
+Const SVSFlagsAsync = 1 
+const SVSFPurgeBeforeSpeak = 2 
+
+Dim Speech
+Dim FSO
+
+CreateObjects
+Main
+DestroyObjects
+Quit
+
+Sub Main
+        Dim sText
+        sText = InputBox("Enter the text you want the computer to say", "Text2Speech")
+        sText = Trim(sText)
+        If sText <> "" Then
+                SpeakText sText
+        End If
+End Sub
+
+Sub SpeakText(sText)
+        On Error Resume Next
+        Speech.Speak sText, SVSFlagsAsync + SVSFPurgeBeforeSpeak
+        Do
+                Sleep 100
+        Loop Until Speech.WaitUntilDone(10)
+End Sub
+
+Sub StopSpeaking()
+        On Error Resume Next
+        Speech.Speak vbNullString, SVSFPurgeBeforeSpeak
+        Set Speech = Nothing
+End Sub
+
+Sub CreateObjects
+        Set Speech = CreateObject("SAPI.SpVoice")
+        Set FSO = CreateObject("Scripting.FileSystemObject")
+End Sub
+
+Sub DestroyObjects
+        Set Speech = Nothing
+        Set FSO = Nothing
+End Sub
+
+Sub Sleep(nTimeout)
+        WScript.Sleep nTimeout
+End Sub
+
+Sub Quit
+        WScript.Quit
+End Sub
+
+
+To wav file 
+
+
+'Create Object
+Set objVoice = CreateObject("SAPI.SpVoice")
+
+Const SVSFlagsAsync = 1
+Const SSFMCreateForWrite = 3
+
+
+'Basic speech
+objVoice.Speak "Hello I am talking to you"
+
+'Speech while continuing with the rest of the script.
+'(warning, if the script finished before the speech, the speech will stop)
+objVoice.Speak "You should see a message box, while I am talking", SVSFlagsAsync
+MsgBox "This is the message box that I mentioned."
+
+
+'List voices that are installed.
+For Each strVoice in objVoice.GetVoices
+    Wscript.Echo strVoice.GetDescription
+Next
+
+
+'Change voice (these may not work if you don't have these voices installed).
+Set objVoice.Voice = objVoice.GetVoices("Name=Microsoft Anna").Item(0)
+objVoice.Speak "Hi, this is Microsoft Anna."
+
+Set objVoice.Voice = objVoice.GetVoices("Name=Microsoft Sam").Item(0)
+objVoice.Speak "And this is Microsoft Sam"
+
+
+'Record speech to a WAV file
+Set objFile = CreateObject("SAPI.SpFileStream.1")
+objFile.Open "C:\Record.wav", SSFMCreateForWrite
+Set objVoice.AudioOutputStream = objFile
+objVoice.Speak "This text will be recorded to be played back later"
+
+
+Speech to wav file
+
+'By Timbo
+
+Const SVSFlagsAsync = 1 
+const SVSFPurgeBeforeSpeak = 2 
+
+Dim Speech
+Dim FSO
+
+Dim output
+Dim format
+
+CreateObjects
+Main
+DestroyObjects
+Quit
+
+Sub Main
+        Dim sText
+        sText = InputBox("Enter the text you want the computer to say", "Text2Speech")
+        sText = Trim(sText)
+        If sText <> "" Then
+                SpeakText sText
+        End If
+End Sub
+
+Sub SpeakText(sText)
+        On Error Resume Next
+        Speech.Speak sText, SVSFlagsAsync + SVSFPurgeBeforeSpeak
+        Do
+                Sleep 100
+        Loop Until Speech.WaitUntilDone(10)
+End Sub
+
+Sub StopSpeaking()
+        On Error Resume Next
+        Speech.Speak vbNullString, SVSFPurgeBeforeSpeak
+        Set Speech = Nothing
+End Sub
+
+Sub CreateObjects
+        Set Speech = CreateObject("SAPI.SpVoice")
+        Set FSO = CreateObject("Scripting.FileSystemObject")
+    Set output = CreateObject("SAPI.SpFileStream")
+    Set format = CreateObject("SAPI.SpAudioFormat")
+    format.Type = 35
+    Set output.Format = format
+    output.Open "test.wav", 3
+    Set Speech.AudioOutputStream = output
+End Sub
+
+Sub DestroyObjects
+        Set Speech = Nothing
+        Set FSO = Nothing
+End Sub
+
+Sub Sleep(nTimeout)
+        WScript.Sleep nTimeout
+End Sub
+
+Sub Quit
+        WScript.Quit
+End Sub
+
+
+Text to speech article - 
+
+Forget it! Microsoft Sam and other Microsoft supplied SAPI5 voices have a couple of major issues, making them work on the Internet Information Services resembles to voodoo magic. However, it is doable. I shall describe the way to make your website speak, but you will not like the solution.
+
+Registry permissions
+First issue I am going to describe is registry permissions. Let us perform a simple test. The following example is a short ASP JScript code that lists all the SAPI5 voices found. Save the following example to a file with ASP extension ("test.asp" for example) inside your C:\Inetpub\wwwroot folder:
+
+<script runat="Server" language="JScript">
+var
+  voice = new ActiveXObject("SAPI.SpVoice"),
+  voices, i, n;
+
+voices = voice.GetVoices("");
+n = voices.Count;
+for (i = 0; i < n; i++) {
+  var
+     v = voices.Item(i);
+
+  Response.Write("Voice ID: " + v.Id + ", Title: " +
+     v.GetDescription()+ "</br>");
+}
+</script>Example 1 Generate a list of installed SAPI5 voices using ASP script
+
+When you try to load the file using URL address ("http://localhost/test.asp" for example) in your browser, you get the following error:
+
+HTTP 500.100 - Internal Server Error - ASP error
+Internet Information Services
+
+Error 0x80045039After doing some research, I found the sperror.h file, giving the following error description:
+
+SPERR_NO_MORE_ITEMS
+When enumerating items, the requested index is greater than
+the count of items.To put it in another way, SAPI5 core did not find any voices.
+
+Let us continue our test. Go to the IIS's configuration and temporary disable the anonymous access to the sample ASP file forcing you to authenticate when you reload it. Provide credentials of any user with administrative privilege and voila - it works now.
+
+When things work for one user and not for another on the very same computer, the usual cause is permission problems. This led me to investigate the behaviour of SAPI5 core further and to discover the following:
+
+Any process trying to make use of SAPI5 voices requires both: read and write access to the 
+HKLM\SOFTWARE\Microsoft\Speech
+ key and its sub-keys.
+
+Therefore, if you grant the IUSR_machine user full access to this registry key, restart the World Wide Web Publishing service the Example 1 above starts working.
+
+Microsoft Sam loves to interact
+In previous chapter, we have seen the example, how to list the installed SAPI5 voices. Let us take a look, how to make it speak next. The example below is a simple script, which opens a TestSAPI.wav file in the _private folder. Make sure the IUSR_machine user has write permission to the _private folder. It searches for all English SAPI5 voices installed next, ordering them by preferred attributes. Finally, it selects the first appropriate voice and tries to synthesize the "Hello world!" sentence into the WAV file.
+
+<script runat="Server" language="JScript">
+var
+  output = new ActiveXObject("SAPI.SpFileStream"),
+  format = new ActiveXObject("SAPI.SpAudioFormat"),
+  voice = new ActiveXObject("SAPI.SpVoice"),
+  voices;
+
+// Prepare the output WAV file.
+format.Type = 18 /*SAFT16kHz16BitMono*/;
+output.Format = format;
+output.Open(Server.MapPath("_private/TestSAPI.wav"),
+  3 /*SSFMCreateForWrite*/);
+
+try {
+  // Find all installed English voices (language code 9).
+  // Male adult speakers preferably.
+  voices = voice.GetVoices("Language=9",
+     "Gender=Male;Age=Adult");
+  if (voices.Count) {
+     // Select the first voice.
+     voice.Voice = voices.Item(0);
+
+     // Output goes to WAV file.
+     voice.AudioOutputStream = output;
+
+     // Read the text.
+     voice.Speak("<SAPI>Hello world!</SAPI>",
+       8 /*SVSFIsXML*/);
+
+     Response.Write("Success!");
+  } else
+     Response.Write("No English SAPI5 voices found.");
+} catch (e) {
+  throw e;
+} finally {
+  output.Close();
+}
+</script>Example 2 Read a sentence to a WAV file
+
+Suppose your only English SAPI5 voice installed is Microsoft Sam. When you try to run the above script entering its URL in your browser, you get the following error:
+
+HTTP 500.100 - Internal Server Error - ASP error
+Internet Information Services
+
+Error 0x800A0046 Permission deniedThe error description pinpoints the line with the voice.Speak() method call. Providing you granted the write permission to the _private folder to IUSR_machine user correctly, the folder should contain an almost empty TestSAPI.wav file. Therefore, this "Permission denied" error does not consequence insufficient access right to the _private folder.
+
+We can try the same trick as in previous chapter, by disabling the anonymous access to the sample ASP file, and restarting the World Wide Web Publishing service. After reloading the example and providing the credentials of any user with administrative privileges, it either works either returns an error:
+
+HTTP 500.100 - Internal Server Error - ASP error
+Internet Information Services
+
+Error 0x80004005 Unspecified errorMake sure to restart the World Wide Web Publishing service after each retry - SAPI5 and/or Microsoft Sam have some issues beyond ones described here.
+
+The difference between working credentials or non-working ones is the interactivity of the user.
+
+Microsoft Sam voice works only when run by the same user, who is also logged in locally - namely the interactive user.
+
+I assume the Microsoft Sam voice wants to access the sound card, even if you configure the output to a WAV file or a memory stream. Other proprietary SAPI5 voices do not exhibit the same behaviour. It is specific to Microsoft supplied voices.
+
+Therefore, if you would like to make use of the Microsoft Sam voice on your website, you should:
+
+1.Create a user X on the web server, copying the settings from IUSR_machine user.
+2.Configure your website to run as user X.
+3.Grant the user X read and write access to the HKLM\SOFTWARE\Microsoft\Speech registry key (see the Registry permissions chapter above).
+4.Configure the web server to auto-login the user X locally after each server restart.
+... or forget about the Microsoft Sam voice and get some third party one
+
+
+wave format display program 
+
+'============================================================================'    
+ ' NAME    : WavProp                                                         '    
+ ' AUTHOR  : C.J.B                                                           '   
+ ' DATE    : 1/9/2010                                                        '    
+ ' VERSION : 0.0.1                                                           '    
+ ' COMMENT : Needs sapi.dll 5.0+                                             '    
+ ' REPORTS : AudioFormatType , AvgBytesPerSec , BitsPerSample                '    
+ '         : BlockAlign , Channels , ExtraData , FormatTag , SamplesPerSec   '    
+ '==========================================================================='    
+ Option Explicit    
+  
+ Const SSFMOpenForRead = 0    
+  
+ Dim inFileStream    
+ Dim AudioFormat    
+ Dim WaveFormatEx    
+  
+ Set inFileStream = CreateObject( "SAPI.SpFileStream" )        ' ISpeechFileStream    
+ inFileStream.Open WScript.Arguments(0) , SSFMOpenForRead    
+ Set AudioFormat = inFileStream.Format                         ' ISpeechAudioFormat    
+ WScript.Echo Enum_SpeechAudioFormatType( AudioFormat.Type )    
+ Set WaveFormatEx = AudioFormat.GetWaveFormatEx                ' ISpeechWaveFormatEx             
+ WScript.Echo GetWaveInfo( WaveFormatEx )    
+ inFileStream.Close    
+ CleanUp()    
+  
+ Function GetWaveInfo( WFEx )    
+ GetWaveInfo = "AvgBytesPerSec " & WFEx.AvgBytesPerSec  & VbNewLine &_    
+ "BitsPerSample  " & WFEx.BitsPerSample   & VbNewLine &_    
+ "BlockAlign     " & WFEx.BlockAlign      & VbNewLine &_    
+ "Channels       " & WFEx.Channels        & VbNewLine &_    
+ "ExtraData      " & WFEx.ExtraData       & VbNewLine &_    
+ "FormatTag      " & WFEx.FormatTag       & VbNewLine &_    
+ "SamplesPerSec  " & WFEx.SamplesPerSec    
+ End Function    
+  
+ Function Enum_SpeechAudioFormatType( inAudioFormatType )    
+ Select Case     inAudioFormatType    
+ Case -1  Enum_SpeechAudioFormatType = "SAFTDefault"    
+ Case  0  Enum_SpeechAudioFormatType = "SAFTNoAssignedFormat"    
+ Case  1  Enum_SpeechAudioFormatType = "SAFTText"    
+ Case  2  Enum_SpeechAudioFormatType = "SAFTNonStandardFormat"    
+ Case  3  Enum_SpeechAudioFormatType = "SAFTExtendedAudioFormat"    
+ Case  4  Enum_SpeechAudioFormatType = "SAFT8kHz8BitMono"    
+ Case  5  Enum_SpeechAudioFormatType = "SAFT8kHz8BitStereo"    
+ Case  6  Enum_SpeechAudioFormatType = "SAFT8kHz16BitMono"    
+ Case  7  Enum_SpeechAudioFormatType = "SAFT8kHz16BitStereo"    
+ Case  8  Enum_SpeechAudioFormatType = "SAFT11kHz8BitMono"    
+ Case  9  Enum_SpeechAudioFormatType = "SAFT11kHz8BitStereo"    
+ Case 10  Enum_SpeechAudioFormatType = "SAFT11kHz16BitMono"    
+ Case 11  Enum_SpeechAudioFormatType = "SAFT11kHz16BitStereo"    
+ Case 12  Enum_SpeechAudioFormatType = "SAFT12kHz8BitMono"    
+ Case 13  Enum_SpeechAudioFormatType = "SAFT12kHz8BitStereo"    
+ Case 14  Enum_SpeechAudioFormatType = "SAFT12kHz16BitMono"    
+ Case 15  Enum_SpeechAudioFormatType = "SAFT12kHz16BitStereo"    
+ Case 16  Enum_SpeechAudioFormatType = "SAFT16kHz8BitStereo"    
+ Case 17  Enum_SpeechAudioFormatType = "SAFT16kHz8BitMono"    
+ Case 18  Enum_SpeechAudioFormatType = "SAFT16kHz16BitMono"    
+ Case 19  Enum_SpeechAudioFormatType = "SAFT16kHz16BitStereo"    
+ Case 20  Enum_SpeechAudioFormatType = "SAFT22kHz8BitMono"    
+ Case 21  Enum_SpeechAudioFormatType = "SAFT22kHz8BitStereo"    
+ Case 22  Enum_SpeechAudioFormatType = "SAFT22kHz16BitMono"    
+ Case 23  Enum_SpeechAudioFormatType = "SAFT22kHz16BitStereo"    
+ Case 24  Enum_SpeechAudioFormatType = "SAFT24kHz8BitMono"    
+ Case 25  Enum_SpeechAudioFormatType = "SAFT24kHz8BitStereo"    
+ Case 26  Enum_SpeechAudioFormatType = "SAFT24kHz16BitMono"    
+ Case 27  Enum_SpeechAudioFormatType = "SAFT24kHz16BitStereo"    
+ Case 28  Enum_SpeechAudioFormatType = "SAFT32kHz8BitMono"    
+ Case 29  Enum_SpeechAudioFormatType = "SAFT32kHz8BitStereo"    
+ Case 30  Enum_SpeechAudioFormatType = "SAFT32kHz16BitMono"    
+ Case 31  Enum_SpeechAudioFormatType = "SAFT32kHz16BitStereo"    
+ Case 32  Enum_SpeechAudioFormatType = "SAFT44kHz8BitMono"    
+ Case 33  Enum_SpeechAudioFormatType = "SAFT44kHz8BitStereo"    
+ Case 34  Enum_SpeechAudioFormatType = "SAFT44kHz16BitMono"    
+ Case 35  Enum_SpeechAudioFormatType = "SAFT44kHz16BitStereo"    
+ Case 36  Enum_SpeechAudioFormatType = "SAFT48kHz8BitMono"    
+ Case 37  Enum_SpeechAudioFormatType = "SAFT48kHz8BitStereo"    
+ Case 38  Enum_SpeechAudioFormatType = "SAFT48kHz16BitMono"    
+ Case 39  Enum_SpeechAudioFormatType = "SAFT48kHz16BitStereo"    
+ Case 40  Enum_SpeechAudioFormatType = "SAFTTrueSpeech_8kHz1BitMono"    
+ Case 41  Enum_SpeechAudioFormatType = "SAFTCCITT_ALaw_8kHzMono"    
+ Case 42  Enum_SpeechAudioFormatType = "SAFTCCITT_ALaw_8kHzStereo"    
+ Case 43  Enum_SpeechAudioFormatType = "SAFTCCITT_ALaw_11kHzMono"    
+ Case 44  Enum_SpeechAudioFormatType = "SAFTCCITT_ALaw_11kHzStereo"    
+ Case 45  Enum_SpeechAudioFormatType = "SAFTCCITT_ALaw_22kHzMono"    
+ Case 46  Enum_SpeechAudioFormatType = "SAFTCCITT_ALaw_22kHzStereo"    
+ Case 47  Enum_SpeechAudioFormatType = "SAFTCCITT_ALaw_44kHzMono"    
+ Case 48  Enum_SpeechAudioFormatType = "SAFTCCITT_ALaw_44kHzStereo"    
+ Case 49  Enum_SpeechAudioFormatType = "SAFTCCITT_uLaw_8kHzMono"    
+ Case 50  Enum_SpeechAudioFormatType = "SAFTCCITT_uLaw_8kHzStereo"    
+ Case 51  Enum_SpeechAudioFormatType = "SAFTCCITT_uLaw_11kHzMono"    
+ Case 52  Enum_SpeechAudioFormatType = "SAFTCCITT_uLaw_11kHzStereo"    
+ Case 53  Enum_SpeechAudioFormatType = "SAFTCCITT_uLaw_22kHzMono"    
+ Case 54  Enum_SpeechAudioFormatType = "SAFTCCITT_uLaw_22kHzStereo"    
+ Case 55  Enum_SpeechAudioFormatType = "SAFTCCITT_uLaw_44kHzMono"    
+ Case 56  Enum_SpeechAudioFormatType = "SAFTCCITT_uLaw_44kHzStereo"    
+ Case 57  Enum_SpeechAudioFormatType = "SAFTADPCM_8kHzMono"    
+ Case 58  Enum_SpeechAudioFormatType = "SAFTADPCM_8kHzStereo"    
+ Case 59  Enum_SpeechAudioFormatType = "SAFTADPCM_11kHzMono"    
+ Case 60  Enum_SpeechAudioFormatType = "SAFTADPCM_11kHzStereo"    
+ Case 61  Enum_SpeechAudioFormatType = "SAFTADPCM_22kHzMono"    
+ Case 62  Enum_SpeechAudioFormatType = "SAFTADPCM_22kHzStereo"    
+ Case 63  Enum_SpeechAudioFormatType = "SAFTADPCM_44kHzMono"    
+ Case 64  Enum_SpeechAudioFormatType = "SAFTADPCM_44kHzStereo"    
+ Case 65  Enum_SpeechAudioFormatType = "SAFTGSM610_8kHzMono"    
+ Case 66  Enum_SpeechAudioFormatType = "SAFTGSM610_11kHzMono"    
+ Case 67  Enum_SpeechAudioFormatType = "SAFTGSM610_22kHzMono"    
+ Case 68  Enum_SpeechAudioFormatType = "SAFTGSM610_44kHzMono"    
+ End Select    
+ End Function    
+  
+ Sub CleanUp()    
+ Set(AudioFormat)=Nothing    
+ Set(inFileStream)=Nothing    
+ Set(WaveFormatEx)=Nothing    
+ WScript.Quit    
+ End Sub 
+
+
+General Nores on VBS
+
+vbs files are run from 
+wscript or cscript
+cscript is command line, wscript is windows executable
+Arguments
+Dim ArgObj, var1, var2 
+Set ArgObj = WScript.Arguments 
+'First parameter
+var1 = ArgObj(0) 
+'Second parameter
+var2 = ArgObj(1) 
+msgbox "Variable 1=" & var1 & " Variable 2=" & var2
+'Clear object out of memory
+set ArgObj = Nothing
+
+UBound(name) returns upper bound of index.
+UBound(name) returns lower bound.
+
+vbscript language -
+http://msdn.microsoft.com/en-us/library/t0aew7h6.aspx
+Windows script host - 
+http://msdn.microsoft.com/en-us/library/9bbdkx3k(v=VS.85).aspx
+Speech API
+http://msdn.microsoft.com/en-us/library/ee125663(VS.85).aspx
+File system object
+http://msdn.microsoft.com/en-us/library/hww8txat.aspx
+
+Wscript.StdOut.WriteLine 

@@ -1,0 +1,67 @@
+This work was packaged for Debian by:
+    Peter Bennett <pgbennett@users.sourceforge.net> on Wed, 02 Mar 2011 18:27:57 -0500
+
+The current Debian Maintainer is
+    Peter Bennett <pgbennett@users.sourceforge.net>
+
+It was downloaded from <http://sourceforge.net/projects/jampal>
+
+Upstream Author(s):
+    Peter Bennett <pgbennett@comcast.net>
+
+Copyright:
+    Copyright (C) 2004-2011 Peter Bennett <pgbennett@comcast.net>
+    See additional copyright holders under specific files below.
+
+License:
+    GPL version 3 or later, see /usr/share/common-licenses/GPL-3.
+
+Debian packaging is:
+    Copyright (C) 2011 Peter Bennett <pgbennett@comcast.net>
+    and is licensed under the GPL version 3 or later, 
+    see /usr/share/common-licenses/GPL-3.
+
+Files: javazoom/*
+Copyright: 1993, 1994 Tobias Bading (bading@cs.tu-berlin.de)
+License: GPL 2 or later
+
+Files: org/tritonus/*
+Copyright: 1999 - 2002 Matthias Pfisterer <Matthias.Pfisterer@gmx.de>
+           1999 - 2000 by Florian Bomers <florian@bome.com>
+License: GPL 2 or later
+
+Files: pgbennett/id3/*
+Copyright: 2001,2002 Jonathan Hilliker
+           2002 Jonathan Hilliker & Andreas Grunewald
+           2004 Peter Bennett <pgbennett@users.sf.net>
+License: GPL 2 or later
+
+Files: pgbennett/jampal/AudioCommon.java, pgbennett/jampal/AudioPlayer.java,
+Copyright: 1999 - 2001 by Matthias Pfisterer <Matthias.Pfisterer@web.de>
+License: GPL 2 or later
+
+Files: pgbennett/jampal/*
+Copyright: 2004-2011 Peter Bennett <pgbennett@users.sf.net>
+License: GPL 3 or later
+
+Files: pgbennett/mp3/MP3Info.java
+Copyright: 2000-2001  Cedric Tefft <cedric@earthling.net>
+License: GPL 2 or later
+
+License: GPL 3 or later
+Jampal is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Jampal is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Jampal.  If not, see <http://www.gnu.org/licenses/>.
+
+On Debian systems, the complete text of the GNU General Public
+License, version 3, can be found in /usr/share/common-licenses/GPL-3
+
