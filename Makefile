@@ -95,9 +95,8 @@ distclean: clean
 
 source: clean get_version
 	mkdir -p package/source
-	tar -c -z --exclude-vcs -f  package/source/jampal-$(VERSION).tar.gz html jampal man \
-      nbproject ptts scripts tagbkup debian utility looks \
-      Makefile jampal_package.sh nbbuild.xml misc VERSION
+	tar -c -z --exclude-vcs -f package/source/jampal-$(VERSION).tar.gz \
+      `echo * | sed "s/ package / /"`
 
 unix:
 #	Create cygwin or generic unix installer.
