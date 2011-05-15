@@ -1,9 +1,9 @@
-#Sun Mar 27 09:21:10 EDT 2011
+#Sun May 15 09:41:01 EDT 2011
 delete-frame=TXXXjampal
 libraryname=custom.jmp
 file-version=002
-charset=UTF-8
 type=L
+charset=UTF-8
 speech1b=
 speech1a=
 continuous=false
@@ -16,13 +16,13 @@ tableheight=300
 tablewidth=640
 selectedrow=-1
 resize-mode=0
+locationy=24
 colwidth5=106
-locationy=0
-locationx=0
 colwidth4=106
+locationx=0
 playlist=playlist
-colwidth3=106
 tag-editor=ID3V2TAG,APIC00,Picture,TITLE,TIT2,Title,ARTIST,TPE1,Artist,ALBUM,TALB,Album,TRACK,TRCK,Track,GENRE,TCON,Genre
+colwidth3=106
 colwidth2=106
 colwidth1=106
 colwidth0=106

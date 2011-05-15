@@ -1,9 +1,9 @@
-#Sun Mar 27 09:19:15 EDT 2011
+#Sun May 15 09:40:44 EDT 2011
 delete-frame=TXXXjampal
 libraryname=default.jmp
 file-version=002
-charset=UTF-8
 type=L
+charset=UTF-8
 speech1b=
 speech1a=
 continuous=false
@@ -20,13 +20,13 @@ colwidth9=64
 colwidth8=64
 colwidth7=64
 colwidth6=197
-colwidth5=77
 locationy=390
-locationx=26
+colwidth5=77
 colwidth4=64
+locationx=26
 playlist=playlist
-colwidth3=38
 tag-editor=ID3V2TAG,APIC00,Picture,TITLE,TIT2,Title,ARTIST,TPE1,Artist,ALBUM,TALB,Album,TRACK,TRCK,Track,GENRE,TCON,Genre,ID3V2TAG,COMMengJampal\:Alternate,Alternate Albums\:Tracks,ID3V2TAG,TXXXjampal,Jampal,ID3V2TAG,TXXXDirectory,Directory
+colwidth3=38
 colwidth2=113
 colwidth1=64
 colwidth0=64
