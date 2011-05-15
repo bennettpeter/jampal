@@ -1,5 +1,5 @@
 Source: jampal
-Section: sound
+Section: contrib/sound
 Priority: optional
 Maintainer: Peter Bennett <pgbennett@comcast.net>
 Build-Depends: openjdk-6-jdk, rman, rsync
@@ -8,7 +8,7 @@ Homepage: http://jampal.sf.net
 
 Package: jampal
 Architecture: any
-Depends:  ${shlibs:Depends}, openjdk-6-jre | java-virtual-machine, 
+Depends:  ${shlibs:Depends}, 
  openjdk-6-jre | java6-runtime, sox, gawk, lame
 Recommends: openoffice.org-writer, openoffice.org-calc
 Suggests: mbrola
