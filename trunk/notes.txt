@@ -372,25 +372,6 @@ test playlistcd for looping of sh
  changed ~ to $HOME in scripts
 Test 32 bit machine
 Support for complete removal - remove config etc but not mp3, not libs
-There seem to be excessive files in playlist directory
-    -rwxrwx--- 1 root vboxsf     285 2011-04-30 13:38 cdparms.profile
-    -rwxrwx--- 1 root vboxsf 3182294 2011-04-30 13:38 cdsource.jmp
-    -rwxrwx--- 1 root vboxsf 3393447 2011-04-30 13:38 extract.jmp
-    -rwxrwx--- 1 root vboxsf 3393447 2011-04-30 13:38 extsort.jmp
-    -rwxrwx--- 1 root vboxsf 9397983 2011-04-30 13:38 libnum.jmp
-    -rwxrwx--- 1 root vboxsf 9397983 2011-04-30 13:38 libsort.jmp
-    -rwxrwx--- 1 root vboxsf 1420815 2011-04-30 13:38 listing.txt
-    -rwxrwx--- 1 root vboxsf      71 2011-04-30 13:38 parameters.txt
-    -rwxrwx--- 1 root vboxsf    1361 2011-04-30 13:38 playlist-110430_1338_peter_car.jampal
-    -rwxrwx--- 1 root vboxsf   16352 2011-04-30 13:41 playlistcd.8425.errlog
-    -rwxrwx--- 1 root vboxsf 3182294 2011-04-30 13:38 playlist-cd.jmp
-previously only this many
-    -rwxrwx--- 1 root vboxsf     332 2011-03-27 18:38 cdparms.profile
-    -rwxrwx--- 1 root vboxsf 3162824 2011-03-27 18:38 cdsource.jmp
-    -rwxrwx--- 1 root vboxsf     136 2011-03-27 18:38 parameters.txt
-    -rwxrwx--- 1 root vboxsf    1375 2011-04-17 09:37 playlist-110327_1838_peter_car.jampal
-    -rwxrwx--- 1 root vboxsf 3162824 2011-04-17 09:37 playlist-cd.jmp
-Excessive zombies from playlistcd.sh
 
 uploading package
 dput ppa:pgbennett/ppa name.changes
@@ -400,6 +381,69 @@ use date -R to get date
 use ppa00~lucid maverick natty oneiric
 
 lintian -i -I --show-overrides jampal_02.01.02-01_amd64.changes
+
+2 source zips - one complete, one dfsg
+http://www.debian.org/doc/manuals/developers-reference/best-pkging-practices.html#bpp-origtargz
+ it is not a sufficient reason for omitting a file that it is used only when building on MS-DOS.
+
+Ubuntu -  main, restricted, universe and multiverse
+Debian - main, contrib, non free
+
+Adding new entries with "reportbug"
+You can use reportbug (apt-get install reportbug):
+
+$ reportbug --email username@domain.tld wnpp
+Using 'Your Name <username@domain.tld>' as your from address.
+Getting status for wnpp...
+Querying Debian bug tracking system for reports on wnpp
+(Use ? for help at prompts.)
+...
+
+You will see a list of reported bugs against WNPP which you should read to prevent a second report for the same package.
+
+After the buglist you are asked for the request type:
+
+What sort of request is this?
+
+1 ITP This is an "Intent To Package". Please submit a package description
+along with copyright and URL in such a report.
+
+Choose the request type: 
+
+After your selection you will be asked for the package name:
+
+Choose the request type: x
+Please enter the proposed package name: PACKAGENAME
+Checking status database...
+
+.If your request type is ITP (1) or RFP (4) you are asked for a short description and then for some information about the package:
+
+Please briefly describe this package; this should be an appropriate short description for the eventual package:
+> A DESCRIPTION
+
+Subject: ITP: PACKAGENAME -- A DESCRIPTION
+Package: wnpp
+Version: N/A; reported 2002-01-30
+Severity: wishlist
+
+* Package name : PACKAGENAME
+Version : x.y.z
+Upstream Author : Name <somebody@some.org>
+* URL : http://www.some.org/
+* License : (GPL, LGPL, BSD, MIT/X, etc.)
+Description : A DESCRIPTION
+
+To reconfigure, re-run reportbug with the "--
+configure" option.
+
+Below the "Description" line you should give more information about the package.
+
+If you want to provide additional information, please wait to
+receive the bug tracking number via email; you may then send any extra
+information to n@bugs.debian.org (e.g. 999999@bugs.debian.org), where n is the bug number.  Normally you
+will receive an acknowledgement via email including the bug report number
+within an hour; if you haven't received a confirmation, then the bug reporting process failed at some point (reportbug or MTA failure, BTS maintenance, etc.).
+
 
 
 Future

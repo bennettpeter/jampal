@@ -94,9 +94,16 @@ distclean: clean
 	cd html && make distclean
 
 source: clean get_version
+	# Make source appear under a jampal-version directory
+	# Exclude debian and package directories
 	mkdir -p package/source
-	tar -c -z --exclude-vcs -f package/source/jampal-$(VERSION).tar.gz \
-      `echo * | sed "s/ package / /"`
+	ln -s ../.. package/source/jampal-$(VERSION)
+	cd package/source && echo jampal-$(VERSION)/* | \
+      sed "s/ jampal-$(VERSION)/package / /;"\
+          "s/ jampal-$(VERSION)/debian / /" \
+          > source_filelist.txt
+	cd package/source && tar -c -z --exclude-vcs -f jampal-$(VERSION).tar.gz \
+      `cat source_filelist.txt`
 
 unix:
 #	Create cygwin or generic unix installer.
