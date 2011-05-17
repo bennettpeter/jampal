@@ -38,6 +38,7 @@ clean:
 	rm -rf build_doc
 	rm -f utility/*.jmp
 	rm -rf unix_build
+	rm -rf package/source
 	# Files created by Netbeans
 	rm -rf build dist
 
@@ -97,12 +98,13 @@ source: clean get_version
 	# Make source appear under a jampal-version directory
 	# Exclude debian and package directories
 	mkdir -p package/source
-	ln -s ../.. package/source/jampal-$(VERSION)
-	cd package/source && echo jampal-$(VERSION)/* | \
-      sed "s/ jampal-$(VERSION)/package / /;"\
-          "s/ jampal-$(VERSION)/debian / /" \
+	ln -fs ../.. package/source/jampal-$(VERSION)
+	VERSION=$(VERSION) && cd package/source && echo jampal-$${VERSION}/* | \
+      sed "s@ jampal-$${VERSION}/package @ @;\
+           s@ jampal-$${VERSION}/debian @ @" \
           > source_filelist.txt
-	cd package/source && tar -c -z --exclude-vcs -f jampal-$(VERSION).tar.gz \
+	VERSION=$(VERSION) && cd package/source && \
+      tar -c -z --exclude-vcs -f jampal-$${VERSION}.tar.gz \
       `cat source_filelist.txt`
 
 unix:

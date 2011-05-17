@@ -13,7 +13,7 @@ Depends:  ${shlibs:Depends},
 Recommends: openoffice.org-writer, openoffice.org-calc
 Suggests: mbrola
 Description: Cross platform mp3 song library management system written in java
- Jampal stores and organizes a library of 40,000 songs or more. It can be used
+ Jampal stores and organizes a very large library of songs. It can be used
  as a jukebox to play the songs. It performs extensive editing of song tags
  using ID3v2. The library is based on the IDV3V2 standard. The library is
  extensively customizable. Text to speech voice synthesis to announce song names
