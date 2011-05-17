@@ -444,6 +444,9 @@ information to n@bugs.debian.org (e.g. 999999@bugs.debian.org), where n is the b
 will receive an acknowledgement via email including the bug report number
 within an hour; if you haven't received a confirmation, then the bug reporting process failed at some point (reportbug or MTA failure, BTS maintenance, etc.).
 
+peter@debian601x64:~/proj/local/jampal/jampal-02.01.03$ tar cvf '/media/sf_c/Mount/3125/work'/debian.tar debian
+
+
 
 
 Future
