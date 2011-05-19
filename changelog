@@ -1,10 +1,5 @@
 jampal (02.01.01)
 
-  * Packaged for Debian / Ubuntu
-
-    Debian source and install packages, ready for inclusion in the Debian 
-    or Ubuntu repository, or download from sourceforge.
-
   * Documentation
 
     Created man pages. Generate html documentation from man pages.
