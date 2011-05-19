@@ -22,7 +22,7 @@
 #
 
 # VERSION ?= $(shell read VERSION && echo $$VERSION)
-VERSION=`cat VERSION`
+VERSION := $(shell cat VERSION)
 
 all: 
 	cd jampal && make all
@@ -33,7 +33,6 @@ clean:
 	cd jampal && make clean
 	cd tagbkup && make clean
 	cd html && make clean
-	rm -rf debian/tmp
 	rm -rf tmp OS
 	rm -rf build_doc
 	rm -f utility/*.jmp
@@ -99,12 +98,12 @@ source: clean get_version
 	# Exclude debian and package directories
 	mkdir -p package/source
 	ln -fs ../.. package/source/jampal-$(VERSION)
-	VERSION=$(VERSION) && cd package/source && echo jampal-$${VERSION}/* | \
-      sed "s@ jampal-$${VERSION}/package @ @;\
-           s@ jampal-$${VERSION}/debian @ @" \
+	cd package/source && echo jampal-$(VERSION)/* | \
+           sed "s@ jampal-$(VERSION)/package @ @;\
+           s@ jampal-$(VERSION)/debian @ @" \
           > source_filelist.txt
-	VERSION=$(VERSION) && cd package/source && \
-      tar -c -z --exclude-vcs -f jampal-$${VERSION}.tar.gz \
+	cd package/source && \
+      tar -c -z --exclude-vcs -f jampal-$(VERSION).tar.gz \
       `cat source_filelist.txt`
 
 unix:
@@ -118,7 +117,7 @@ unix:
 	basename `uname -o` > OS
 	mkdir -p package/generic
 	cd unix_build && tar -c -z --exclude-vcs \
-        -f  ../package/generic/jampal-build-`cat ../OS`-`arch`-`cat ../VERSION`.tar.gz *
+        -f  ../package/generic/jampal-build-`cat ../OS`-`arch`-$(VERSION).tar.gz *
 
 get_version:
 	grep "Jampal Version" jampal/src/pgbennett/jampal/MainFrame.java
