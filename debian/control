@@ -9,7 +9,7 @@ Homepage: http://jampal.sf.net
 #Vcs-Browser: http://git.debian.org/?p=collab-maint/jampal.git;a=summary
 
 Package: jampal
-Architecture: any
+Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, tagbkup,
  openjdk-6-jre | java6-runtime, sox, gawk
 Recommends: openoffice.org-writer, openoffice.org-calc
@@ -28,7 +28,7 @@ Description: mp3 song library management system and player
  Song announcements can also be added to songs written to CD or player.
 
 Package: tagbkup
-Architecture: all
+Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: back up and restore mp3 tags
  If you have a lot of information in your mp3 tags, you want to protect it
