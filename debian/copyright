@@ -1,3 +1,14 @@
+Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
+Name: jampal
+Maintainer: Peter Bennett <pgbennett@comcast.net>
+Source: http://sourceforge.net/projects/jampal/files/
+
+
+
+
+
+
+
 This work was packaged for Debian by:
     Peter Bennett <pgbennett@users.sourceforge.net> on Wed, 02 Mar 2011 18:27:57 -0500
 
