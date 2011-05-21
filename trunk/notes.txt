@@ -455,6 +455,8 @@ Possible conflicts
 package.manpages
 package.examples
 
+Fix license in html help
+
 
 
 Future
