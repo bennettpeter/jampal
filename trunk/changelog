@@ -1,3 +1,10 @@
+jampal (02.01.03)
+
+  * Debian support
+
+    Moving debian directory out of the source archive to make sure this is not
+    a native debian package.
+
 jampal (02.01.01)
 
   * Documentation

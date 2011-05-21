@@ -66,11 +66,11 @@ install: all
 	install -d ${DESTDIR}/usr/share/applications/
 	install -m644 desktop/jampal.desktop \
         ${DESTDIR}/usr/share/applications/
-	install -d ${DESTDIR}/usr/share/menu/
-	install -m644 desktop/menu/jampal ${DESTDIR}/usr/share/menu/
-	install -d ${DESTDIR}/usr/share/mime/packages/
-	install -m644 desktop/mime/jampal.xml \
-        ${DESTDIR}/usr/share/mime/packages/
+#	install -d ${DESTDIR}/usr/share/menu/
+#	install -m644 desktop/menu/jampal ${DESTDIR}/usr/share/menu/
+#	install -d ${DESTDIR}/usr/share/mime/packages/
+#	install -m644 desktop/mime/jampal.xml \
+#        ${DESTDIR}/usr/share/mime/packages/
 	rsync -aC desktop/icons/* ${DESTDIR}/usr/share/icons/
 	chmod 644 `find ${DESTDIR}/usr/share/icons -name 'application-jampal.png'`
 

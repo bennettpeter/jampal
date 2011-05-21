@@ -2,7 +2,8 @@ Source: jampal
 Section: contrib/sound
 Priority: extra
 Maintainer: Peter Bennett <pgbennett@comcast.net>
-Build-Depends: debhelper (>= 7.0.50~),openjdk-6-jdk, rman, rsync, quilt
+Build-Depends: debhelper (>= 7.0.50~),openjdk-6-jdk, rman, rsync,
+ quilt (>= 0.46-7~)
 Standards-Version: 3.9.1.0
 Homepage: http://jampal.sf.net
 #Vcs-Git: git://git.debian.org/collab-maint/jampal.git
@@ -10,7 +11,7 @@ Homepage: http://jampal.sf.net
 
 Package: jampal
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, tagbkup,
+Depends: ${misc:Depends}, tagbkup,
  openjdk-6-jre | java6-runtime, sox, gawk
 Recommends: openoffice.org-writer, openoffice.org-calc
 Suggests: mbrola
@@ -35,15 +36,15 @@ Description: back up and restore mp3 tags
  against accidental deletion. You could back up your mp3 files every time you
  update the tags but that will take a lot of disks. Using tagbkup you can back
  up just the tags from your mp3 files and restore them into the files at any
- time. tagbkup can restore tags to your mp3 files even if the mp3 files have been
- renamed or moved to different directories. To back up your tags, create a
+ time. tagbkup can restore tags to your mp3 files even if the mp3 files have
+ been renamed or moved to different directories. To back up your tags, create a
  separate directory where your tag backup will be stored on your hard drive.
- Running tagbkup will copy all of the tags from your mp3 files into files in that
- directory. You can run tagbkup again and use the same backup directory to update
- your backup with files whose tags have changed. Do this on a regular basis to
- make sure you have backed up the most current data. Include your tag backup
- directory in the list of directories backed up with your regular backup process.
- tagbkup also includes an option to copy tags from one mp3 to another or to copy
- them to empty mp3 files of the same name in another directory. You can also
- strip the tags off a file (use the -cm option, see below).
+ Running tagbkup will copy all of the tags from your mp3 files into files in
+ that directory. You can run tagbkup again and use the same backup directory to
+ update your backup with files whose tags have changed. Do this on a regular
+ basis to make sure you have backed up the most current data. Include your tag
+ backup directory in the list of directories backed up with your regular backup
+ process. tagbkup also includes an option to copy tags from one mp3 to another
+ or to copy them to empty mp3 files of the same name in another directory. You
+ can also strip the tags off a file (use the -cm option, see below).
 
