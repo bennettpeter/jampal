@@ -7,7 +7,4 @@
 # Engines: eSpeak, Microsoft, Cepstral, FreeTTS, None
 # Voices: if blank for eSpeak uses default for language, for others uses default
 # For espeak if the voice starts with mb- it uses mbrola
-#|eSpeak||
-other|eSpeak||
-|eSpeak|mb-en1
-eng|eSpeak|mb-en1
+|eSpeak||100|
