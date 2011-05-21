@@ -98,12 +98,13 @@ source: clean get_version
 	# Exclude debian and package directories
 	mkdir -p package/source
 	ln -fs ../.. package/source/jampal-$(VERSION)
-	cd package/source && echo jampal-$(VERSION)/* | \
-           sed "s@ jampal-$(VERSION)/package @ @;\
-           s@ jampal-$(VERSION)/debian @ @" \
+	cd package/source && echo jampal-${VERSION}/* | \
+           sed "s@ jampal-${VERSION}/package @ @;\
+           s@ jampal-${VERSION}/debian @ @;\
+           s@ jampal-${VERSION}/notes.txt @ @" \
           > source_filelist.txt
 	cd package/source && \
-      tar -c -z --exclude-vcs -f jampal-$(VERSION).tar.gz \
+      tar -c -z --exclude-vcs --exclude=**/notes.txt -f jampal-$(VERSION).tar.gz \
       `cat source_filelist.txt`
 
 unix:

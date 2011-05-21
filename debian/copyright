@@ -35,6 +35,10 @@ Files: jampal/src/pgbennett/mp3/MP3Info.java
 Copyright: 2000-2001  Cedric Tefft <cedric@earthling.net>
 License: GPL-2+
 
+Files: jampal/src/pgbennett/jampal/frames.txt
+Copyright: 2000 Martin Nilsson <nilsson@id3.org>
+License: ID3V2
+
 License: GPL-2+
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -72,3 +76,15 @@ License: GPL-3+
  License version 2 can be found in the file
  '/usr/share/common-licenses/GPL-3'.
 
+License: ID3V2
+ You may freely redistribute the text files found on these pages if otherwise
+ isn't stated on the page. You may freely quote the text found on these pages as
+ long as a reference to the page is included. You may freely use the ID3v2 logo
+ on pages containing ID3v2 information and in programs supporting the ID3v2
+ standard.
+ .
+ Distribution of this document is unlimited.
+ .
+ Page references:
+ http://id3.org/d3v2.3.0
+ http://id3.org/id3v2.4.0-frames
