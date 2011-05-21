@@ -1,5 +1,5 @@
 Source: jampal
-Section: contrib/sound
+Section: sound
 Priority: extra
 Maintainer: Peter Bennett <pgbennett@comcast.net>
 Build-Depends: debhelper (>= 7.0.50~),openjdk-6-jdk, rman, rsync,
@@ -13,7 +13,7 @@ Package: jampal
 Architecture: all
 Depends: ${misc:Depends}, tagbkup,
  openjdk-6-jre | java6-runtime, sox, gawk
-Recommends: openoffice.org-writer, openoffice.org-calc
+Recommends: openoffice.org-writer, openoffice.org-calc, espeak
 Suggests: mbrola
 Description: mp3 song library management system and player
  Jampal stores and organizes a very large library of songs. It can be used
