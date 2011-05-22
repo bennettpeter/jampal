@@ -1,6 +1,6 @@
 Download files 
 
-tagbkup_02.01.03-1_i386.deb
+tagbkup_02.01.03-1_amd64.deb
 jampal_02.01.03-1_all.deb
 Install both of these on debian/ubuntu 64 bit systems. 
 
@@ -12,7 +12,7 @@ jampal-02.01.03.jar
 Java executable jar file. 
 
 jampal-02.01.03.tar.gz
-Full source code. To install of Unix other than Linux run make install. 
+Full source code. To install on Unix run make install. 
 
 jampal-build-Cygwin-i686-02.01.03.tar.gz
 Install package for Cygwin and Windows (32 and 64 bit). If you want to use the command line features with Windows you need Cygwin installed. Then this package will install the scripts for Cygwin as well as the Windows components. Run make install under Cygwin (on Windows Vista or Windows 7 run as administrator). 
@@ -33,6 +33,13 @@ jampal-windows-setup-02.01.03.exe
 Windows setup for all versions of Windows. This does not support the command line utilities, although you can use the tagbkup stand alone command and the tagupdate command via the java command line. To use the full command line commands you need Cygwin or a version of unix. 
 
 This is a list of the new features and changes in Jampal 
+
+jampal (02.01.03)
+
+* Debian support
+Moving debian directory out of the source archive to make sure this is not
+a native debian package.
+
 Version 02.01.01 
 
 Packaged for Debian / Ubuntu
