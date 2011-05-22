@@ -380,7 +380,7 @@ e.g. ppa1~intrepid1
 use date -R to get date
 use ppa00~lucid maverick natty oneiric
 
-lintian -i -I --show-overrides jampal_02.01.02-01_amd64.changes
+lintian -i -I --show-overrides *.changes > lintian.out
 
 2 source zips - one complete, one dfsg
 http://www.debian.org/doc/manuals/developers-reference/best-pkging-practices.html#bpp-origtargz
@@ -445,17 +445,6 @@ will receive an acknowledgement via email including the bug report number
 within an hour; if you haven't received a confirmation, then the bug reporting process failed at some point (reportbug or MTA failure, BTS maintenance, etc.).
 
 
-Possible updates to debian
-docs
-menu
-watch
-patch for documentation to exclude lame
-
-Possible conflicts
-package.manpages
-package.examples
-
-Fix license in html help
 
 
 
@@ -469,7 +458,7 @@ Freetts expects mbrola voices to be each under its own directory,
 under mbrola.base system property
 FreeTTS hangs in linux
 use vbscript for speech
-
+Default voices.txt to espeak for GUI.
 
 
 
