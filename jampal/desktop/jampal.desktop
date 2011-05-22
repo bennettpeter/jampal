@@ -6,6 +6,6 @@ Exec=jampal open %U
 Icon=jampal
 Terminal=false
 Type=Application
-Categories=Audio;Database;AudioVideo
+Categories=Audio;Database;AudioVideo;
 StartupNotify=true
 MimeType=application/jampal;
