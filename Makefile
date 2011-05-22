@@ -111,7 +111,7 @@ unix:
 #	Create cygwin or generic unix installer.
 	mkdir -p unix_build
 	cd jampal && make unix
-	cd tagbkup && make unix
+	cd tagbkup && make clean && make unix
 	cd html && make unix
 	rsync -aC man scripts utility looks \
         Makefile misc unix_build/
