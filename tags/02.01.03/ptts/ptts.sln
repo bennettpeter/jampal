@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ptts", "ptts.vcproj", "{A256E189-F269-4DB6-B9D5-308B15446A55}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pttsjni", "pttsjni.vcproj", "{F61645CE-7164-4DF6-B5E2-951DD3E483E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A256E189-F269-4DB6-B9D5-308B15446A55}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A256E189-F269-4DB6-B9D5-308B15446A55}.Debug|Win32.Build.0 = Debug|Win32
+		{A256E189-F269-4DB6-B9D5-308B15446A55}.Release|Win32.ActiveCfg = Release|Win32
+		{A256E189-F269-4DB6-B9D5-308B15446A55}.Release|Win32.Build.0 = Release|Win32
+		{F61645CE-7164-4DF6-B5E2-951DD3E483E2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F61645CE-7164-4DF6-B5E2-951DD3E483E2}.Debug|Win32.Build.0 = Debug|Win32
+		{F61645CE-7164-4DF6-B5E2-951DD3E483E2}.Release|Win32.ActiveCfg = Release|Win32
+		{F61645CE-7164-4DF6-B5E2-951DD3E483E2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

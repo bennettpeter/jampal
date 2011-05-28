@@ -1,0 +1,55 @@
+          <p>
+            <b>Log files</b>
+          </p>
+          <p>
+            If the program fails to respond or responds incorrectly, there may
+            be helpful information in the log files. The log files are located
+            in your home directory, subdirectory ".jampal". There are two
+            files, jampal_err.txt and jampal_out.txt. These are cleared every
+            time you start jampal so if be sure to look at them before you
+            restart.
+          </p>
+          <p>
+            <b>Extra large libraries</b>
+          </p>
+          <p>
+            Jampal easily handles a library of 40000 songs. If you want to open
+            two such libraries at the same time or drag 40000 songs from one to
+            another you may run out of memory. If you look in the log file
+            mentioned above you would see an out of memory error listed.
+          </p>
+          <p>
+            If you have a library that is too big, or run out of memory for
+            some other reason, you can increase the memory allocation for
+            jampal. On the command line or in the shortcut, include a parameter
+            "-Xmx256M" to allocate 256MB (the default if you do not do this is
+            64MB). You can use any value you need on the -Xmx parameter.
+          </p>
+          <p>
+            <b>Bad mp3 files</b>
+          </p>
+          <p>
+            If you find you cannot add an mp3 file to the library or you cannot
+            edit the tag, you may have a corrupted tag. To fix this use the
+            "Add tracks to library" menu and select the option to remove id3v2
+            tags.
+          </p>
+          <p>
+            On the other hand if you get a message "This file is not valid
+            MPEG" then it is not an mp3 file. This will happen if you try to
+            add a wav file, wma or ogg vorbis. Jampal does not support other
+            audio formats. If you try this you may have a long wait before
+            seeing the message especially in the case of a wav file. This is
+            because jampal is searching the entire file for valid mp3 data
+            before displaying the error message. If the file is large this will
+            cause some delay.
+          </p>
+          <p>
+            <i>Please let me know if you find Jampal useful or if you find any
+            bugs or shortcomings in it. Also I would like to hear from anybody
+            who runs it on linux, macintosh or Solaris. The best way to do this
+            is by <a href=
+            "http://sourceforge.net/forum/forum.php?forum_id=370097">posting a
+            message</a> at the product information page or else send me email
+            at pgbennett at users.sourceforge.net.</i>
+          </p>
