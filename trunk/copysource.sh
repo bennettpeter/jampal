@@ -7,6 +7,12 @@ scriptpath=`dirname "$scriptname"`
 
 cd $scriptpath
 
+if [[ "$1" != ubuntu && "$1" != debian ]] ; then
+    echo "Please specify debian or ubuntu"
+    exit 2;
+fi
+
+system="$1"
 
 export VERSION=`cat VERSION`
 echo Copy new version of jampal $VERSION from host to local
@@ -24,6 +30,9 @@ cp package/source/jampal-$VERSION.tar.gz ~/proj/jampal/jampal_$VERSION.orig.tar.
 cd ~/proj/jampal
 tar xf jampal_$VERSION.orig.tar.gz
 
-rsync -aC ~/proj/jampal.svn.sourceforge.net/svnroot/jampal/trunk/debian \
+rsync -aC ~/proj/jampal.svn.sourceforge.net/svnroot/jampal/trunk/$system \
     ~/proj/jampal/jampal-$VERSION/
 
+if [[ "$system" != debian ]] ; then
+    mv ~/proj/jampal/jampal-$VERSION/$system ~/proj/jampal/jampal-$VERSION/debian
+fi

@@ -1,13 +1,11 @@
 Source: jampal
 Section: sound
-Priority: extra
+Priority: optional
 Maintainer: Peter Bennett <pgbennett@comcast.net>
 Build-Depends: debhelper (>= 7.0.50~),openjdk-6-jdk, rman, rsync,
  quilt (>= 0.46-7~)
 Standards-Version: 3.9.1.0
 Homepage: http://jampal.sf.net
-#Vcs-Git: git://git.debian.org/collab-maint/jampal.git
-#Vcs-Browser: http://git.debian.org/?p=collab-maint/jampal.git;a=summary
 
 Package: jampal
 Architecture: all
