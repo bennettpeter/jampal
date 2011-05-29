@@ -1,0 +1,15 @@
+Change man page for jampal command mp3lame to explain that 
+lame needs to be installed for this to work. Lame is not 
+available as a debian package.
+--- a/man/jampal.1
++++ b/man/jampal.1
+@@ -974,6 +974,9 @@
+ If you use no input option, it encodes all wave files in the current directory
+ that have extension wav. It encodes to 128K mp3.
+ 
++In order to use this command you must have lame installed. Lame may not be available
++with your installation. It is free software and can be downloaded and installed.
++
+ This command checks the number of CPUs in your system and runs many files at one time, 
+ so that if you have two or more CPUs it can
+ finish in the shortest time.
