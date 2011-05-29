@@ -1,1 +1,3 @@
 remove-COPYING.patch
+fix-manpage-lame.patch
+increase-heap-size.patch
