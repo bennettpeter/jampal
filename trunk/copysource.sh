@@ -11,7 +11,8 @@ cd $scriptpath
 export VERSION=`cat VERSION`
 echo Copy new version of jampal $VERSION from host to local
 
-make source
+# do not make source - download it
+# make source
 
 rm -rf ~/proj/jampal/jampal-$VERSION*
 rm -rf  ~/proj/jampal/jampal_$VERSION*
@@ -23,5 +24,6 @@ cp package/source/jampal-$VERSION.tar.gz ~/proj/jampal/jampal_$VERSION.orig.tar.
 cd ~/proj/jampal
 tar xf jampal_$VERSION.orig.tar.gz
 
-rsync -aC ~/proj/jampal.svn.sourceforge.net/svnroot/jampal/trunk/debian ~/proj/jampal/jampal-$VERSION/
+rsync -aC ~/proj/jampal.svn.sourceforge.net/svnroot/jampal/trunk/debian \
+    ~/proj/jampal/jampal-$VERSION/
 
