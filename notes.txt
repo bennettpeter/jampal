@@ -446,6 +446,10 @@ within an hour; if you haven't received a confirmation, then the bug reporting p
 
 Wrong icon in launcher
 https://wiki.ubuntu.com/Unity
+add to desktop file  StartupWMClass=pgbennett-jampal-Jampal
+need to logoff and logon again for it to take effect
+WM_CLASS(STRING) = "sun-awt-X11-XFramePeer", "pgbennett-jampal-Jampal"
+use xprop to find out
 
 
 Future
