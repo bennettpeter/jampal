@@ -366,7 +366,7 @@ Make sure cygwin tar and linux tar have correct dir structure
 what happened to asx_edit.ods?
 don't include linux executables with generic?
  make sure I build without freetts for ubuntu
-test playlistcd for looping of sh
+ test playlistcd for looping of sh
  tag editor in Linux shows very large text box for alternate album.
  why was a directory ~/Music/temp created under the home directory?
  changed ~ to $HOME in scripts
@@ -444,8 +444,8 @@ information to n@bugs.debian.org (e.g. 999999@bugs.debian.org), where n is the b
 will receive an acknowledgement via email including the bug report number
 within an hour; if you haven't received a confirmation, then the bug reporting process failed at some point (reportbug or MTA failure, BTS maintenance, etc.).
 
-
-
+Wrong icon in launcher
+https://wiki.ubuntu.com/Unity
 
 
 Future
@@ -459,6 +459,8 @@ under mbrola.base system property
 FreeTTS hangs in linux
 use vbscript for speech
 Default voices.txt to espeak for GUI.
+Fix memory leak - repeated change of looks causes out of memory in 64 bit system
+Increase default memory size for 64bit, or for all, to 512M
 
 
 
