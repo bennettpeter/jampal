@@ -14,7 +14,7 @@ mkdir -p package
 if [[ ! -f package/PPAVERSION ]] ; then
     echo 1 > package/PPAVERSION
     ppaversion=1
-else 
+else
     let ppaversion=`cat package/PPAVERSION`+1
     echo $ppaversion > package/PPAVERSION
 fi
@@ -25,28 +25,43 @@ if [[ "$xxxin" != "" ]] ; then
     ppaversion=$xxxin
     echo $ppaversion > package/PPAVERSION
 fi
-make source
-mkdir -p ~/proj/local/jampal/jampal-$VERSION
-cp package/source/jampal-$VERSION.tar.gz ~/proj/local/jampal/
-cd ~/proj/local/jampal/jampal-$VERSION
-rm -rf ../sourcepackage
+# do not make source - download it
+# make source
+# mkdir -p ~/proj/jampal/jampal-$VERSION
+#cp package/source/jampal-$VERSION.tar.gz \
+#  ~/proj/jampal/jampal_$VERSION.orig.tar.gz
+# cd ~/proj/jampal/jampal-$VERSION
+cd ~/proj/jampal
+rm -rf sourcepackage jampal-$VERSION
 versionsuffix="-"
 if [[ "$list" = "" ]] ; then
-    list="unstable lucid maverick natty oneiric"
+#    list="unstable lucid maverick natty oneiric"
+    list="maverick natty oneiric"
 fi
 for distro in $list ; do
     if [[ "$distro" == unstable ]] ; then
         distrosuffix=
         versionsuffix=
         reason=debian
+        system=debian
     else
-        versionsuffix=ubuntu1ppa`printf %02d $ppaversion`
+        versionsuffix=-1ubuntu1ppa`printf %02d $ppaversion`
         distrosuffix="~$distro"
         reason=ppa
+        system=ubuntu
     fi
-    rm -rf *
-    rm -rf ../jampal_$VERSION*
-    tar xf ../jampal-$VERSION.tar.gz
+    rm -rf jampal-$VERSION
+    rm -rf jampal_$VERSION*
+    rm -rf tagbkup_$VERSION*
+    cp $scriptpath/package/source/jampal-$VERSION.tar.gz \
+      jampal_$VERSION.orig.tar.gz
+    tar xf jampal_$VERSION.orig.tar.gz
+    rsync -aC $scriptpath/$system \
+      jampal-$VERSION/
+    cd jampal-$VERSION
+    if [[ "$system" != debian ]] ; then
+      mv $system debian
+    fi
     cd debian
     echo "jampal (${VERSION}${versionsuffix}$distrosuffix) $distro; urgency=low" > changelogxxx
     echo >> changelogxxx
@@ -58,9 +73,10 @@ for distro in $list ; do
     mv -f changelogxxx changelog
     cd ..
     echo build Suffix Version $ppaversion for $distro
-    dpkg-buildpackage -S
+    debuild -S -sa
     dirname=../sourcepackage/$distro
     mkdir -p $dirname
     mv -f ../jampal_$VERSION* $dirname
+    cd ..
 done
 

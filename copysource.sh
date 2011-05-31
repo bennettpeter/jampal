@@ -26,13 +26,15 @@ rm -f  ~/proj/jampal/*.deb
 mkdir -p ~/proj/jampal
 
 # cp package/source/jampal-$VERSION.tar.gz ~/proj/jampal/jampal-$VERSION.tar.gz
-cp package/source/jampal-$VERSION.tar.gz ~/proj/jampal/jampal_$VERSION.orig.tar.gz
+cp package/source/jampal-$VERSION.tar.gz \
+  ~/proj/jampal/jampal_$VERSION.orig.tar.gz
 cd ~/proj/jampal
+
 tar xf jampal_$VERSION.orig.tar.gz
 
-rsync -aC ~/proj/jampal.svn.sourceforge.net/svnroot/jampal/trunk/$system \
-    ~/proj/jampal/jampal-$VERSION/
+rsync -aC $scriptpath/$system \
+    jampal-$VERSION/
 
 if [[ "$system" != debian ]] ; then
-    mv ~/proj/jampal/jampal-$VERSION/$system ~/proj/jampal/jampal-$VERSION/debian
+    mv jampal-$VERSION/$system jampal-$VERSION/debian
 fi
