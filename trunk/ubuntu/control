@@ -10,10 +10,9 @@ Homepage: http://jampal.sf.net
 Package: jampal
 Architecture: all
 Depends: ${misc:Depends}, tagbkup,
- openjdk-6-jre | java6-runtime, sox, gawk
+ openjdk-6-jre | java6-runtime, sox, gawk, lame
 Recommends: espeak
-Suggests: mbrola, libreoffice-writer | openoffice.org-writer,
- libreoffice-calc | openoffice.org-calc, lame
+Suggests: mbrola
 Description: mp3 song library management system and player
  Jampal stores and organizes a very large library of songs. It can be used
  as a jukebox to play the songs. It performs extensive editing of song tags
