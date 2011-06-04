@@ -1,3 +1,4 @@
+check-lame-and-soffice.patch
 unity-launch.patch
 remove-COPYING.patch
 fix-manpage-lame.patch

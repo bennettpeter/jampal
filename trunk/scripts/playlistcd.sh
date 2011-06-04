@@ -51,6 +51,12 @@ cdstagingp=$2
 
 . "$diskdir/cdparms.profile"
 
+if [[ "$announce" == Y && ! -x `which lame` ]] ; then
+    echo "Announcements require lame installed and on the path" >&2
+    echo "Please install lame or try again without announcements" >&2
+    exit 2
+fi
+
 
 if [[ "$cdstaging" = "" ]]; then
     cdstaging=$CDSTAGING

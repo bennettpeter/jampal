@@ -144,6 +144,12 @@ if [[ "${18}" != "" ]];then
     start_disknum="${18}"
 fi
 
+if [[ "$announce" == Y && ! -x `which lame` ]] ; then
+    echo "Announcements require lame installed and on the path" >&2
+    echo "Please install lame or try again without announcements" >&2
+    exit 2
+fi
+
 echo "Playlist generated from songs in library $libfile"
 
 libname=`basename $libfile`

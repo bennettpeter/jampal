@@ -451,6 +451,9 @@ need to logoff and logon again for it to take effect
 WM_CLASS(STRING) = "sun-awt-X11-XFramePeer", "pgbennett-jampal-Jampal"
 use xprop to find out
 
+Use java-wrappers.sh ? Makes it more debian or ubuntu dependent..
+empty library - playlist fails
+
 
 Future
 Document how to convert wma to mp3

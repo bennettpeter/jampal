@@ -24,7 +24,11 @@ scriptname=`readlink -e "$0"`
 scriptpath=`dirname "$scriptname"`
 . "$scriptpath/mp3.profile"
 
-
+if [[ ! -x `which lame` ]] ; then
+    echo "ERROR This operation requires lame installed and on the path" >&2
+    echo "Please install lame" >&2
+    exit 2
+fi
 
 if [[ "$option" = recode || "$option" = recode-even ]]; then
     dest="recode/"

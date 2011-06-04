@@ -9,3 +9,5 @@ Type=Application
 Categories=Audio;Database;AudioVideo;
 StartupNotify=true
 MimeType=application/jampal;
+StartupWMClass=pgbennett-jampal-Jampal
+

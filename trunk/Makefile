@@ -64,7 +64,6 @@ install:
 	rm -f utility/*.jmp
 	install -m644 -p utility/* ${DESTDIR}/usr/share/jampal/utility/
 #	MISC
-	install -m644 misc/COPYING ${DESTDIR}/usr/share/jampal/
 #	If not building a debian package add the looks files
 	if [ "${DEBIAN_BUILD}" != Y ] ; then \
         install -m644 looks/*.jar ${DESTDIR}/usr/share/jampal/ ; fi
