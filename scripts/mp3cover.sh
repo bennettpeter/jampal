@@ -33,6 +33,13 @@ if [[ "$1" = "" ]]; then
     echo "        in the library, for example from the playlist.sh scripts"
     exit 2
 fi
+
+if [[ "$OPENOFFICE" != "" && ! -x `which $OPENOFFICE` ]] ; then
+    echo "This requires Open Office or Libre Office installed and on the path" >&2
+    echo "Please install soffice or update ~/.jampal/jampal.conf" >&2
+    exit 2
+fi
+
 cover=
 if [[ "$1" = "--artist" ]]; then
     cover=artist

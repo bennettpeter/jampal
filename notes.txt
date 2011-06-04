@@ -454,6 +454,10 @@ use xprop to find out
 Use java-wrappers.sh ? Makes it more debian or ubuntu dependent..
 empty library - playlist fails
 
+Testing setup 
+link /usr/bin/jampal to test jampal.sh
+put jampal.jar, jampal_environment.properties and jampal_initial.properties in trunk
+
 
 Future
 Document how to convert wma to mp3

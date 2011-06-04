@@ -38,6 +38,8 @@ clean:
 	rm -f utility/*.jmp
 	rm -rf unix_build
 	rm -rf package/source
+	# files from testing target
+	rm jampal.jar jampal_environment.properties jampal_initial.properties
 	# Files created by Netbeans
 	rm -rf build dist
 
@@ -92,7 +94,7 @@ distclean: clean
 	cd tagbkup && make distclean
 	cd html && make distclean
 
-source: clean get_version
+source: clean
 	# Make source appear under a jampal-version directory
 	# Exclude debian and package directories
 	mkdir -p package/source
@@ -119,10 +121,24 @@ unix:
 	cd unix_build && tar -c -z --exclude-vcs \
         -f  ../package/generic/jampal-build-`cat ../OS`-`arch`-$(VERSION).tar.gz *
 
-get_version:
-	grep "Jampal Version" jampal/src/pgbennett/jampal/MainFrame.java
-	grep "ptts Version" ptts/ptts.cpp
-	grep "tagbkup Version" tagbkup/tagbkup.cpp
-	grep "TagUpdate Version" jampal/src/pgbennett/id3/TagUpdate.java
-	echo Enter Version
+testing: all
+	# needs root
+	cp jampal/jampal.jar .
+	install -m644 -T jampal/jampal_environment.properties_testing \
+        ./jampal_environment.properties
+	basename `uname -o` > OS
+	if [ `cat OS` = Cygwin ] ; then \
+       install -m644 -T jampal/jampal_initial.properties_windows \
+       ./jampal_initial.properties ; \
+    else \
+       install -m644 -T jampal/jampal_initial.properties_unix \
+       ./jampal_initial.properties ; \
+    fi
+	if [ `readlink -e /usr/bin/jampal` != $$PWD/scripts/jampal.sh ]; then \
+		ln -fs $$PWD/scripts/jampal.sh /usr/bin/jampal; \
+	fi
+
+# check if we are logged in as root
+checkroot:
+	test $$(id -u) = 0
 
