@@ -28,7 +28,7 @@ case $1 in
         shift||rc=$?||rc=$?
         "$JAVA_COMMAND"  -Xincgc -Xmx512M $JAMPAL_JVM_OPTIONS \
             -classpath "$JAMPAL_CLASSPATH" \
-            "-Djampal.libdir=$LIBDIR" pgbennett.jampal.Jampal "$@" &
+            "-Djampal.libdir=$LIBDIR" pgbennett.jampal.Jampal "$@" >/dev/null 2>/dev/null &
         ;;
     cleanup)
         shift||rc=$?

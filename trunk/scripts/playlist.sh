@@ -240,7 +240,7 @@ echo playlistlib="'"./playlist-$datetime${playlistname}"'" >> "$diskdir/cdparms.
 #############################################
 # Insert existing record sequence as field 1#
 #############################################
-rm -f "$libnum"
+cat /dev/null > "$libnum"
 awk '
 BEGIN { 
     FS="\t"
