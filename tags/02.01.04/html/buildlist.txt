@@ -1,0 +1,20 @@
+advanced.html       Advanced Topics
+customization.html  Customization
+editor.html         Track Editor Window
+features.html       Detailed Features Description
+frames.html         ID3V2 Frames
+installation.html   Installation \\& Getting Started
+library.html        Library Window
+license.html        License \\& acknowledgements 
+playlist.html       Playlist Window
+regex.html          Regular Expressions
+man_jampal.html     Jampal Command Line (man page)
+summary.html        Summary of Features
+tables.html         Tables
+man_tagbkup.html    Tag Backup (man page)
+trouble.html        Trouble Shooting
+whats_new.html      What's New?
+release_notes.html  Release Notes
+envelope.html       Making an envelope
+ptts.html           Text to Speech
+XXX                 Marks end of the list

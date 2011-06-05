@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Jampal
+GenericName=mp3 song library
+Comment=Organize and play mp3 songs
+Exec=jampal open %U
+Icon=jampal
+Terminal=false
+Type=Application
+Categories=Audio;Database;AudioVideo;
+StartupNotify=true
+MimeType=application/jampal;
+StartupWMClass=pgbennett-jampal-Jampal
+
