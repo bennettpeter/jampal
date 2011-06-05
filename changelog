@@ -1,9 +1,30 @@
+jampal (02.01.04)
+
+  * Memory leak
+
+    Fixed memory leak that occurs when closing a library or making certain
+    changes with the edit-customize dialog.
+
+  * Man pages
+
+    Added clarification about requirement for lame and Libre Office.
+
+  * Error Handling
+
+    Improved error handling for when components are not installed, and for
+    commands run against an empty library.
+
 jampal (02.01.03)
 
   * Debian support
 
     Moving debian directory out of the source archive to make sure this is not
     a native debian package.
+
+  * General
+
+    Fixed file permissions on documentation files, removing incorrect execute
+    permissions
 
 jampal (02.01.01)
 

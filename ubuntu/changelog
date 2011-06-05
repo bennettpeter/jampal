@@ -1,10 +1,10 @@
-jampal (02.01.03-0ubuntu1) natty; urgency=low
+jampal (02.01.04-0ubuntu1) oneiric; urgency=low
 
   * Ubuntu Release
 
  -- Peter Bennett <pgbennett@comcast.net>  Sun, 29 May 2011 18:13:07 -0400
 
-jampal (02.01.03-1) unstable; urgency=low
+jampal (02.01.04-1) unstable; urgency=low
 
   * Initial release (Closes: #626991)
 
