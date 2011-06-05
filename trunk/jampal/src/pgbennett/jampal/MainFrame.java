@@ -2350,6 +2350,9 @@ WindowListener, ListSelectionListener {
                 }
                 // frame.dispose();
                 savedOnClose=true;
+                // Extra cleanup to free up memory
+                library.trackVec.clear();
+                library.trackMap.clear();
             }
             catch (Exception ex) {
                 ex.printStackTrace();
