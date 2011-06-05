@@ -1,8 +1,0 @@
---- a/jampal/desktop/jampal.desktop
-+++ b/jampal/desktop/jampal.desktop
-@@ -9,3 +9,5 @@
- Categories=Audio;Database;AudioVideo;
- StartupNotify=true
- MimeType=application/jampal;
-+StartupWMClass=pgbennett-jampal-Jampal
-+
