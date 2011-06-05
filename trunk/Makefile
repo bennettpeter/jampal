@@ -97,12 +97,13 @@ distclean: clean
 
 source: clean
 	# Make source appear under a jampal-version directory
-	# Exclude debian and package directories
+	# Exclude debian ubuntu and package directories
 	mkdir -p package/source
 	ln -fs ../.. package/source/jampal-$(VERSION)
 	cd package/source && echo jampal-${VERSION}/* | \
            sed "s@ jampal-${VERSION}/package @ @;\
            s@ jampal-${VERSION}/debian @ @;\
+           s@ jampal-${VERSION}/ubuntu @ @;\
            s@ jampal-${VERSION}/notes.txt @ @" \
           > source_filelist.txt
 	cd package/source && \

@@ -45,7 +45,13 @@ for distro in $list ; do
         reason=debian
         system=debian
     else
-        versionsuffix=-1ubuntu1ppa`printf %02d $ppaversion`
+        clogversion=`head -1 $scriptpath/ubuntu/changelog| sed 's/.*(// ; s/).*//'`
+        if [[ ${clogversion} != ${VERSION}* ]] ; then 
+            echo VERSION file $VERSION does not match changelog $clogversion
+            exit 2
+        fi
+        clogversionsuffix=`echo $clogversion | sed "s/^$VERSION//"`
+        versionsuffix=${clogversionsuffix}ppa`printf %02d $ppaversion`
         distrosuffix="~$distro"
         reason=ppa
         system=ubuntu
