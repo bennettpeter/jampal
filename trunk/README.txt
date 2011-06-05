@@ -1,40 +1,56 @@
 Download files 
 
-tagbkup_02.01.03-1_amd64.deb
-jampal_02.01.03-1_all.deb
+tagbkup_02.01.04-1_amd64.deb
+jampal_02.01.04-1_all.deb
 Install both of these on debian/ubuntu 64 bit systems. 
 
-tagbkup_02.01.03-1_i386.deb
-jampal_02.01.03-1_all.deb
+tagbkup_02.01.04-1_i386.deb
+jampal_02.01.04-1_all.deb
 Install both of these on debian/ubuntu 32 bit systems. 
 
-jampal-02.01.03.jar
+jampal-02.01.04.jar
 Java executable jar file. 
 
-jampal-02.01.03.tar.gz
+jampal-02.01.04.tar.gz
 Full source code. To install on Unix run make install. 
 
-jampal-build-Cygwin-i686-02.01.03.tar.gz
+jampal-build-Cygwin-i686-02.01.04.tar.gz
 Install package for Cygwin and Windows (32 and 64 bit). If you want to use the command line features with Windows you need Cygwin installed. Then this package will install the scripts for Cygwin as well as the Windows components. Run make install under Cygwin (on Windows Vista or Windows 7 run as administrator). 
 
-jampal-build-Linux-i686-02.01.03.tar.gz
+jampal-build-Linux-i686-02.01.04.tar.gz
 Install package for generic Linux 32 bit. On Ubuntu or Debian systems it is better to download the Ubuntu package. To install run make install under root. 
 
-jampal-build-Linux-x86-64-02.01.03.tar.gz
+jampal-build-Linux-x86-64-02.01.04.tar.gz
 Install package for generic Linux 64 bit. On Ubuntu or Debian systems it is better to download the Ubuntu package. To install run make install under root. 
 
-jampal-doc-02.01.03.zip
+jampal-doc-02.01.04.zip
 Documentation (html files). Copy of the web site http://jampal.sf.net. These are also included in all other install downloads. 
 
-jampal-generic-setup-02.01.03.zip
+jampal-generic-setup-02.01.04.zip
 Zip file install containing all components. If possible it is better to use the specific install for your system. Use this for systems not covered by other install packages. 
 
-jampal-windows-setup-02.01.03.exe
+jampal-windows-setup-02.01.04.exe
 Windows setup for all versions of Windows. This does not support the command line utilities, although you can use the tagbkup stand alone command and the tagupdate command via the java command line. To use the full command line commands you need Cygwin or a version of unix. 
 
 This is a list of the new features and changes in Jampal 
 
-jampal (02.01.03)
+jampal (02.01.04)
+
+  * Memory leak
+
+    Fixed memory leak that occurs when closing a library or making certain
+    changes with the edit-customize dialog.
+
+  * Man pages
+
+    Added clarification about requirement for lame and Libre Office.
+
+  * Error Handling
+
+    Improved error handling for when components are not installed, and for
+    commands run against an empty library.
+
+jampal (02.01.04)
 
 * Debian support
 Moving debian directory out of the source archive to make sure this is not
