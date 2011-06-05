@@ -107,8 +107,11 @@ source: clean
            s@ jampal-${VERSION}/notes.txt @ @" \
           > source_filelist.txt
 	cd package/source && \
-      tar -c -z --exclude-vcs --exclude=**/notes.txt -f jampal-$(VERSION).tar.gz \
-      `cat source_filelist.txt`
+		tar -c -z --exclude-vcs --exclude=**/notes.txt -f jampal-$(VERSION).tar.gz \
+		`cat source_filelist.txt`
+	tar -c -z --exclude-vcs -f package/source/jampal-$(VERSION)_debian.tar.gz \
+		debian ubuntu
+
 
 unix:
 #	Create cygwin or generic unix installer.
