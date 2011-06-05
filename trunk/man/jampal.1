@@ -406,6 +406,9 @@ This will reverse the sort sequence given in the \fB\-\-sort\fP option.
 This chooses to have audio announcements of song titles included in files
 copied to the staging directory. Synthesized announcements are stored in the 
 front of each mp3 file.
+.PP
+In order to use this option you must have \fBlame\fP installed. \fBLame\fP may not be available
+with your installation. It is free software and can be downloaded and installed.
 .RE
 .PP
 
@@ -595,6 +598,10 @@ Copies a playlist disk to a staging directory. This uses an existing playlist
 created by the \fBplaylist\fP command and does the same operation as is 
 done by the last step of that command.
 .PP
+If the \fB\-\-announce\fP option was used with the \fBplaylist\fP command that created the playlist,
+you must have \fBlame\fP installed. \fBLame\fP may not be available
+with your installation. It is free software and can be downloaded and installed.
+.PP
 When running this command you must first change directory to the directory
 where the playlist is stored. The directory will be named YYMMDD_HHMM or
 YYMMDD_HHMM_description and will be in the directory identified by the variable
@@ -624,6 +631,11 @@ an mp3 player to store the songs directly on the player.
 .PP
 The \fBenvelope\fP command prints CD or DVD envelopes for your mp3 disks. 
 It also can prints a song list for songs on an mp3 player.
+.PP
+The \fBenvelope\fP command uses OpenOffice.org Writer or LibreOffice Writer. 
+If one of these is not installed an on the path you will see an error message.
+LibreOffice is available via a free download. 
+.PP
 The program scans the library and creates an openoffice write document with 
 the songs listed and the albums listed on a page configured as an envelope. 
 It then opens the document in openoffice. YOu can make any changes you wish,
@@ -970,11 +982,11 @@ several file names can be provided on the command line.
 
 \fBjampal mp3lame\fP [ \-recode|\-recode\-even ]
 
-Converts files in a directory to mp3 using lame or re-encodes mp3 files. 
+Converts files in a directory to mp3 using \fBlame\fP or re-encodes mp3 files. 
 If you use no input option, it encodes all wave files in the current directory
 that have extension wav. It encodes to 128K mp3.
 
-In order to use this command you must have lame installed. Lame may not be available
+In order to use this command you must have \fBlame\fP installed. \fBLame\fP may not be available
 with your installation. It is free software and can be downloaded and installed.
 
 This command checks the number of CPUs in your system and runs many files at one time, 

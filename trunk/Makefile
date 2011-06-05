@@ -39,7 +39,7 @@ clean:
 	rm -rf unix_build
 	rm -rf package/source
 	# files from testing target
-	rm jampal.jar jampal_environment.properties jampal_initial.properties
+	rm -f jampal.jar jampal_environment.properties jampal_initial.properties
 	# Files created by Netbeans
 	rm -rf build dist
 
@@ -66,9 +66,10 @@ install:
 	rm -f utility/*.jmp
 	install -m644 -p utility/* ${DESTDIR}/usr/share/jampal/utility/
 #	MISC
-#	If not building a debian package add the looks files
+#	If not building a debian package add the looks files and COPYING
 	if [ "${DEBIAN_BUILD}" != Y ] ; then \
-        install -m644 looks/*.jar ${DESTDIR}/usr/share/jampal/ ; fi
+		install -m644 looks/*.jar ${DESTDIR}/usr/share/jampal/ ; \
+		install -m644 misc/COPYING ${DESTDIR}/usr/share/jampal/ ; fi
 #	CYGWIN
 	basename `uname -o` > OS
 	if [ `cat OS` = Cygwin ] ; then \
