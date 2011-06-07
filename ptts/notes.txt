@@ -395,7 +395,7 @@ wave format display program
  End Sub 
 
 
-General Nores on VBS
+General Notes on VBS
 
 vbs files are run from 
 wscript or cscript
@@ -422,5 +422,7 @@ Speech API
 http://msdn.microsoft.com/en-us/library/ee125663(VS.85).aspx
 File system object
 http://msdn.microsoft.com/en-us/library/hww8txat.aspx
+Script Runtime (includes file system object)
+http://msdn.microsoft.com/en-us/library/bstcxhf7(v=VS.85).aspx
 
 Wscript.StdOut.WriteLine 
