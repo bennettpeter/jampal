@@ -221,7 +221,7 @@ Function doit
         }
     }
     else
-        pInFile=stdin;
+        pInFile=WScript.StdIn
 
     while (!eof) {
         bufferUsed=0;
