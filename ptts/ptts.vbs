@@ -63,7 +63,7 @@ For Each arg in argv
         volume=CInt(arg)
         needVolume = False
     ElseIf needSamples Then
-        samples=CInt(arg)
+        samples=CLng(arg)
         needSamples = False
     ElseIf needChannels Then
         channels=CInt(arg)
@@ -111,7 +111,9 @@ For Each arg in argv
     Else 
         IsOK=False
     End If
-    printErr("Arg:"&arg& " IsOK:"&IsOK&" doWaveFile:"&doWaveFile&" doMultWaveFiles:"&doMultWaveFiles&" needFileName:"&needFileName)
+'    printErr("Arg:"&arg& " IsOK:"&IsOK&" doWaveFile:"& _
+'    doWaveFile&" doMultWaveFiles:"&doMultWaveFiles& _
+'    " needFileName:"&needFileName)
 Next
 
 
@@ -124,7 +126,7 @@ if needFileName Or needVolume Or needRate  _
     IsOK=False
 End If
 if IsOK And doListVoices then
-    print ("ListVoices")
+    printOut ("ListVoices")
     ' count = listVoices(&ppszDescription,NULL)
     ' for (ix=0ix < count ix++) {
     '     fwprintf(stdout,L"%s",ppszDescription[ix])    
@@ -196,8 +198,9 @@ Function doit
         if pFileName = Null Then
             hSpeaker = createSpeaker(Null)
         else
-            hSpeaker = createSpeaker(fileName & ".wav")
+            hSpeaker = createSpeaker(pFileName & ".wav")
         End If
+        prnt
         if hSpeaker = Null Then
             printErr("hSpeaker is Null")
             doit = False
@@ -300,6 +303,8 @@ Function doit
 End Function
 
 Function createSpeaker(filename)
+    printErr("createSpeaker " & filename)
+    createSpeaker = Null
 End Function
 
 Function setRate(hSpeaker, rate)
