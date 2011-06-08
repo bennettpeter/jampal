@@ -16,19 +16,33 @@
 '    along with Jampal.  If not, see <http://www.gnu.org/licenses/>.
 '
 
-doWaveFile = 0
-doMultWaveFiles = 0
-pFileName = Null
-pUnicodeFileName = Null
+doWaveFile = False
+doMultWaveFiles = False
+pFileName = Null            ' Name of output wav file
+pUnicodeFileName = Null     ' name of input text file
 rate=-999
 volume=-999
 samples=44100
 channels=2
 pVoice=Null
 pEncoding = Null
+needFileName = False
+needRate = False
+needVolume = False
+needWord = False
+needPron = False
+needUnicodeFileName = False
+needSamples = False
+needChannels = False
+needVoice = False
+needEncoding = False
+doInstruct = False
+doLexiconAdd = False
+doListVoices = False
+
 
 Dim IsOK
-IsOK = 1
+IsOK = True
 
 Dim argv
 Set argv = WScript.Arguments
@@ -38,74 +52,76 @@ printErr("ptts Version 1.28 (c) 2011 Peter G. Bennett")
 For Each arg in argv
     If needFileName Then
         pFileName=arg
-        needFileName=0
+        needFileName = False
     ElseIf needUnicodeFileName Then
         pUnicodeFileName=arg
-        needUnicodeFileName=0
+        needUnicodeFileName = False
     ElseIf needRate Then
         rate=CInt(arg)
-        needRate=0
+        needRate = False
     ElseIf needVolume Then
         volume=CInt(arg)
-        needVolume=0
+        needVolume = False
     ElseIf needSamples Then
         samples=CInt(arg)
-        needSamples=0
+        needSamples = False
     ElseIf needChannels Then
         channels=CInt(arg)
-        needChannels=0
+        needChannels = False
     ElseIf needVoice Then
         pVoice=arg
-        needVoice=0
+        needVoice = False
     ElseIf needEncoding Then
         pEncoding=arg
-        needEncoding=0
+        needEncoding = False
         pEncoding = UCase(pEncoding)
         If pEncoding <> "ASCII" And pEncoding <> "UTF-16LE" Then
-            IsOK=0
+            IsOK=False
         End If
     ElseIf arg = "-w" Then
         If (doWaveFile Or doMultWaveFiles) Then
-            IsOK=0
-        doWaveFile = 1
-        needFileName=1
+            IsOK=False
         End If
+        doWaveFile = True
+        needFileName = True
     ElseIf arg = "-m" Then
         If (doWaveFile Or doMultWaveFiles) Then
-            IsOK=0
+            IsOK=False
         End If
-        doMultWaveFiles = 1
-        needFileName=1
+        doMultWaveFiles = True
+        needFileName = True
     ElseIf arg = "-r" Then
-        needRate=1
+        needRate = True
     ElseIf arg = "-v" Then
-        needVolume=1
+        needVolume = True
     ElseIf arg = "-s" Then
-        needSamples=1
+        needSamples = True
     ElseIf arg = "-c" Then
-        needChannels=1
+        needChannels = True
     ElseIf arg = "-u" Then
-        needUnicodeFileName=1
+        needUnicodeFileName = True
     ElseIf arg = "-vl" Then
-        doListVoices=1
+        doListVoices = True
     ElseIf arg = "-voice" Then
-        needVoice=1
+        needVoice = True
     ElseIf arg = "-e" Then
-        needEncoding=1
+        needEncoding = True
     ElseIf Mid(arg,1,1) = "-" Then
-        IsOK=0
+        IsOK=False
     Else 
-        IsOK=0
+        IsOK=False
     End If
+    printErr("Arg:"&arg& " IsOK:"&IsOK&" doWaveFile:"&doWaveFile&" doMultWaveFiles:"&doMultWaveFiles&" needFileName:"&needFileName)
 Next
 
 
 ' Release
 set argv = Nothing
 
+
 if needFileName Or needVolume Or needRate  _
      Or needUnicodeFileName Or needSamples Or needChannels Or needVoice Then
-    IsOK=0
+    IsOK=False
 End If
 if IsOK And doListVoices then
     print ("ListVoices")
@@ -169,10 +185,10 @@ Function doit
     ' pBuffer = (wchar_t*)malloc(BUFFER_SIZE * sizeof (wchar_t));
     ' int bufferUsed=0;
     ' int prevBufferUsed=0;
-    eof=0
+    eof = False
     ' int waveSeq=0;
     hSpeaker = Null
-    IsOK=1
+    IsOK=True
     ' FILE *pInFile;
     ' wchar_t fileMode[256];
 
@@ -180,11 +196,11 @@ Function doit
         if pFileName = Null Then
             hSpeaker = createSpeaker(Null)
         else
-            hSpeaker = createSpeaker(fileName & ".wav");
+            hSpeaker = createSpeaker(fileName & ".wav")
         End If
         if hSpeaker = Null Then
-            printErr("hSpeaker is Null");
-            doit = 0
+            printErr("hSpeaker is Null")
+            doit = False
             Exit Function
         else 
             if rate <> -999 Then
@@ -195,12 +211,12 @@ Function doit
             End If
             if Not IsOK Then
                 printErr("Set rate " & rate & _
-                    " or volume " & volume " failed.")
-                doit = 0
+                    " or volume " & volume & " failed." & IsOK)
+                doit = False
                 Exit Function
             End If
             if IsOK And pVoice <> Null Then
-                setVoice(hSpeaker,pVoice)
+                setVoice hSpeaker,pVoice
             End If
         End If
     End If
@@ -213,72 +229,83 @@ Function doit
             fileMode = 0
         Else
             fileMode = -2 'System Default
-        Set pInFile = fso.OpenTextFile("c:\testfile.txt", ForReading)
-        pInFile = _wfopen(pUnicodeFileName, fileMode);
-        if (pInFile==0) {
-            wprintf(L"Unable to open input file %s\n",pUnicodeFileName);
-            return 0;
-        }
-    }
-    else
-        pInFile=WScript.StdIn
+        End If
+        Set pInFile = fso.OpenTextFile(pUnicodeFileName, fileMode)
+'        if (pInFile==0) {
+'            wprintf(L"Unable to open input file %s\n",pUnicodeFileName);
+'            return 0;
+'        }
+    Else
+        Set pInFile = WScript.StdIn
+    End If
 
-    while (!eof) {
-        bufferUsed=0;
-        prevBufferUsed=0;
-        wchar_t* endBufferUsed;
-        while(bufferUsed<BUFFER_SIZE) {
-            pBuffer[bufferUsed]=0;
-            wchar_t *ret = fgetws(pBuffer+bufferUsed,BUFFER_SIZE-bufferUsed,pInFile);
-            endBufferUsed = wcschr(pBuffer, L'\n');
-            if (endBufferUsed == 0) 
-                endBufferUsed = wcschr(pBuffer, L'\0');
-            if (endBufferUsed == 0 || ret == 0) {
-                eof=1;
-                break;
-            }
-            // replace newline with space
-            if (*endBufferUsed == L'\n')
-                *endBufferUsed=L' ';
-            prevBufferUsed = bufferUsed;
-            bufferUsed = endBufferUsed - pBuffer;
-            if (bufferUsed==prevBufferUsed)
-                break;
-            bufferUsed++;
-        }
-        // Check if there is anything to say
-        wchar_t *pChar=pBuffer;
-        while (!iswalnum(*pChar)&&*pChar!=0)
-            pChar++;
-        if (*pChar==0)
-            continue;
-        // We now have something to say
-        if (doMultWaveFiles) {
-            swprintf(fileName,L"%s%5.5d.wav",pFileName,++waveSeq);
-            hSpeaker = createSpeaker(fileName);
-            if (hSpeaker == 0)
-                return 0;
-            else {
-                if (rate != -999)
-                   IsOK=setRate(hSpeaker, rate);
-                if (IsOK && volume != -999)
-                    IsOK=setVolume(hSpeaker, volume);
-                if (!IsOK)
-                    return 0;
-            }
-        }
-        Speak(hSpeaker,pBuffer);
-        if (doMultWaveFiles) {
-            closeSpeaker(hSpeaker);
-            hSpeaker=0;
-        }
-    }
-    if (hSpeaker) {
-        closeSpeaker(hSpeaker);
-        hSpeaker=0;
-    }
+'    while (!eof) {
+'        bufferUsed=0;
+'        prevBufferUsed=0;
+'        wchar_t* endBufferUsed;
+'        while(bufferUsed<BUFFER_SIZE) {
+'            pBuffer[bufferUsed]=0;
+'            wchar_t *ret = fgetws(pBuffer+bufferUsed,BUFFER_SIZE-bufferUsed,pInFile);
+'            endBufferUsed = wcschr(pBuffer, L'\n');
+'            if (endBufferUsed == 0) 
+'                endBufferUsed = wcschr(pBuffer, L'\0');
+'            if (endBufferUsed == 0 || ret == 0) {
+'                eof=1;
+'                break;
+'            }
+'            // replace newline with space
+'            if (*endBufferUsed == L'\n')
+'                *endBufferUsed=L' ';
+'            prevBufferUsed = bufferUsed;
+'            bufferUsed = endBufferUsed - pBuffer;
+'            if (bufferUsed==prevBufferUsed)
+'                break;
+'            bufferUsed++;
+'        }
+'        // Check if there is anything to say
+'        wchar_t *pChar=pBuffer;
+'        while (!iswalnum(*pChar)&&*pChar!=0)
+'            pChar++;
+'        if (*pChar==0)
+'            continue;
+'        // We now have something to say
+'        if (doMultWaveFiles) {
+'            swprintf(fileName,L"%s%5.5d.wav",pFileName,++waveSeq);
+'            hSpeaker = createSpeaker(fileName);
+'            if (hSpeaker == 0)
+'                return 0;
+'            else {
+'                if (rate != -999)
+'                   IsOK=setRate(hSpeaker, rate);
+'                if (IsOK && volume != -999)
+'                    IsOK=setVolume(hSpeaker, volume);
+'                if (!IsOK)
+'                    return 0;
+'            }
+'        }
+'        Speak(hSpeaker,pBuffer);
+'        if (doMultWaveFiles) {
+'            closeSpeaker(hSpeaker);
+'            hSpeaker=0;
+'        }
+'    }
+'    if (hSpeaker) {
+'        closeSpeaker(hSpeaker);
+'        hSpeaker=0;
+'    }
 
-    closeDown();
-    return 1;
+'    closeDown();
+'    return 1;
 
+End Function
+
+Function createSpeaker(filename)
+End Function
+
+Function setRate(hSpeaker, rate)
+    setRate = True
+End Function
+
+Function setVolume(hSpeaker, volume)
+    setVolume = True
 End Function
