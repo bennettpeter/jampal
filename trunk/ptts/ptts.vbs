@@ -132,7 +132,7 @@ if IsOK And doListVoices then
     '     fwprintf(stdout,L"%s",ppszDescription[ix])    
     ' }
 End If
-if IsOK And pFileName <> Null Then
+if IsOK And Not IsNull(pFileName) Then
     If Len(pFileName) > 4 _
         And LCase(Mid(pFileName,Len(pFilename) -3)) = ".wav" Then
         pFileName = Mid(pFileName,1,Len(pFilename) -4)
@@ -195,14 +195,13 @@ Function doit
     ' wchar_t fileMode[256];
 
     if  Not doMultWaveFiles Then
-        if pFileName = Null Then
+        if IsNull(pFileName) Then
             hSpeaker = createSpeaker(Null)
         else
             hSpeaker = createSpeaker(pFileName & ".wav")
         End If
-        prnt
-        if hSpeaker = Null Then
-            printErr("hSpeaker is Null")
+        if IsNull(hSpeaker) Then
+            printErr("ERROR hSpeaker is Null")
             doit = False
             Exit Function
         else 
@@ -218,13 +217,15 @@ Function doit
                 doit = False
                 Exit Function
             End If
-            if IsOK And pVoice <> Null Then
+            if IsOK And Not IsNull(pVoice) Then
                 setVoice hSpeaker,pVoice
             End If
         End If
     End If
 
-    if pUnicodeFileName <> Null Then
+    Const ForReading = 1, ForWriting = 2, ForAppending = 8
+
+    if Not IsNull(pUnicodeFileName) Then
         Set fso = CreateObject("Scripting.FileSystemObject")
         If pEncoding = "UTF-16LE" Then
             fileMode = -1
@@ -233,16 +234,17 @@ Function doit
         Else
             fileMode = -2 'System Default
         End If
-        Set pInFile = fso.OpenTextFile(pUnicodeFileName, fileMode)
-'        if (pInFile==0) {
-'            wprintf(L"Unable to open input file %s\n",pUnicodeFileName);
-'            return 0;
-'        }
+        Set pInFile = fso.OpenTextFile(pUnicodeFileName, ForReading, False, fileMode)
+        If IsNull(pInFile) Then
+            PrintErr("Unable to open input file "& pUnicodeFileName)
+            doit = False
+            Exit Function
+        End If
     Else
         Set pInFile = WScript.StdIn
     End If
 
-'    while (!eof) {
+    While Not pInFile.AtEndOfStream
 '        bufferUsed=0;
 '        prevBufferUsed=0;
 '        wchar_t* endBufferUsed;
@@ -265,6 +267,7 @@ Function doit
 '                break;
 '            bufferUsed++;
 '        }
+        textLine = pInFile.ReadLine
 '        // Check if there is anything to say
 '        wchar_t *pChar=pBuffer;
 '        while (!iswalnum(*pChar)&&*pChar!=0)
@@ -272,26 +275,37 @@ Function doit
 '        if (*pChar==0)
 '            continue;
 '        // We now have something to say
-'        if (doMultWaveFiles) {
-'            swprintf(fileName,L"%s%5.5d.wav",pFileName,++waveSeq);
-'            hSpeaker = createSpeaker(fileName);
-'            if (hSpeaker == 0)
-'                return 0;
-'            else {
-'                if (rate != -999)
-'                   IsOK=setRate(hSpeaker, rate);
-'                if (IsOK && volume != -999)
-'                    IsOK=setVolume(hSpeaker, volume);
-'                if (!IsOK)
-'                    return 0;
-'            }
-'        }
-'        Speak(hSpeaker,pBuffer);
+        If doMultWaveFiles Then
+            waveSeq = waveSeq + 1
+            fnNumber = "00000" & CStr(waveSeq)
+            fnNumber = Mid (fnNumber, Len(fnNumber) - 4)
+            fileName = pFileName & fnNumber & ".wav"
+            hSpeaker = createSpeaker(fileName)
+            if IsNull(hSpeaker) Then
+                printErr("ERROR hSpeaker is Null")
+                doit = False
+                Exit Function
+            Else 
+                if rate <> -999 Then
+                    IsOK=setRate(hSpeaker, rate)
+                End If
+                if IsOK And volume <> -999 Then
+                    IsOK=setVolume(hSpeaker, volume)
+                End If
+                if Not IsOK Then
+                    printErr("Set rate " & rate & _
+                        " or volume " & volume & " failed." & IsOK)
+                    doit = False
+                    Exit Function
+                End If
+            End If
+        End If
+        Call Speak(hSpeaker,textLine)
 '        if (doMultWaveFiles) {
 '            closeSpeaker(hSpeaker);
 '            hSpeaker=0;
 '        }
-'    }
+     Wend
 '    if (hSpeaker) {
 '        closeSpeaker(hSpeaker);
 '        hSpeaker=0;
@@ -302,9 +316,14 @@ Function doit
 
 End Function
 
+Function Speak(hSpeaker, text)
+    printErr("Speak " & text)
+    Speak = True
+End Function
+
 Function createSpeaker(filename)
     printErr("createSpeaker " & filename)
-    createSpeaker = Null
+    createSpeaker = "S"
 End Function
 
 Function setRate(hSpeaker, rate)
