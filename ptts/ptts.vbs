@@ -126,11 +126,11 @@ if needFileName Or needVolume Or needRate  _
     IsOK=False
 End If
 if IsOK And doListVoices then
-    Set hSpeaker = createSpeaker(Null)
-    For Each strVoice in hSpeaker.GetVoices
-        printOut(strVoice.GetDescription)
+    Set voiceList = listVoices(Null)
+    For Each strVoice in voiceList
+        printOut(strVoice.GetAttribute("Name"))
     Next
-    Call closeSpeaker(hSpeaker)
+    WScript.Quit (0)
 End If
 if IsOK And Not IsNull(pFileName) Then
     If Len(pFileName) > 4 _
@@ -328,6 +328,7 @@ Function setVolume(hSpeaker, volume)
 End Function
 
 Function setVoice(hSpeaker, voice)
+    Set hSpeaker.Voice = hSpeaker.GetVoices(voice).Item(0)
     setVoice = True
 End Function
 
@@ -338,4 +339,17 @@ Function closeSpeaker(hSpeaker)
     Set outputFile = Nothing
     outputFile = Null
     closeSpeaker = True
+End Function
+
+
+Function listVoices(hSpeaker)
+    nullSpeaker = False
+    If IsNull(hSpeaker) Then
+        nullSpeaker = True
+        Set hSpeaker = createSpeaker(Null)
+    End If
+    Set listVoices = hSpeaker.GetVoices
+    If nullSpeaker Then
+        Call closeSpeaker(hSpeaker)
+    End If
 End Function
