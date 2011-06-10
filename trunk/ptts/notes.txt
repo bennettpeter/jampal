@@ -426,3 +426,10 @@ Script Runtime (includes file system object)
 http://msdn.microsoft.com/en-us/library/bstcxhf7(v=VS.85).aspx
 
 Wscript.StdOut.WriteLine 
+
+
+Voices from getvoices are spObjectToken objects
+GetAttribute can get "Name" "Gender" "Language" "Vendor" "Age"
+set voice using Name= or Name!= for any of these
+setting rate spVoice.Rate = long -10 to 10
+setting vol spVoice.Volume = Long 0 to 100
