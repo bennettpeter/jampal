@@ -126,11 +126,11 @@ if needFileName Or needVolume Or needRate  _
     IsOK=False
 End If
 if IsOK And doListVoices then
-    printOut ("ListVoices")
-    ' count = listVoices(&ppszDescription,NULL)
-    ' for (ix=0ix < count ix++) {
-    '     fwprintf(stdout,L"%s",ppszDescription[ix])    
-    ' }
+    Set hSpeaker = createSpeaker(Null)
+    For Each strVoice in hSpeaker.GetVoices
+        printOut(strVoice.GetDescription)
+    Next
+    Call closeSpeaker(hSpeaker)
 End If
 if IsOK And Not IsNull(pFileName) Then
     If Len(pFileName) > 4 _
@@ -180,6 +180,7 @@ Sub printErr (text)
     WScript.StdErr.WriteLine(text)
 End Sub
 
+
 Function doit
 
     ' wchar_t fileName[256];
@@ -189,6 +190,7 @@ Function doit
     ' int prevBufferUsed=0;
     eof = False
     ' int waveSeq=0;
+    ' hSpeaker is the SAPI.SpVoice
     hSpeaker = Null
     IsOK=True
     ' FILE *pInFile;
@@ -196,9 +198,9 @@ Function doit
 
     if  Not doMultWaveFiles Then
         if IsNull(pFileName) Then
-            hSpeaker = createSpeaker(Null)
+            Set hSpeaker = createSpeaker(Null)
         else
-            hSpeaker = createSpeaker(pFileName & ".wav")
+            Set hSpeaker = createSpeaker(pFileName & ".wav")
         End If
         if IsNull(hSpeaker) Then
             printErr("ERROR hSpeaker is Null")
@@ -245,42 +247,14 @@ Function doit
     End If
 
     While Not pInFile.AtEndOfStream
-'        bufferUsed=0;
-'        prevBufferUsed=0;
-'        wchar_t* endBufferUsed;
-'        while(bufferUsed<BUFFER_SIZE) {
-'            pBuffer[bufferUsed]=0;
-'            wchar_t *ret = fgetws(pBuffer+bufferUsed,BUFFER_SIZE-bufferUsed,pInFile);
-'            endBufferUsed = wcschr(pBuffer, L'\n');
-'            if (endBufferUsed == 0) 
-'                endBufferUsed = wcschr(pBuffer, L'\0');
-'            if (endBufferUsed == 0 || ret == 0) {
-'                eof=1;
-'                break;
-'            }
-'            // replace newline with space
-'            if (*endBufferUsed == L'\n')
-'                *endBufferUsed=L' ';
-'            prevBufferUsed = bufferUsed;
-'            bufferUsed = endBufferUsed - pBuffer;
-'            if (bufferUsed==prevBufferUsed)
-'                break;
-'            bufferUsed++;
-'        }
         textLine = pInFile.ReadLine
-'        // Check if there is anything to say
-'        wchar_t *pChar=pBuffer;
-'        while (!iswalnum(*pChar)&&*pChar!=0)
-'            pChar++;
-'        if (*pChar==0)
-'            continue;
 '        // We now have something to say
         If doMultWaveFiles Then
             waveSeq = waveSeq + 1
             fnNumber = "00000" & CStr(waveSeq)
             fnNumber = Mid (fnNumber, Len(fnNumber) - 4)
             fileName = pFileName & fnNumber & ".wav"
-            hSpeaker = createSpeaker(fileName)
+            Set hSpeaker = createSpeaker(fileName)
             if IsNull(hSpeaker) Then
                 printErr("ERROR hSpeaker is Null")
                 doit = False
@@ -301,29 +275,48 @@ Function doit
             End If
         End If
         Call Speak(hSpeaker,textLine)
-'        if (doMultWaveFiles) {
-'            closeSpeaker(hSpeaker);
-'            hSpeaker=0;
-'        }
-     Wend
-'    if (hSpeaker) {
-'        closeSpeaker(hSpeaker);
-'        hSpeaker=0;
-'    }
+        If doMultWaveFiles Then
+            Call closeSpeaker(hSpeaker)
+        End If
+    Wend
+    If Not IsNull(hSpeaker) Then
+        Call closeSpeaker(hSpeaker)
+    End If
 
 '    closeDown();
-'    return 1;
+    doit = True
+End Function
 
+outputFile = Null
+Const SVSFlagsAsync = 1 
+const SVSFPurgeBeforeSpeak = 2 
+
+Function createSpeaker(filename)
+    ' printErr("createSpeaker " & filename)
+    Dim voice
+    outputFile = Null
+    Set voice = CreateObject("SAPI.SpVoice")
+    If Not IsNull(filename) Then
+        Set outputFile = CreateObject("SAPI.SpFileStream")
+        Set format = CreateObject("SAPI.SpAudioFormat")
+        ' Need to fix this for samples and channels
+        format.Type = 35
+        Set outputFile.Format = format
+        outputFile.Open filename, 3
+        Set voice.AudioOutputStream = outputFile
+    End If
+    Set createSpeaker = voice
 End Function
 
 Function Speak(hSpeaker, text)
     printErr("Speak " & text)
-    Speak = True
-End Function
+    On Error Resume Next
+    hSpeaker.Speak text, SVSFlagsAsync + SVSFPurgeBeforeSpeak
+    Do
+            Sleep 100
+    Loop Until hSpeaker.WaitUntilDone(10)
 
-Function createSpeaker(filename)
-    printErr("createSpeaker " & filename)
-    createSpeaker = "S"
+    Speak = True
 End Function
 
 Function setRate(hSpeaker, rate)
@@ -332,4 +325,17 @@ End Function
 
 Function setVolume(hSpeaker, volume)
     setVolume = True
+End Function
+
+Function setVoice(hSpeaker, voice)
+    setVoice = True
+End Function
+
+
+Function closeSpeaker(hSpeaker)
+    Set hSpeaker = Nothing
+    hSpeaker = Null
+    Set outputFile = Nothing
+    outputFile = Null
+    closeSpeaker = True
 End Function
