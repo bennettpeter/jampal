@@ -47,7 +47,7 @@ IsOK = True
 Dim argv
 Set argv = WScript.Arguments
 
-printErr("ptts Version 1.28 (c) 2011 Peter G. Bennett")
+printErr("ptts Version **UNSTABLE** (c) 2011 Peter G. Bennett")
 
 For Each arg in argv
     If needFileName Then
@@ -126,7 +126,7 @@ if needFileName Or needVolume Or needRate  _
     IsOK=False
 End If
 if IsOK And doListVoices then
-    Set voiceList = listVoices(Null)
+    Set voiceList = getVoices(Null)
     For Each strVoice in voiceList
         printOut(strVoice.GetAttribute("Name"))
     Next
@@ -153,6 +153,7 @@ Else
     printErr("-r rate      Speech rate -10 to +10, default is 0.")
     printErr("-v volume    Volume as a percentage, default is 100.")
     printErr("-s samples   Samples per sec for wav file, default is 44100.")
+    printErr("             options are 8000, 16000, 22050, 44100 48000.")
     printErr("-c channels  Channels (1 or 2) for wav file, default is 2.")
     printErr("-u filename  Read text from file instead of stdin.")
     printErr("-e encoding  File encoding. UTF-8, UTF-16LE.")
@@ -182,19 +183,9 @@ End Sub
 
 
 Function doit
-
-    ' wchar_t fileName[256];
-    ' wchar_t *pBuffer;
-    ' pBuffer = (wchar_t*)malloc(BUFFER_SIZE * sizeof (wchar_t));
-    ' int bufferUsed=0;
-    ' int prevBufferUsed=0;
     eof = False
-    ' int waveSeq=0;
-    ' hSpeaker is the SAPI.SpVoice
     hSpeaker = Null
     IsOK=True
-    ' FILE *pInFile;
-    ' wchar_t fileMode[256];
 
     if  Not doMultWaveFiles Then
         if IsNull(pFileName) Then
@@ -291,25 +282,26 @@ outputFile = Null
 Const SVSFlagsAsync = 1 
 const SVSFPurgeBeforeSpeak = 2 
 
+
 Function createSpeaker(filename)
     ' printErr("createSpeaker " & filename)
-    Dim voice
+    Dim speaker
     outputFile = Null
-    Set voice = CreateObject("SAPI.SpVoice")
+    Set speaker = CreateObject("SAPI.SpVoice")
     If Not IsNull(filename) Then
         Set outputFile = CreateObject("SAPI.SpFileStream")
-        Set format = CreateObject("SAPI.SpAudioFormat")
+        Set format = outputFile.format
         ' Need to fix this for samples and channels
-        format.Type = 35
+        format.Type = getWaveType(samples,channels)
         Set outputFile.Format = format
         outputFile.Open filename, 3
-        Set voice.AudioOutputStream = outputFile
+        Set speaker.AudioOutputStream = outputFile
     End If
-    Set createSpeaker = voice
+    Set createSpeaker = speaker
 End Function
 
+
 Function Speak(hSpeaker, text)
-    printErr("Speak " & text)
     On Error Resume Next
     hSpeaker.Speak text, SVSFlagsAsync + SVSFPurgeBeforeSpeak
     Do
@@ -319,16 +311,27 @@ Function Speak(hSpeaker, text)
     Speak = True
 End Function
 
+
 Function setRate(hSpeaker, rate)
+    hSpeaker.Rate = rate
     setRate = True
 End Function
 
+
 Function setVolume(hSpeaker, volume)
+    hSpeaker.Volume = volume
     setVolume = True
 End Function
 
+
 Function setVoice(hSpeaker, voice)
-    Set hSpeaker.Voice = hSpeaker.GetVoices(voice).Item(0)
+    Set list = hSpeaker.GetVoices("Name="&voice)
+    If list.Count <> 1 Then
+        printErr("ERROR "&list.Count&" voices match "&voice)
+        setVoice = False
+        Exit Function
+    End If
+    Set hSpeaker.Voice = list.Item(0)
     setVoice = True
 End Function
 
@@ -342,14 +345,37 @@ Function closeSpeaker(hSpeaker)
 End Function
 
 
-Function listVoices(hSpeaker)
+Function getVoices(hSpeaker)
     nullSpeaker = False
     If IsNull(hSpeaker) Then
         nullSpeaker = True
         Set hSpeaker = createSpeaker(Null)
     End If
-    Set listVoices = hSpeaker.GetVoices
+    Set getVoices = hSpeaker.GetVoices
     If nullSpeaker Then
         Call closeSpeaker(hSpeaker)
+    End If
+End Function
+
+Function getWaveType(samples, channels)
+    getWaveType = 34
+    If     samples =  8000 Then 
+        getWaveType = 6
+    ElseIf samples = 16000 Then 
+        getWaveType = 18
+    ElseIf samples = 22050 Then 
+        getWaveType = 22
+    ElseIf samples = 44100 Then 
+        getWaveType = 34
+    ElseIf samples = 48000 Then 
+        getWaveType = 38
+    Else
+        printErr("Invalid samples "&samples)
+    End If
+    If channels = 1 Then
+    ElseIf channels = 2 Then
+        getWaveType = getWaveType + 1
+    Else
+        printErr("Invalid channel number "&channels)
     End If
 End Function

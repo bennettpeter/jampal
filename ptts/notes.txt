@@ -433,3 +433,9 @@ GetAttribute can get "Name" "Gender" "Language" "Vendor" "Age"
 set voice using Name= or Name!= for any of these
 setting rate spVoice.Rate = long -10 to 10
 setting vol spVoice.Volume = Long 0 to 100
+
+32bit speech control panel 
+C:\Windows\SysWOW64\Speech\SpeechUX\sapi.cpl
+
+printOut(strVoice.GetAttribute("Name"))
+Set hSpeaker.Voice = hSpeaker.GetVoices(voice).Item(0)
