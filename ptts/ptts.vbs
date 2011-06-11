@@ -39,6 +39,7 @@ needEncoding = False
 doInstruct = False
 doLexiconAdd = False
 doListVoices = False
+isCscript = True        ' Identifies if we are running CScript
 
 
 Dim IsOK
@@ -47,7 +48,10 @@ IsOK = True
 Dim argv
 Set argv = WScript.Arguments
 
-printErr("ptts Version **UNSTABLE** (c) 2011 Peter G. Bennett")
+Call checkCScript
+if (isCscript) Then
+    printErr("ptts Version **UNSTABLE** (c) 2011 Peter G. Bennett")
+End If
 
 For Each arg in argv
     If needFileName Then
@@ -127,9 +131,14 @@ if needFileName Or needVolume Or needRate  _
 End If
 if IsOK And doListVoices then
     Set voiceList = getVoices(Null)
+    list = ""
     For Each strVoice in voiceList
-        printOut(strVoice.GetAttribute("Name"))
+        if Len(list) > 0 Then
+            list = list & vbLf
+        End If
+        list = list & strVoice.GetAttribute("Name")
     Next
+    printOut(list)
     WScript.Quit (0)
 End If
 if IsOK And Not IsNull(pFileName) Then
@@ -140,28 +149,32 @@ if IsOK And Not IsNull(pFileName) Then
 End If
 If IsOK Then
     IsOK = doit
-Else 
-    printErr("Usage: ptts [options]")
-    printErr("")
-    printErr("Reads from standard input and generates speech")
-    printErr("")
-    printErr("Options:")
-    printErr("-w filename  create wave file instead of outputting sound")
-    printErr("-m filename  multiple wave files")
-    printErr("             new wave file after each empty input line")
-    printErr("             appends nnnnn.wav to the filename.")
-    printErr("-r rate      Speech rate -10 to +10, default is 0.")
-    printErr("-v volume    Volume as a percentage, default is 100.")
-    printErr("-s samples   Samples per sec for wav file, default is 44100.")
-    printErr("             options are 8000, 16000, 22050, 44100 48000.")
-    printErr("-c channels  Channels (1 or 2) for wav file, default is 2.")
-    printErr("-u filename  Read text from file instead of stdin.")
-    printErr("-e encoding  File encoding. UTF-8, UTF-16LE.")
-    printErr("             Default ANSI or as indicated by BOM in file.")
-    printErr("-voice xxxx  Voice to be used.")
-    printErr("-vl          List voices.")
-    printErr("XML can be included in the input text to control the speech.")
-    printErr("For details see the Microsoft speech API.")
+End If
+If Not IsOK then
+    printErr( VbCrLf & _
+    "Usage: cscript ptts.vbs [options]" & VbCrLf & _
+    VbCrLf & _
+    "Reads from standard input or text file and generates speech" & VbCrLf & _
+    VbCrLf & _
+    "Options:" & VbCrLf & _
+    "-w filename  create wave file instead of outputting sound" & VbCrLf & _
+    "-m filename  multiple wave files" & VbCrLf & _
+    "             new wave file after each empty input line" & VbCrLf & _
+    "             appends nnnnn.wav to the filename." & VbCrLf & _
+    "-r rate      Speech rate -10 to +10, default is 0." & VbCrLf & _
+    "-v volume    Volume as a percentage, default is 100." & VbCrLf & _
+    "-s samples   Samples per sec for wav file, default is 44100." & VbCrLf & _
+    "             options are 8000, 16000, 22050, 44100, 48000." & VbCrLf & _
+    "-c channels  Channels (1 or 2 & VbCrLf & _ for wav file, default is 2." & VbCrLf & _
+    "-u filename  Read text from file instead of stdin." & VbCrLf & _
+    "-e encoding  File encoding. UTF-8, UTF-16LE." & VbCrLf & _
+    "             Default ANSI or as indicated by BOM in file." & VbCrLf & _
+    "-voice xxxx  Voice to be used." & VbCrLf & _
+    "-vl          List voices." & VbCrLf & _
+    "XML can be included in the input text to control the speech." & VbCrLf & _
+    "For details see the Microsoft speech API." & VbCrLf & _
+    "" & VbCrLf & _
+    "If using standard input you must run with CScript program.")
 End If
 
 if IsOK Then
@@ -174,11 +187,29 @@ WScript.Quit (rc)
 
 
 Sub printOut (text)
-    WScript.StdOut.WriteLine(text)
+    if isCscript Then
+        WScript.StdOut.WriteLine(text)
+    Else
+        WScript.Echo text
+    End If
 End Sub
 
+
 Sub printErr (text)
-    WScript.StdErr.WriteLine(text)
+    if isCscript Then
+        WScript.StdErr.WriteLine(text)
+    Else
+        WScript.Echo text
+    End If
+End Sub
+
+Sub checkCScript()
+    On Error Resume Next
+    WScript.StdErr.Write(vbLf)
+    If Err.Number <> 0 Then
+        isCscript = False
+    End If
+    Err.Clear
 End Sub
 
 
@@ -186,6 +217,7 @@ Function doit
     eof = False
     hSpeaker = Null
     IsOK=True
+    doit = True
 
     if  Not doMultWaveFiles Then
         if IsNull(pFileName) Then
@@ -234,48 +266,57 @@ Function doit
             Exit Function
         End If
     Else
-        Set pInFile = WScript.StdIn
+        If isCscript Then
+            Set pInFile = WScript.StdIn
+        Else
+            pInFile = Null
+        End If
     End If
 
-    While Not pInFile.AtEndOfStream
-        textLine = pInFile.ReadLine
-'        // We now have something to say
-        If doMultWaveFiles Then
-            waveSeq = waveSeq + 1
-            fnNumber = "00000" & CStr(waveSeq)
-            fnNumber = Mid (fnNumber, Len(fnNumber) - 4)
-            fileName = pFileName & fnNumber & ".wav"
-            Set hSpeaker = createSpeaker(fileName)
-            if IsNull(hSpeaker) Then
-                printErr("ERROR hSpeaker is Null")
-                doit = False
-                Exit Function
-            Else 
-                if rate <> -999 Then
-                    IsOK=setRate(hSpeaker, rate)
-                End If
-                if IsOK And volume <> -999 Then
-                    IsOK=setVolume(hSpeaker, volume)
-                End If
-                if Not IsOK Then
-                    printErr("Set rate " & rate & _
-                        " or volume " & volume & " failed." & IsOK)
+    If IsNull(pInFile) Then
+        sText = InputBox("Enter the text you want the computer to say", "ptts")
+        sText = Trim(sText)
+        If sText <> "" Then
+            Call Speak(hSpeaker,sText)
+        End If
+    Else
+        While Not pInFile.AtEndOfStream
+            textLine = pInFile.ReadLine
+    '        // We now have something to say
+            If doMultWaveFiles Then
+                waveSeq = waveSeq + 1
+                fnNumber = "00000" & CStr(waveSeq)
+                fnNumber = Mid (fnNumber, Len(fnNumber) - 4)
+                fileName = pFileName & fnNumber & ".wav"
+                Set hSpeaker = createSpeaker(fileName)
+                if IsNull(hSpeaker) Then
+                    printErr("ERROR hSpeaker is Null")
                     doit = False
                     Exit Function
+                Else 
+                    if rate <> -999 Then
+                        IsOK=setRate(hSpeaker, rate)
+                    End If
+                    if IsOK And volume <> -999 Then
+                        IsOK=setVolume(hSpeaker, volume)
+                    End If
+                    if Not IsOK Then
+                        printErr("Set rate " & rate & _
+                            " or volume " & volume & " failed." & IsOK)
+                        doit = False
+                        Exit Function
+                    End If
                 End If
             End If
-        End If
-        Call Speak(hSpeaker,textLine)
-        If doMultWaveFiles Then
-            Call closeSpeaker(hSpeaker)
-        End If
-    Wend
+            Call Speak(hSpeaker,textLine)
+            If doMultWaveFiles Then
+                Call closeSpeaker(hSpeaker)
+            End If
+        Wend
+    End If
     If Not IsNull(hSpeaker) Then
         Call closeSpeaker(hSpeaker)
     End If
-
-'    closeDown();
-    doit = True
 End Function
 
 outputFile = Null
