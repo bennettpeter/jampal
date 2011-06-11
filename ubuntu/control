@@ -1,11 +1,12 @@
 Source: jampal
 Section: universe/sound
 Priority: optional
-Maintainer: Peter Bennett <pgbennett@comcast.net>
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Peter Bennett <pgbennett@comcast.net>
 Build-Depends: debhelper (>= 7.0.50~),openjdk-6-jdk, rman, rsync,
  quilt (>= 0.46-7~)
 Standards-Version: 3.9.1.0
-Homepage: http://jampal.sf.net
+Homepage: http://jampal.sourceforge.net
 
 Package: jampal
 Architecture: all
