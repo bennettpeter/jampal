@@ -473,8 +473,19 @@ Default voices.txt to espeak for GUI.
 Fix memory leak - repeated change of looks causes out of memory in 64 bit system
 Increase default memory size for 64bit, or for all, to 512M
 
+I am packaging Jampal for  Ubuntu. Jampal is an mp3 song library management system and player.  It can
+1. Organize a very large library of songs
+2. Perform updating of tags, supporting more frames than other systems, also a flexible way of updating large numbers of tags
+3. Organize and sort songs according to standard or custom fields
+4. Create and play playlists of songs.
+5. Voice synthesized song announcements.
+6. Transferring playlists to player or disk, optionally with voice announcements.
+7. Backup of tags.
+Many other capabilities
 
+needs-packaging
 
+Bug #795993 
 
 
 
