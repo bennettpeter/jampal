@@ -33,14 +33,19 @@
       <b>Debian or Ubuntu Linux</b>
     </p>
     Run the package maneger to see if jampal is available as a
-    download. If so, install from there. Otherwise download the
-    correct jampal_*.deb file. There is one for 32 bit systems
-    and one for 64 bit systems. Double click on it, and then
-    select Install Package. Alternatively, you can also install a
-    .deb file by opening a terminal and typing: 
-    <p>
+    download. If so, install from there. If you are installing on
+    Ubuntu version 11.04 (Natty), see instructions at the top of
+    this page for setting up the private package archive
+    Otherwise download the correct jampal_*.deb and tagbkup_*.deb
+    files. There are one of each for 32 bit systems and one for
+    64 bit systems. First install the tagbkup file and then the
+    jampal file. Double click on the file, and then select
+    Install Package. Alternatively, you can also install a .deb
+    file by opening a terminal and typing: 
+<pre>
       sudo dpkg -i package_file.deb
-    </p>
+   
+</pre>
     <p>
       Required elements, including java, will automatically be
       installed.
@@ -133,7 +138,8 @@
       On linux or solaris you can run the jampal open command.
     </p>
     <p>
-      On other environments run the command<br>
+      On other environments run the command
+      <br>
        java -Xincgc -Xmx256M -jar jampal.jar
     </p>
     <p>
@@ -223,4 +229,5 @@
     </p>
   </body>
 </html>
+
 
