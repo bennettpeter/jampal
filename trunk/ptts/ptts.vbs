@@ -165,9 +165,9 @@ If Not IsOK then
     "-v volume    Volume as a percentage, default is 100." & VbCrLf & _
     "-s samples   Samples per sec for wav file, default is 44100." & VbCrLf & _
     "             options are 8000, 16000, 22050, 44100, 48000." & VbCrLf & _
-    "-c channels  Channels (1 or 2 & VbCrLf & _ for wav file, default is 2." & VbCrLf & _
+    "-c channels  Channels (1 or 2) for wav file, default is 2." & VbCrLf & _
     "-u filename  Read text from file instead of stdin." & VbCrLf & _
-    "-e encoding  File encoding. UTF-8, UTF-16LE." & VbCrLf & _
+    "-e encoding  File encoding. ASCII, UTF-16LE." & VbCrLf & _
     "             Default ANSI or as indicated by BOM in file." & VbCrLf & _
     "-voice xxxx  Voice to be used." & VbCrLf & _
     "-vl          List voices." & VbCrLf & _
