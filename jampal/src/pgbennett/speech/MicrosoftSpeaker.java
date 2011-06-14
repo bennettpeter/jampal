@@ -38,8 +38,12 @@ public class MicrosoftSpeaker implements SpeechInterface {
     public MicrosoftSpeaker()  {
     }
     
-    public void setPath(String path) {
-        this.path = path;
+    public void setWOW64(boolean useWOW64) {
+        String windowsDir = System.getenv("windir");
+        if (useWOW64)
+            this.path = windowsDir + "\\SysWOW64";
+        else
+            this.path = null;
     }
 
     public boolean close() {
@@ -53,11 +57,12 @@ public class MicrosoftSpeaker implements SpeechInterface {
     public boolean init() {
         String command;
         if (path==null)
-            command="swift";
+            command="cscript";
         else
-            command=path+File.separator+"bin"+File.separator+"swift";
+            command=path+File.separator+"cscript";
         Vector cmdVec = new Vector();
         cmdVec.add(command);
+        cmdVec.add("ptts.vbs");
         if (voice != null && voice.length()>0) {
             cmdVec.add("-n");
             cmdVec.add(voice);
