@@ -1,5 +1,5 @@
 /*
-    Copyright 2006 Peter Bennett
+    Copyright 2011 Peter Bennett
 
     This file is part of Jampal.
 
@@ -25,17 +25,46 @@ import java.util.*;
 
 public class MicrosoftSpeaker implements SpeechInterface {
     
-    int rateWPM = 165;
+    int rate = 0;
     int volume = 100;
     String voice;
     Process process;
     
     String path;
+    static File speakText;
+    static File pttsVbs;
 
     
     
-    /** Creates a new instance of CepstralSpeaker */
-    public MicrosoftSpeaker()  {
+    /** Creates a new instance of MicrosoftSpeaker */
+    public MicrosoftSpeaker() throws IOException {
+        synchronized(MicrosoftSpeaker.class) {
+            if (speakText == null) {
+                    speakText = File.createTempFile("jampal", ".txt");
+            }
+            InputStream inStream = null;
+            OutputStream outStream = null;
+            if (pttsVbs == null) {
+                try {
+                    pttsVbs = File.createTempFile("jampal", ".vbs");
+                    inStream = ClassLoader.getSystemResourceAsStream(("pgbennett/speech/ptts.vbs"));
+                    outStream = new FileOutputStream(pttsVbs);
+                    byte buffer[] = new byte[1024];
+                    int len = 0;
+                    while (len != -1) {
+                        len = inStream.read(buffer);
+                        if (len != -1)
+                            outStream.write(buffer, 0, len);
+                    }
+                }
+                finally {
+                    if (inStream != null)
+                        inStream.close();
+                    if (outStream != null)
+                        outStream.close();
+                }
+            }
+        }
     }
     
     public void setWOW64(boolean useWOW64) {
@@ -47,30 +76,44 @@ public class MicrosoftSpeaker implements SpeechInterface {
     }
 
     public boolean close() {
-        outWriter.flush();
-        outWriter.close();
         return true;
     }
     
     PrintWriter outWriter;
 
     public boolean init() {
+        return true;
+    }
+    
+    enum invokeOption {SPEAK, VOICELIST }
+    
+    boolean invoke(invokeOption option) {
         String command;
         if (path==null)
             command="cscript";
         else
             command=path+File.separator+"cscript";
-        Vector cmdVec = new Vector();
+        ArrayList cmdVec = new ArrayList<String>();
         cmdVec.add(command);
-        cmdVec.add("ptts.vbs");
-        if (voice != null && voice.length()>0) {
-            cmdVec.add("-n");
-            cmdVec.add(voice);
+        cmdVec.add(pttsVbs.getPath());
+        switch (option) {
+            case VOICELIST:
+                cmdVec.add("-vl");
+                break;
+            case SPEAK:
+            if (voice != null && voice.length()>0) {
+                cmdVec.add("-n");
+                cmdVec.add(voice);
+            }
+            cmdVec.add("-v");
+            cmdVec.add(volume);
+            cmdVec.add("-r");
+            cmdVec.add(rate);
+            cmdVec.add("-e");
+            cmdVec.add("UTF-16LE");
+            cmdVec.add("-u");
+            cmdVec.add(speakText.getPath());
         }
-        cmdVec.add("-p");
-        cmdVec.add("audio/volume="+volume+",speech/rate="+rateWPM);
-        cmdVec.add("-f");
-        cmdVec.add("-");
         String [] cmdArray = new String[cmdVec.size()];
         cmdArray = (String[])cmdVec.toArray(cmdArray);
         if (process!=null)
@@ -88,7 +131,26 @@ public class MicrosoftSpeaker implements SpeechInterface {
         outThread = new ReaderThread(process.getInputStream(), System.out);
         outThread.start();
         outWriter = new PrintWriter(process.getOutputStream(),true);
-        return true;
+        outWriter.flush();
+        outWriter.close();
+
+        int ret=999;
+        boolean IsOK = true;
+        try {
+            ret=process.waitFor();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            IsOK=false;
+        }
+        if (ret!=0) {
+            Exception ex = new Exception("process failed, ret="+ret);
+            ex.printStackTrace();
+            IsOK=false;
+        }
+        process=null;
+        
+        return IsOK;
     }
     
     ReaderThread errThread;
@@ -98,11 +160,11 @@ public class MicrosoftSpeaker implements SpeechInterface {
         BufferedReader reader;
         PrintStream printStream;
         boolean eof = false;
-        Vector lines = new Vector();
+        ArrayList<String> lines = new ArrayList<String> ();
         String line;
         
         ReaderThread(InputStream inputStream, PrintStream printStream) {
-            super("cepstral-reader");
+            super("microsoft-reader");
             this.reader=new BufferedReader(new InputStreamReader(inputStream));
             this.printStream=printStream;
         }
@@ -127,7 +189,7 @@ public class MicrosoftSpeaker implements SpeechInterface {
     }
 
     public boolean setRate(int rate) {
-        rateWPM = (rate+11)*15;
+        this.rate = rate;
         return true;
     }
 
@@ -141,46 +203,35 @@ public class MicrosoftSpeaker implements SpeechInterface {
     }
 
     public boolean speak(String strInput) {
-        if (process==null || outWriter == null)  //  || !outThread.isAlive())
-            init();
-        if (process==null || outWriter == null)  //  || !outThread.isAlive())
-            return false;
-        outWriter.println(strInput);
-        outWriter.println("\n");
-        close();
-        int ret=999;
-        try {
-            ret=process.waitFor();
+        PrintWriter textWriter = null;
+        boolean IsOK=true;
+        synchronized(speakText) {
+            try {
+                textWriter = new PrintWriter(speakText,"UTF-16LE");
+                textWriter.println(strInput);
+                textWriter.println("\n");
+                textWriter.close();
+                textWriter = null;
+                IsOK=invoke(invokeOption.SPEAK);
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                IsOK=false;
+            }
+            finally {
+                if (textWriter != null)
+                    textWriter.close();
+            }
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        if (ret!=0) {
-            Exception ex = new Exception("process failed, ret="+ret);
-            ex.printStackTrace();
-        }
-        process=null;
-        // start up another process so it will be ready next time
-        // to reduce delay
-        init();
-        return true;
+        return IsOK;
     }
 
     public String [] getVoiceList() {
-        if (path != null && path.length() > 0) {
-            File voicesDir = new File(path, "voices");
-            File [] dirArray = voicesDir.listFiles();
-            if (dirArray==null)
-                return null;
-            Vector voicesVec = new Vector();
-            int ix;
-            for (ix=0;ix<dirArray.length;ix++) {
-                if (dirArray[ix].isDirectory()) {
-                    voicesVec.add(dirArray[ix].getName());
-                }
-            }
-            String [] voicesArray = new String[voicesVec.size()];
-            voicesArray = (String[]) voicesVec.toArray(voicesArray);
+        boolean IsOK=true;
+        IsOK=invoke(invokeOption.VOICELIST);
+        if (IsOK) {
+            String [] voicesArray = new String[outThread.lines.size()];
+            voicesArray = (String[]) outThread.lines.toArray(voicesArray);
             return voicesArray;
         }
         else return null;
