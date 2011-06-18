@@ -40,6 +40,7 @@ doInstruct = False
 doLexiconAdd = False
 doListVoices = False
 isCscript = True        ' Identifies if we are running CScript
+needDebugging = False
 
 
 Dim IsOK
@@ -54,6 +55,9 @@ if (isCscript) Then
 End If
 
 For Each arg in argv
+    If needDebugging Then
+        printErr("arg:" & arg)
+    End If
     If needFileName Then
         pFileName=arg
         needFileName = False
@@ -110,6 +114,9 @@ For Each arg in argv
         needVoice = True
     ElseIf arg = "-e" Then
         needEncoding = True
+    ElseIf arg = "-debug" Then
+        needDebugging = True
+        printErr("Debug selected")
     ElseIf Mid(arg,1,1) = "-" Then
         IsOK=False
     Else 
@@ -131,11 +138,9 @@ if needFileName Or needVolume Or needRate  _
 End If
 if IsOK And doListVoices then
     Set voiceList = getVoices(Null)
-    list = ""
+    list = "--Voice List--"
     For Each strVoice in voiceList
-        if Len(list) > 0 Then
-            list = list & vbLf
-        End If
+        list = list & vbLf
         list = list & strVoice.GetAttribute("Name")
     Next
     printOut(list)
