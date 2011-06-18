@@ -141,13 +141,16 @@ class VoicePage {
         
         // Microsoft
         try {
-            voices = Speaker.getVoices();
+            MicrosoftSpeaker microsoftSpeaker = new MicrosoftSpeaker();
+            voices = microsoftSpeaker.getVoiceList();
         }
         catch (Throwable th) {
             // th.printStackTrace();
             System.err.println("VoicesPage.loadVoices " + th.toString());
             voices=new String[0];
         }
+        if (voices == null)
+            voices = new String[0];
         voiceComboBox[1] = new JComboBox(voices);
         voiceComboBox[1].insertItemAt("", 0);
         //voiceMatrix.add(voices);
@@ -312,7 +315,7 @@ class VoicePage {
                     speaker = (SpeechInterface)freeTTSSpeakerClass.newInstance();
                 }
                 else if ("Microsoft".equals(entry.engine)) 
-                    speaker = new Speaker();
+                    speaker = new MicrosoftSpeaker();
                 else if ("Cepstral".equals(entry.engine)) {
                     CepstralSpeaker cepstralSpeaker = new CepstralSpeaker();
                     speaker = cepstralSpeaker;

@@ -1009,7 +1009,7 @@ public class AudioPlayer implements Runnable {
                             speaker = (SpeechInterface)freeTTSSpeakerClass.newInstance();
                         }
                         else if ("Microsoft".equals(engine)) 
-                            speaker = new Speaker();
+                            speaker = new MicrosoftSpeaker();
                         else if ("Cepstral".equals(engine)) {
                             CepstralSpeaker cepstralSpeaker = new CepstralSpeaker();
                             speaker = cepstralSpeaker;
