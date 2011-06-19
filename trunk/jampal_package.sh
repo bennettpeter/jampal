@@ -118,6 +118,7 @@ mkdir -p $package/utility
 cp -up utility/* $package/utility
 
 cp -up looks/*.jar $package
+cp -up jampal/src/pgbennett/speech/ptts.vbs $package
 
 rm -f jampal-doc-$VERSION.zip
 cd $package

@@ -142,9 +142,44 @@ case $engine in
         echo "#closefile"  >> "$streamfile"
         ;;
     Microsoft)
-        "$JAMPAL_HOME/ptts.exe" "$@"
-        
-        rm -f "$streamfile"
+        command[0]="cscript"
+        command[1]=`cygpath -w "$JAMPAL_HOME/ptts.vbs"`
+        index=1
+        encoding=
+        while (( $# != 0 )); do
+            case $1 in
+            -voice)
+                command[++index]="$1"
+                if [[ "${2#\*\*}" != "$2" ]] ; then
+                    command[++index]="${2#\*\*}"
+                    command[0]="$SYSTEMROOT/SysWOW64/cscript"
+                else
+                    command[++index]="$2"
+                fi
+                shift;shift
+                ;;
+            -e)
+                encoding="$2"
+                command[++index]="-e"
+                command[++index]="UTF-16LE"
+                shift;shift
+                ;;
+            *)
+                command[++index]="$1"
+                shift
+                ;;
+            esac
+        done
+        streamfile1=$TEMPDIR/ptts_input_stream1.$$.txt
+        streamfile2=$TEMPDIR/ptts_input_stream2.$$.txt
+        cat > "$streamfile1"
+        echo >> "$streamfile1"
+        echo >> "$streamfile1"
+        iconv -f "$encoding" -t UTF-16LE "$streamfile1" > "$streamfile2"
+        command[++index]="-u"
+        command[++index]="$streamfile2"
+        "${command[@]}"
+        rm -f "$streamfile1" "$streamfile2"
         ;;
     Cepstral)
         cepstral[0]="$CEPSTRAL_HOME/bin/swift"
@@ -331,6 +366,23 @@ case $engine in
         ;;
     *)
         echo "ERROR Unknown Speech Engine $engine"
+        echo "Use -engine xxx as first parameter to change engine"
+        echo "Valid engines are eSpeak, Microsoft, Cepstral, FreeTTS"
+        echo "$0 usage:"
+        echo "-engine name"
+        echo "-start       start process"
+        echo "-stop        stop process"
+        echo "-w filename  create wave file instead of outputting sound"
+        echo "-r rate      Speech rate -10 to +10, default is 0."
+        echo "-v volume    Volume as a percentage, default is 100."
+        echo "-voice xxxx  Voice to be used."
+        echo "-vl          List voices."
+        echo "-e xxxx      input file encoding."
+        echo "After this, for all except -start and -stop, read standard input"
+        echo "for text to be spoken"
+        echo "for ESpeak input file encoding is always UTF-8."
+        echo "After this, for all except -start and -stop, read standard input"
+        echo "for text to be spoken"
         exit 2
         ;;
 esac
