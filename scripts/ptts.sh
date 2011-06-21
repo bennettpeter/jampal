@@ -74,7 +74,6 @@ if [[ "$1" = -stop ]]; then
                 $encoding \
                 -cp "$JAMPAL_CLASSPATH" \
                 pgbennett.speech.BatchSpeaker < $streamfile
-            
             echo BatchSpeaker complete
             ;;
     esac
@@ -142,6 +141,10 @@ case $engine in
         echo "#closefile"  >> "$streamfile"
         ;;
     Microsoft)
+        if [[ `uname -s` != CYGWIN* ]]; then
+            echo "ERROR Microsoft engine can only be used with Cygwin"
+            exit 2
+        fi
         command[0]="cscript"
         command[1]=`cygpath -w "$JAMPAL_HOME/ptts.vbs"`
         index=1
