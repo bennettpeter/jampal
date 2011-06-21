@@ -149,6 +149,7 @@ case $engine in
         command[1]=`cygpath -w "$JAMPAL_HOME/ptts.vbs"`
         index=1
         encoding=
+        voicelist=N
         while (( $# != 0 )); do
             case $1 in
             -voice)
@@ -158,6 +159,9 @@ case $engine in
                     command[0]="$SYSTEMROOT/SysWOW64/cscript"
                 else
                     command[++index]="$2"
+                    if [[ -d `cygpath -u "$SYSTEMROOT/Sysnative"` ]] ; then
+                        command[0]="$SYSTEMROOT/Sysnative/cscript"
+                    fi
                 fi
                 shift;shift
                 ;;
@@ -167,21 +171,62 @@ case $engine in
                 command[++index]="UTF-16LE"
                 shift;shift
                 ;;
+            -vl)
+                voicelist=Y
+                command[++index]="$1"
+                shift
+                ;;
             *)
                 command[++index]="$1"
                 shift
                 ;;
             esac
         done
-        streamfile1=$TEMPDIR/ptts_input_stream1.$$.txt
-        streamfile2=$TEMPDIR/ptts_input_stream2.$$.txt
-        cat > "$streamfile1"
-        echo >> "$streamfile1"
-        echo >> "$streamfile1"
-        iconv -f "$encoding" -t UTF-16LE "$streamfile1" > "$streamfile2"
-        command[++index]="-u"
-        command[++index]="$streamfile2"
-        "${command[@]}"
+        if [[ "$voicelist" == Y ]] ; then
+            if [[ -d `cygpath -u "$SYSTEMROOT/SysWOW64"` ]] ; then
+                # 64 bit - first do 64bit voices
+                if [[ -d `cygpath -u "$SYSTEMROOT/Sysnative"` ]] ; then
+                    command[0]="$SYSTEMROOT/Sysnative/cscript"
+                fi
+                "${command[@]}"
+                # now do 32 bit voices
+                command[0]="$SYSTEMROOT/SysWOW64/cscript"
+                "${command[@]}" 2>/dev/null | (
+                    eof=N
+                    while [[ "$eof" != "Y" ]] ; do
+                        rc=0
+                        read line || rc=$?
+                        if [[ "$rc" != 0  ]] ; then
+                            eof=Y
+                            break
+                        fi
+                        if [[ "$voicestart" == Y && "$line" != "" ]] ; then
+                            echo "**$line"
+                        fi
+                        if [[ "$line" == "--Voice List--" ]] ; then
+                            voicestart=Y
+                        fi
+                    done
+                )
+            else
+                # 32 bit system
+                "${command[@]}"
+            fi
+        else
+            streamfile1=$TEMPDIR/ptts_input_stream1.$$.txt
+            streamfile2=$TEMPDIR/ptts_input_stream2.$$.txt
+            cat > "$streamfile1"
+            echo >> "$streamfile1"
+            echo >> "$streamfile1"
+            if [[ "$encoding" != "" ]] ; then
+                iconv -f "$encoding" -t UTF-16LE "$streamfile1" > "$streamfile2"
+            else
+                streamfile2="$streamfile1"
+            fi
+            command[++index]="-u"
+            command[++index]="$streamfile2"
+            "${command[@]}"
+        fi
         rm -f "$streamfile1" "$streamfile2"
         ;;
     Cepstral)
