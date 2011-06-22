@@ -32,7 +32,9 @@ public class MicrosoftSpeaker implements SpeechInterface {
     
     String path;
     boolean useWOW64;
-    static char wow64Exists = '?';
+    static boolean wow64Exists;
+    static boolean nativeExists;
+    static String windowsDir;
     static File speakText;
     static File pttsVbs;
 
@@ -40,45 +42,48 @@ public class MicrosoftSpeaker implements SpeechInterface {
     
     /** Creates a new instance of MicrosoftSpeaker */
     public MicrosoftSpeaker() throws IOException {
-        synchronized(MicrosoftSpeaker.class) {
-            if (speakText == null) {
-                    speakText = File.createTempFile("jampal", ".txt");
-            }
-            InputStream inStream = null;
-            OutputStream outStream = null;
-            if (pttsVbs == null) {
-                try {
-                    pttsVbs = File.createTempFile("jampal", ".vbs");
-                    inStream = ClassLoader.getSystemResourceAsStream(("pgbennett/speech/ptts.vbs"));
-                    outStream = new FileOutputStream(pttsVbs);
-                    byte buffer[] = new byte[1024];
-                    int len = 0;
-                    while (len != -1) {
-                        len = inStream.read(buffer);
-                        if (len != -1)
-                            outStream.write(buffer, 0, len);
-                    }
-                }
-                finally {
-                    if (inStream != null)
-                        inStream.close();
-                    if (outStream != null)
-                        outStream.close();
-                }
-            }
-        }
+        initSystemStatics();
+        setWOW64(false);
     }
     
-    private synchronized boolean setWOW64(boolean useWOW64) {
-        if (this.useWOW64 == useWOW64)
-            return true;
-        if (useWOW64) {
-            String windowsDir = System.getenv("windir");
-            if (wow64Exists == '?') {
-                File wow64File = new File(windowsDir + File.separator + "SysWOW64");
-                wow64Exists = wow64File.exists() ? 'y' : 'n';
+    private synchronized static void initSystemStatics() throws IOException {
+        if (windowsDir == null) {
+            windowsDir = System.getenv("windir");
+            File wow64File = new File(windowsDir + File.separator + "SysWOW64");
+            wow64Exists = wow64File.exists();
+            File nativeFile = new File(windowsDir + File.separator + "Sysnative");
+            nativeExists = nativeFile.exists();
+            InputStream inStream = null;
+            OutputStream outStream = null;
+            try {
+                pttsVbs = File.createTempFile("jampal", ".vbs");
+                inStream = ClassLoader.getSystemResourceAsStream(("pgbennett/speech/ptts.vbs"));
+                outStream = new FileOutputStream(pttsVbs);
+                byte buffer[] = new byte[1024];
+                int len = 0;
+                while (len != -1) {
+                    len = inStream.read(buffer);
+                    if (len != -1)
+                        outStream.write(buffer, 0, len);
+                }
+                speakText = File.createTempFile("jampal", ".txt");
             }
-            if (wow64Exists == 'y') 
+            catch(IOException io) {
+                windowsDir = null;
+                throw io;
+            }
+            finally {
+                if (inStream != null)
+                    inStream.close();
+                if (outStream != null)
+                    outStream.close();
+            }
+        }
+    } 
+    
+    private boolean setWOW64(boolean useWOW64) {
+        if (useWOW64) {
+            if (wow64Exists) 
                 this.path = windowsDir + File.separator + "SysWOW64";
             else {
                 this.path = null;
@@ -86,8 +91,12 @@ public class MicrosoftSpeaker implements SpeechInterface {
                 return false;
             }
         }
-        else
-            this.path = null;
+        else {
+            if (nativeExists) 
+                this.path = windowsDir + File.separator + "Sysnative";
+            else
+                this.path = null;
+        }
         this.useWOW64 = useWOW64;
         return true;
     }
@@ -104,7 +113,7 @@ public class MicrosoftSpeaker implements SpeechInterface {
     
     enum invokeOption {SPEAK, VOICELIST }
     
-    private synchronized boolean invoke(invokeOption option) {
+    private boolean invoke(invokeOption option) {
         String command;
         if (path==null)
             command="cscript";
@@ -206,12 +215,12 @@ public class MicrosoftSpeaker implements SpeechInterface {
         
     }
 
-    public synchronized  boolean setRate(int rate) {
+    public boolean setRate(int rate) {
         this.rate = rate;
         return true;
     }
 
-    public synchronized  void setVoice(String voiceName) {
+    public void setVoice(String voiceName) {
         if (voiceName.startsWith("**")) {
             setWOW64(true);
             voiceName = voiceName.substring(2);
@@ -221,7 +230,7 @@ public class MicrosoftSpeaker implements SpeechInterface {
         voice = voiceName;
     }
 
-    public synchronized  boolean setVolume(int volume) {
+    public boolean setVolume(int volume) {
         this.volume = volume;
         return true;
     }
@@ -251,7 +260,7 @@ public class MicrosoftSpeaker implements SpeechInterface {
     }
 
     // Voices supported by wow64 get ** in front of the names
-    public synchronized String [] getVoiceList() {
+    public String [] getVoiceList() {
         boolean saveWow64 = useWOW64;
         boolean IsOK=true;
         boolean wowOptions [] = {false,true};
@@ -261,11 +270,11 @@ public class MicrosoftSpeaker implements SpeechInterface {
                 IsOK=invoke(invokeOption.VOICELIST);
                 if (IsOK) {
                     boolean isVoices = false;
-                    for (String voice : outThread.lines) {
+                    for (String voiceInstance : outThread.lines) {
                         if (isVoices)
-                            voicesList.add(useWOW64 ? "**" + voice : voice);
+                            voicesList.add(useWOW64 ? "**" + voiceInstance : voiceInstance);
                         else
-                            isVoices = "--Voice List--".equals(voice);
+                            isVoices = "--Voice List--".equals(voiceInstance);
                     }
                 }
             }
