@@ -121,7 +121,7 @@ unix:
 	cd tagbkup && make clean && make unix
 	cd html && make unix
 	rsync -aC man scripts utility looks \
-		Makefile misc unix_build/
+		Makefile misc VERSION unix_build/
 	mkdir -p unix_build/jampal/src/pgbennett/speech/
 	cp jampal/src/pgbennett/speech/ptts.vbs unix_build/jampal/src/pgbennett/speech/
 	basename `uname -o` > OS
