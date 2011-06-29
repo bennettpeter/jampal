@@ -37,8 +37,8 @@ Source: "nimrodlf.j16.jar"; DestDir: "{app}"; Flags: ignoreversion; Components: 
 Source: "PgsLookAndFeel.jar"; DestDir: "{app}"; Flags: ignoreversion; Components: looks
 Source: "jampal.ico"; DestDir: "{app}"; Flags: ignoreversion; Components: jampal
 ;Source: "jampal2.ico"; DestDir: "{app}"; Flags: ignoreversion; Components: jampal
-Source: "ptts.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: utilities
-Source: "pttsjni.dll"; DestDir: "{app}"; Flags: ignoreversion; Components: jampal utilities
+Source: "ptts.vbs"; DestDir: "{app}"; Flags: ignoreversion; Components: utilities
+;Source: "pttsjni.dll"; DestDir: "{app}"; Flags: ignoreversion; Components: jampal utilities
 Source: "mbrola*"; DestDir: "{app}"; Flags: ignoreversion; Components: jampal utilities
 Source: "COPYING"; DestDir: "{app}"; Flags: ignoreversion; Components: jampal utilities
 Source: "tagbkup.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: utilities

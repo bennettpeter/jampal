@@ -23,7 +23,7 @@ cd $scriptpath
 base=$PWD
 
 grep "Jampal Version" jampal/src/pgbennett/jampal/MainFrame.java
-grep "ptts Version" ptts/ptts.cpp
+# grep "ptts Version" ptts/ptts.cpp
 grep "tagbkup Version" tagbkup/tagbkup.cpp
 grep "TagUpdate Version" jampal/src/pgbennett/id3/TagUpdate.java
 
@@ -52,9 +52,9 @@ make
 # if [[ $OS = CYGWIN* ]]; then
 #     ptts/build.sh
 # fi
-cp -p misc/windows-32/pttsjni.dll \
-   misc/windows-32/ptts.exe \
-   $package
+# cp -p misc/windows-32/pttsjni.dll \
+#    misc/windows-32/ptts.exe \
+#    $package
 
 
 cp -p jampal/jampal.jar \

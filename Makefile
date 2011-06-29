@@ -76,7 +76,7 @@ install:
         install -m644 jampal/jampal.ico ${DESTDIR}/usr/share/jampal/ ; \
         install -m755 misc/windows-32/mbrola.exe ${DESTDIR}/usr/share/jampal/ ; \
         install -m644 misc/mbrola*.txt ${DESTDIR}/usr/share/jampal/ ; \
-        install -m644 -p jampal/src/pgbennett/speech/ptts.vbs ${DESTDIR}/usr/share/jampal/ \
+        install -m644 -p jampal/src/pgbennett/speech/ptts.vbs ${DESTDIR}/usr/share/jampal/ ; \
         scripts/setup_cygwin.sh ; fi
 
 uninstall:
@@ -121,7 +121,8 @@ unix:
 	cd tagbkup && make clean && make unix
 	cd html && make unix
 	rsync -aC man scripts utility looks \
-        Makefile misc unix_build/
+		Makefile misc unix_build/
+	mkdir -p unix_build/jampal/src/pgbennett/speech/
 	cp jampal/src/pgbennett/speech/ptts.vbs unix_build/jampal/src/pgbennett/speech/
 	basename `uname -o` > OS
 	mkdir -p package/generic

@@ -8,10 +8,10 @@
   <body>
     <b>Simple text to speech command line program</b> 
     <p>
-      This is a very simple Microsoft Windows command line
-      program to convert text to speech. If uses the Microsoft
-      Text to Speech Engine and the Microsoft Speech SDK. The
-      Text to Speech Engine is installed with Windows XP and later versions.
+      This is a very simple Microsoft Windows script to convert
+      text to speech. If uses the windows scripting host and the Microsoft Text to Speech
+      Engine. The Text to Speech Engine is installed with Windows
+      XP and later versions.
     </p>
     <p>
       For Linux or CYGWIN installations, there is a script file
@@ -27,34 +27,40 @@
       a wave file. Text is read from standard input or can be
       read from a file using a redirect, for example, to read
       aloud a text file:<br>
-       ptts &lt; war-and-peace.txt
+       cscript "C:\Program Files\Jampal\ptts.vbs" &lt;
+      war-and-peace.txt
     </p>
     <p>
       To create a wav file from the text file (e.g create an
       audio book ;) ):<br>
-       ptts -w war-and-peace.wav &lt; war-and-peace.txt
+       cscript "C:\Program Files\Jampal\ptts.vbs" -w
+      war-and-peace.wav &lt; war-and-peace.txt
     </p>
     <p>
       Adjust the speech and voice defaults using the speech
-      control panel option. Customization of the speech can also
-      be performed using XML. If XML is included,
-      there must be an XML tag as the first character of the
-      text. If you don't need any XML at the start of the text,
-      include &lt;&gt; at the beginning.
+      control panel option.
+    </p>
+    <p>
+      If you are running 64-bit windows you may only see 64-bit
+      voices. If you have 32-bit voices you can access them by
+      running<br>
+       c:\windows\syswow64\cscript "C:\Program
+      Files\Jampal\ptts.vbs"
     </p>
     <p>
       <b>Usage</b>
     </p>
     <p>
-      Typing the ptts command with -h will list out the available
-      options.
+      Typing the command<br>
+       cscript "C:\Program Files\Jampal\ptts.vbs" -h<br>
+       will list out the available options.
     </p>
     <p>
-      Usage: ptts [options]
+      Usage: cscript "C:\Program Files\Jampal\ptts.vbs" [options]
     </p>
     <table border="1">
       <tr>
-        <th>
+        <th width="100px">
           Option
         </th>
         <th>
@@ -102,7 +108,8 @@
           -s samples
         </td>
         <td>
-          Samples per sec for wav file, default is 44100.
+          Samples per sec for wav file, default is 44100. Options
+          are 8000, 16000, 22050, 44100, 48000.
         </td>
       </tr>
       <tr>
@@ -118,10 +125,19 @@
           -u filename
         </td>
         <td>
-          Read unicode text from file instead from stdin. Note
-          this must be a binary Microsoft style Unicode file, not
-          a text file. To read a text file use redirection (&lt;
-          filename).
+          Read text from file instead from stdin. This can be
+          either Unicode file, ANSI or default encoding. Specify
+          encoding using the -e option.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          -e encoding
+        </td>
+        <td>
+          File encoding for the -u option. Options are ASCII,
+          UTF-16LE. Default is the windows encoding for your
+          system.
         </td>
       </tr>
       <tr>
@@ -138,22 +154,6 @@
         </td>
         <td>
           List voices.
-        </td>
-      </tr>
-      <tr>
-        <td>
-          -la word "pronounciation"
-        </td>
-        <td>
-          Add word to lexicon.
-        </td>
-      </tr>
-      <tr>
-        <td>
-          -la word ""
-        </td>
-        <td>
-          Delete word from lexicon.
         </td>
       </tr>
     </table>
