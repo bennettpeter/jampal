@@ -3,9 +3,9 @@ Section: universe/sound
 Priority: optional
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Peter Bennett <pgbennett@comcast.net>
-Build-Depends: debhelper (>= 7.0.50~),openjdk-6-jdk, rman, rsync,
+Build-Depends: debhelper (>= 8.0.0~),openjdk-6-jdk, rman, rsync,
  quilt (>= 0.46-7~)
-Standards-Version: 3.9.1.0
+Standards-Version: 3.9.2
 Homepage: http://jampal.sourceforge.net
 
 Package: tagbkup
@@ -39,9 +39,9 @@ Description: mp3 song library management system and player
  as a jukebox to play the songs. It performs extensive editing of song tags
  using ID3v2. The library is based on the IDV3V2 standard. The library is
  extensively customizable. Text to speech voice synthesis to announce song names
- is an option. The library is organized and customized by ID3V2 tags, including
+ is an option. The library is organized and customized by ID3v2 tags, including
  any number of custom tags you can set up. A utility is provided to back up the
- ID3V2 tags so that your customizations, such as song ratings, are not lost if
+ ID3v2 tags so that your customizations, such as song ratings, are not lost if
  you have a disk failure. There are utilities to rename and organize the song
  files by album, artist and song, and to generate playlists from criteria you
  choose. Generated play lists can be burned to CD or written to an mp3 player.

@@ -1,4 +1,4 @@
 version=3
 
-http://sf.net/jampal/jampal-(.*)\.tar\.gz
+http://sf.net/jampal/jampal-source-(.*)\.tar\.gz
 
