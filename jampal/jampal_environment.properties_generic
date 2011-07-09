@@ -1,3 +1,3 @@
 # Enviroment properties for generic zip install
 # This file is renamed to jampal_environment.properties in those systems
-helpFile = ../doc/summary.html
+helpFile = ./doc/summary.html

@@ -7,26 +7,6 @@ Build-Depends: debhelper (>= 8.0.0~),openjdk-6-jdk, rman, rsync,
 Standards-Version: 3.9.2
 Homepage: http://jampal.sourceforge.net
 
-Package: tagbkup
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: back up and restore mp3 tags
- If you have a lot of information in your mp3 tags, you want to protect it
- against accidental deletion. You could back up your mp3 files every time you
- update the tags but that will take a lot of disks. Using tagbkup you can back
- up just the tags from your mp3 files and restore them into the files at any
- time. tagbkup can restore tags to your mp3 files even if the mp3 files have
- been renamed or moved to different directories. To back up your tags, create a
- separate directory where your tag backup will be stored on your hard drive.
- Running tagbkup will copy all of the tags from your mp3 files into files in
- that directory. You can run tagbkup again and use the same backup directory to
- update your backup with files whose tags have changed. Do this on a regular
- basis to make sure you have backed up the most current data. Include your tag
- backup directory in the list of directories backed up with your regular backup
- process. tagbkup also includes an option to copy tags from one mp3 to another
- or to copy them to empty mp3 files of the same name in another directory. You
- can also strip the tags off a file (use the -cm option, see below).
-
 Package: jampal
 Architecture: all
 Depends: ${misc:Depends}, tagbkup,
@@ -34,16 +14,19 @@ Depends: ${misc:Depends}, tagbkup,
 Recommends: espeak
 Suggests: mbrola
 Description: mp3 song library management system and player
- Jampal stores and organizes a very large library of songs. It can be used
- as a jukebox to play the songs. It performs extensive editing of song tags
- using ID3v2. The library is based on the IDV3V2 standard. The library is
- extensively customizable. Text to speech voice synthesis to announce song names
- is an option. The library is organized and customized by ID3v2 tags, including
- any number of custom tags you can set up. A utility is provided to back up the
- ID3v2 tags so that your customizations, such as song ratings, are not lost if
- you have a disk failure. There are utilities to rename and organize the song
- files by album, artist and song, and to generate playlists from criteria you
- choose. Generated play lists can be burned to CD or written to an mp3 player.
- Song announcements can also be added to songs written to CD or player.
+ Jampal stores and organizes a large library of songs. It is a jukebox and tag
+ editor. The song library is based on the IDV3v2 standard and is customizable.
+ Text to speech voice synthesis to announce song names is an option. There are
+ utilities to rename and organize the song files by album, artist and song, and
+ to generate playlists from criteria you choose. Generated play lists can be
+ burned to CD or written to an mp3 player. Song announcements can be added to
+ songs written to CD or player.
 
-
+Package: tagbkup
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: back up and restore mp3 tags
+ tagbkup backs up and restores mp3 song tags without having to back up the
+ entire mp3 file. If you customize your tags using a program like jampal, you
+ only need to back up your songs once, and back up the tags separately on a
+ regular basis. tagbkup also can copy tags or remove tags from mp3 files.
