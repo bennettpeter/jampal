@@ -100,13 +100,13 @@ source: clean
 	# Make source appear under a jampal-version directory
 	# Exclude debian ubuntu and package directories
 	mkdir -p package/source
-	ln -fs ../.. package/source/jampal-source-$(VERSION)
-	cd package/source && echo jampal-source-${VERSION}/* | \
-           sed "s@ jampal-source-${VERSION}/package @ @;\
-           s@ jampal-source-${VERSION}/debian @ @;\
-           s@ jampal-source-${VERSION}/ubuntu @ @;\
-           s@ jampal-source-${VERSION}/ptts @ @;\
-           s@ jampal-source-${VERSION}/notes.txt @ @" \
+	ln -fs ../.. package/source/jampal-$(VERSION)
+	cd package/source && echo jampal-${VERSION}/* | \
+           sed "s@ jampal-${VERSION}/package @ @;\
+           s@ jampal-${VERSION}/debian @ @;\
+           s@ jampal-${VERSION}/ubuntu @ @;\
+           s@ jampal-${VERSION}/ptts @ @;\
+           s@ jampal-${VERSION}/notes.txt @ @" \
           > source_filelist.txt
 	cd package/source && \
 		tar -c -z --exclude-vcs --exclude=**/notes.txt --exclude=misc/windows-32 --exclude=misc/windows-32 -f jampal-source-$(VERSION).tar.gz \
@@ -115,7 +115,7 @@ source: clean
 		debian ubuntu
 	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_windows.tar.gz \
 		misc/windows-32 ptts
-	rm -f package/source/jampal-source-$(VERSION)
+	rm -f package/source/jampal-$(VERSION)
 
 
 unix:
