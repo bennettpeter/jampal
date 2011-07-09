@@ -1,3 +1,16 @@
+jampal (02.01.05)
+
+  * ptts
+
+    The ptts.exe utility has been rewritten. It is now a vbs script, run
+    with the cscript command. It now supports windows 32 bit as well
+    as 64 bit versions and voices.
+
+  * Announcements
+
+    Announcements using the windows speech engine are now fixed to work with
+    32 bit and 64 bit JVM, and support 32 bit and 64 bit voices.
+
 jampal (02.01.04)
 
   * Memory leak

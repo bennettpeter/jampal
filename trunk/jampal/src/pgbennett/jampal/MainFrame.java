@@ -42,23 +42,33 @@ import pgbennett.utility.FontChooser;
 public class MainFrame implements Runnable, ActionListener, KeyListener,
 WindowListener, ListSelectionListener {
     
-    static final String [] AboutText = {
+    static final String[] AboutText = {
         "Jampal Version " + Jampal.version,
         "Copyright (c) Peter Bennett, 2004-2011",
-        "Jampal comes with ABSOLUTELY NO WARRANTY, " +
-        "for details see the file COPYING.",
-        "This is free software, and you are welcome to redistribute it "+
-        "under certain conditions; see file COPYING for details.",
+        " ",
+        "Jampal is free software: you can redistribute it and/or modify "
+        + "it under the terms of the GNU General Public License as published by "
+        + "the Free Software Foundation, either version 3 of the License, or "
+        + "(at your option) any later version.",
+        " ",
+        "Jampal is distributed in the hope that it will be useful, "
+        + "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+        + "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
+        + "GNU General Public License for more details.",
+        " ",
+        "You should have received a copy of the GNU General Public License "
+        + "along with Jampal.  If not, see <http://www.gnu.org/licenses/>.",
+        " ",
         "For More information see http://jampal.sourceforge.net",
         " ",
         "This software includes elements from:",
         " Jd3lib http://sourceforge.net/projects/jd3lib",
         " Javalayer http://sourceforge.net/projects/javalayer",
         " Tritonus http://sourceforge.net/projects/tritonus",
-        "ID3V2 documentation is Copyright (C) Martin Nilsson 2000, " +
-        "derived from ID3 v2.3.0 Informal Standard at "+
-        "http://www.id3.org/id3v2.3.0.txt and ID3 tag version 2.4.0 "+
-        "- Native Frames at http://www.id3.org/id3v2.4.0-frames.txt",
+        "ID3V2 documentation is Copyright (C) Martin Nilsson 2000, "
+        + "derived from ID3 v2.3.0 Informal Standard at "
+        + "http://www.id3.org/id3v2.3.0.txt and ID3 tag version 2.4.0 "
+        + "- Native Frames at http://www.id3.org/id3v2.4.0-frames.txt",
         " ",
         "This software includes Java look and feel from the following sources:",
         "Liquid - https://liquidlnf.dev.java.net",
@@ -70,9 +80,8 @@ WindowListener, ListSelectionListener {
         "Infonode - http://www.infonode.net/index.html?ilf",
         "Napkin - http://sourceforge.net/projects/napkinlaf",
         " ",
-        "Your Home Directory is " +System.getProperty("user.home")
+        "Your Home Directory is " + System.getProperty("user.home")
     };
-    
     
     public Library library;
     LibraryTableModel model;

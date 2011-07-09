@@ -105,6 +105,7 @@ source: clean
            sed "s@ jampal-source-${VERSION}/package @ @;\
            s@ jampal-source-${VERSION}/debian @ @;\
            s@ jampal-source-${VERSION}/ubuntu @ @;\
+           s@ jampal-source-${VERSION}/ptts @ @;\
            s@ jampal-source-${VERSION}/notes.txt @ @" \
           > source_filelist.txt
 	cd package/source && \
@@ -112,8 +113,9 @@ source: clean
 		`cat source_filelist.txt`
 	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_debian.tar.gz \
 		debian ubuntu
-	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_windows32.tar.gz \
-		misc/windows-32
+	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_windows.tar.gz \
+		misc/windows-32 ptts
+	rm -f package/source/jampal-source-$(VERSION)
 
 
 unix:

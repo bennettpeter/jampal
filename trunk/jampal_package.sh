@@ -76,11 +76,11 @@ fi
 cp  -p package/tagbkup_linux* $package/
 
 ls -l $package/tagbkup_cygwin.exe $package/tagbkup.exe $package/tagbkup_linux*
+echo "Please use Linux to run tagbkup/build.sh on 32 & 64 to create tagbkup_linux_i686 and tagbkup_linux_x86_64"
 echo 'are tagbkups up to date ?'
 echo 'Continue (Y/N) ?'
 read -e ans
 if [[ "$ans" != Y ]]; then 
-    echo "Please use Linux to run tagbkup/build.sh on 32 & 64 to create tagbkup_linux_i686 and tagbkup_linux_x86_64"
     exit 2
 fi
 
@@ -178,4 +178,5 @@ mv -f jampal-windows-setup-$VERSION.exe \
       jampal-$VERSION.jar \
       jampal-generic-setup-$VERSION.zip \
       package/generic
-ls -lR package
+ls -lR package/generic/*${VERSION}*
+ls -lR package/source/*${VERSION}*
