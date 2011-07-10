@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org">
+    <title>
+    </title>
+  </head>
+  <body>
+    <p>
+      <b>Installation</b>
+    </p>
+    <p>
+      To Install Jampal on your system proceed as follows.
+    </p>
+    <p>
+      <b>Microsoft Windows</b>
+    </p>
+    <p>
+      Download jampal-windows setup. Run the setup program and
+      follow the instructions. If you do not have a suitable
+      version of java installed the setup will prompt you do to
+      download it from the Internet.
+    </p>
+    <p>
+      If you want to use the command line utilities, such as
+      creating playlists, printing envelopes, you must use the
+      cygwin install instead. You will have to install Cygwin and
+      the prerequisites mentioned below, then use the "Other
+      Linux/Unix Environments including Cygwin" instructions
+      below.
+    </p>
+    <p>
+      <b>Debian or Ubuntu Linux</b>
+    </p>
+    Run the package maneger to see if jampal is available as a
+    download. If so, install from there. If you are installing on
+    Ubuntu version 11.04 (Natty), see instructions at the top of
+    this page for setting up the private package archive
+    Otherwise download the correct jampal_*.deb and tagbkup_*.deb
+    files. There are one of each for 32 bit systems and one for
+    64 bit systems. First install the tagbkup file and then the
+    jampal file. Double click on the file, and then select
+    Install Package. Alternatively, you can also install a .deb
+    file by opening a terminal and typing: 
+<pre>
+      sudo dpkg -i package_file.deb
+   
+</pre>
+    <p>
+      Required elements, including java, will automatically be
+      installed.
+    </p>
+    <p>
+      <b>Other Linux/Unix Environments including Cygwin</b>
+    </p>
+    <p>
+      Download the apppropriate jampal-build file for your setup.
+      Untar it into a suitable location, then as root run "make
+      install". You can uninstall it by running "make uninstall".
+      You will need to make sure that you have a suitable version
+      of java installed, also other prerequisites listed below.
+    </p>
+    <p>
+      If there is no package built for your version, you can
+      download the source package and run "make install". You
+      will need a java development kit and gcc compiler.
+    </p>
+    <p>
+      <b>Prerequisites</b>
+    </p>
+    <p>
+      The Debian / Ubuntu install package automatically takes
+      care of prerequisites. Other environments will need you to
+      ensure that they are installed.
+    </p>
+    <p>
+      For Jampal you need java version 1.6 or higher. To
+      determine if you have this on your machine open a command
+      prompt and type "java -version". If this fails you probably
+      do not have java. If it displays a lower version than 1.6
+      you will need to get a new version of java. To get the
+      latest version go to <a href=
+      "http://www.java.com">www.java.com</a> and follow the
+      instructions. This is a free download and is available for
+      Windows, Linux, Macintosh and Solaris. There are other
+      vendors that supply java for other systems. If you would
+      like to do java development get a free development kit from
+      <a href="http://java.sun.com">java.sun.com</a>.
+    </p>
+    <p>
+      To run the utilities in the jampal command, such as
+      generating playlists, printing envelopes, and cleaning up
+      your library, you need other components. You must have
+      either a unix environment or cygwin under windows. You need
+      sox, gawk and lame. gawk will be available with your unix
+      or cygwin system, but sox and lame may need to be
+      separately downloaded, compiled and installed. You also
+      need openoffice.org writer and calc.
+    </p>
+    <p>
+      <b>Other environments</b>
+    </p>
+    <p>
+      Once you have java installed, download the latest version
+      of the generic setup zip file from <a href=
+      "http://sourceforge.net/project/showfiles.php?group_id=107584">
+      the download site</a>. Unzip the file into a suitable
+      directory.
+    </p>
+    <p>
+      <b>SUN Java MP3 plugin</b>
+    </p>
+    <p>
+      Jampal has the "Tritonus" mp3 plugin included, and will
+      play any mp3 file. If you prefer you can download the free
+      <a href=
+      "http://java.sun.com/products/java-media/jmf/mp3/download.html">
+      SUN Java MP3 plugin</a>. If you have the SUN Java MP3
+      plugin installed, jampal will play using that plugin
+      instead of the "tritonus" mp3 decoder included in jampal.
+      Jampal writes a trace message in the .jampal/jampal_err.txt
+      file in your home directory to indicate which plugin is
+      being used.
+    </p>
+    <p>
+      Follow the install instructions on the web page. You do not
+      have to install jmf or run the command which registers the
+      plugin for jmf. Jampal is not a jmf application.
+    </p>
+    <p>
+      <b>Running the Jampal GUI</b>
+    </p>
+    <p>
+      With Windows, Debian or Ubuntu click the Icon in the Start
+      menu.
+    </p>
+    <p>
+      On linux or solaris you can run the jampal open command.
+    </p>
+    <p>
+      On other environments run the command
+      <br>
+       java -Xincgc -Xmx256M -jar jampal.jar
+    </p>
+    <p>
+      The first time you run Jampal it will create a default
+      library. You can create new libraries by using the "Open
+      Library" menu item. By default it creates the library in
+      subdirectory ".jampal" of your home directory but you can
+      select another directory in the open dialog.
+    </p>
+    <p>
+      To find out where your home directory is, select the "Help,
+      About Jampal" menu item and scroll down to the last line.
+    </p>
+    <p>
+      Once it has created the first library you can use "File,
+      Open" to create additional libraries.
+    </p>
+    <p>
+      <b>Library Files</b>
+    </p>
+    <p>
+      Jampal will create the following files on your hard drive:
+    </p>
+    <table border="1">
+      <tr>
+        <td>
+          xxxxxxx.jampal
+        </td>
+        <td>
+          Properties file that contains a description of the
+          library columns
+        </td>
+      </tr>
+      <tr>
+        <td>
+          xxxxxxxx.jmp
+        </td>
+        <td>
+          Text file with tab delimited fields, contains one line
+          for each track in the library
+        </td>
+      </tr>
+      <tr>
+        <td>
+          playlist.jampal
+        </td>
+        <td>
+          Properties file that contains a description of the
+          playlist columns
+        </td>
+      </tr>
+      <tr>
+        <td>
+          playlist.jmp
+        </td>
+        <td>
+          Text file with tab delimited fields, contains one line
+          for each track in the playlist
+        </td>
+      </tr>
+      <tr>
+        <td>
+          jampal_initial.properties
+        </td>
+        <td>
+          Startup values for jampal such as which library to
+          load. This file must always be in subdirectory
+          ".jampal" of your home directory
+        </td>
+      </tr>
+    </table>
+    <p>
+      You can move these to any directory of your choice, except
+      jampal_initial.properties, which must remain in your
+      ".jampal" directory. If you move them, the next time you
+      run Jampal it will prompt you with an open dialog to locate
+      the library and open it.
+    </p>
+    <p>
+      <i>Please let me know if you find Jampal useful or if you
+      find any bugs or shortcomings in it. Also I would like to
+      hear from anybody who runs it on linux, macintosh or
+      Solaris. The best way to do this is by <a href=
+      "http://sourceforge.net/forum/forum.php?forum_id=370097">posting
+      a message</a> at the product information page or else send
+      me email at pgbennett at users.sourceforge.net.</i>
+    </p>
+  </body>
+</html>
+
+
