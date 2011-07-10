@@ -21,16 +21,17 @@ echo Copy new version of jampal $VERSION from host to local
 # make source
 
 rm -rf ~/proj/jampal/jampal-$VERSION*
-rm -rf  ~/proj/jampal/jampal_$VERSION*
+rm -rf ~/proj/jampal/jampal-source-$VERSION*
+rm -rf ~/proj/jampal/jampal_$VERSION*
 rm -f  ~/proj/jampal/*.deb
 mkdir -p ~/proj/jampal
 
 # cp package/source/jampal-$VERSION.tar.gz ~/proj/jampal/jampal-$VERSION.tar.gz
 cp package/source/jampal-source-$VERSION.tar.gz \
-  ~/proj/jampal/jampal-source_$VERSION.orig.tar.gz
+  ~/proj/jampal/jampal_$VERSION.orig.tar.gz
 cd ~/proj/jampal
 
-tar xf jampal-source_$VERSION.orig.tar.gz
+tar xf jampal_$VERSION.orig.tar.gz
 
 rsync -aC $scriptpath/$system \
     jampal-$VERSION/
