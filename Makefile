@@ -126,6 +126,7 @@ unix:
 	cd html && make unix
 	rsync -aC man scripts utility looks \
 		Makefile misc VERSION unix_build/
+	cp -p misc/windows-32/mbrola.exe unix_build/misc/windows-32/
 	mkdir -p unix_build/jampal/src/pgbennett/speech/
 	cp jampal/src/pgbennett/speech/ptts.vbs unix_build/jampal/src/pgbennett/speech/
 	basename `uname -o` > OS
