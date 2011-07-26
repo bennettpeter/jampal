@@ -2,6 +2,10 @@ Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=174
 Upstream-Name: jampal
 Upstream-Contact: Peter Bennett <pgbennett@comcast.net>
 Source: http://sourceforge.net/projects/jampal/files/
+ Source is reformatted to exclude precompiled jar files in the looks directory.
+ Debian source is the upstream source with looks directory and its contents
+ removed. The command "debian/rules get-orig-source" retrieves the source and
+ removes the looks directory.
 
 Files: *
 Copyright: 2004-2011 Peter Bennett <pgbennett@comcast.net>
