@@ -28,15 +28,15 @@ mkdir -p ~/proj/jampal
 
 UPSTRMVERSION1=`dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' '|cut -f1 -d+`
 UPSTRMVERSION2=`dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' '|cut -f1 -d-`
-tarfile=jampal-$UPSTRMVERSION2.orig.tar.gz
+tarfile=jampal_$UPSTRMVERSION2.orig.tar.gz
 sourcedir=jampal-$UPSTRMVERSION1-orig
 
-if [[ ! -f package/source/jampal-$UPSTRMVERSION2.orig.tar.gz ]] ; then
+if [[ ! -f package/source/jampal_$UPSTRMVERSION2.orig.tar.gz ]] ; then
     debian/rules get-orig-source
-    mv jampal-$UPSTRMVERSION2.orig.tar.gz package/source
+    mv jampal_$UPSTRMVERSION2.orig.tar.gz package/source
 fi
 
-cp package/source/jampal-$UPSTRMVERSION2.orig.tar.gz \
+cp package/source/jampal_$UPSTRMVERSION2.orig.tar.gz \
   ~/proj/jampal/jampal_$UPSTRMVERSION2.orig.tar.gz
 cd ~/proj/jampal
 
