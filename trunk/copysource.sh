@@ -26,16 +26,26 @@ rm -rf ~/proj/jampal/jampal_$VERSION*
 rm -f  ~/proj/jampal/*.deb
 mkdir -p ~/proj/jampal
 
-# cp package/source/jampal-$VERSION.tar.gz ~/proj/jampal/jampal-$VERSION.tar.gz
-cp package/source/jampal-source-$VERSION.tar.gz \
-  ~/proj/jampal/jampal_$VERSION.orig.tar.gz
+UPSTRMVERSION1=`dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' '|cut -f1 -d+`
+UPSTRMVERSION2=`dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' '|cut -f1 -d-`
+tarfile=jampal-$UPSTRMVERSION2.orig.tar.gz
+sourcedir=jampal-$UPSTRMVERSION1-orig
+
+if [[ ! -f package/source/jampal-$UPSTRMVERSION2.orig.tar.gz ]] ; then
+    debian/rules get-orig-source
+    mv jampal-$UPSTRMVERSION2.orig.tar.gz package/source
+fi
+
+cp package/source/jampal-$UPSTRMVERSION2.orig.tar.gz \
+  ~/proj/jampal/jampal_$UPSTRMVERSION2.orig.tar.gz
 cd ~/proj/jampal
 
-tar xf jampal_$VERSION.orig.tar.gz
+tar xf jampal_$UPSTRMVERSION2.orig.tar.gz
 
-rsync -aC $scriptpath/$system \
-    jampal-$VERSION/
+rsync -aC $scriptpath/$system $sourcedir/
 
 if [[ "$system" != debian ]] ; then
-    mv jampal-$VERSION/$system jampal-$VERSION/debian
+    rm -rf $sourcedir/debian
+    mv $sourcedir/$system $sourcedir/debian
 fi
+

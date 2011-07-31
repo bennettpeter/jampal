@@ -491,3 +491,11 @@ Uploaded to http://revu.ubuntuwire.com/p/jampal
 Bug at https://bugs.launchpad.net/ubuntu/+bug/795993
 
 
+wget http://sourceforge.net/projects/jampal/files/jampal/02.01.05/jampal-source-02.01.05.tar.gz/download
+mv download jampal-source-02.01.05.tar.gz
+
+s/+dfsg.*//
+ opts=dversionmangle=s/\.dfsg\.\d+$// \
+
+
+

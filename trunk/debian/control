@@ -1,5 +1,5 @@
 Source: jampal
-Section: contrib/sound
+Section: sound
 Priority: optional
 Maintainer: Peter Bennett <pgbennett@comcast.net>
 Build-Depends: debhelper (>= 8.0.0~),openjdk-6-jdk, rman, rsync
