@@ -497,5 +497,3 @@ mv download jampal-source-02.01.05.tar.gz
 s/+dfsg.*//
  opts=dversionmangle=s/\.dfsg\.\d+$// \
 
-
-
