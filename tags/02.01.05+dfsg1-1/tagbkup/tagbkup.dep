@@ -1,0 +1,13 @@
+# Microsoft Developer Studio Generated Dependency File, included by tagbkup.mak
+
+.\mp3tech.c : \
+	".\mp3info_u.h"\
+	".\mp3tech.h"\
+	".\textfunc.h"\
+	
+
+.\tagbkup.cpp : \
+	".\mp3info_u.h"\
+	".\mp3tech.h"\
+	".\textfunc.h"\
+	

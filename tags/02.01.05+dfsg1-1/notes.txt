@@ -1,0 +1,499 @@
+
+playlistcd looping in sh called from awk
+
+package for Ubuntu -
+1. decide where evrything to be installed
+   check where tomcat installs, java installs
+
+Open office installs stuff in /usr/share/java/openoffice
+jars are in /usr/lib/stuff and /usr/share/something
+
+doc in /usr/share/doc/package
+man page
+
+http://mentors.debian.net
+http://wiki.debian.org/HowToPackageForDebian and debian maint guide
+Work through the debian maintainers guide
+
+Makefile (no configure script though) that accepts
+these standard targets: all (the default), clean, distclean and install.
+distclean cleans stuff built by configure
+clean cleans stuff build by make
+Step 1 - create a Makefile that conforms with this.
+Simple programs come with a Makefile file in them and can be compiled simply with 'make'. Some of them support 'make check', which runs included self-checks. Installation to the destination directories is usually done with 'make install'. Now try to compile and run your program, to make sure it works properly and doesn't break something else while it's installing or running. Also, you can usually run 'make clean' (or better 'make distclean') to clean up the build directory. Sometimes there's even a 'make uninstall' which can be used to remove all the installed files.
+
+makefile is called debian/rules 
+
+It must start with the line #!/usr/bin/make -f, so that it can be invoked by saying its name rather than invoking make explicitly. That is, invoking either of make -f debian/rules args... or ./debian/rules args... must result in identical behavior
+
+For targets see debian policy p 24.
+
+freetts - include source and license
+Fix it to allow build without freetts - exclude 2 modules
+looks - need source or exclude - some are already available in ubuntu
+tritonus - license -
+GPLv3
+
+GNU standard targets - http://www.gnu.org/software/hello/manual/make/Standard-Targets.html
+
+
+
+Create a Makefile in each directory that builds in that directory and installs under DESTDIR
+targets - 
+all (the default), clean, distclean and install.
+Leave zipping source directories for a global script
+
+Put jampal stuff in /usr/share/jampal
+jar file
+/usr/share/jampal
+doc
+/usr/share/doc/jampal/html
+executable tagbkup
+/usr/bin
+man for jampal (script), tagbkup, tagupdate (script) 
+/usr/share/man/man1
+scripts - 
+with links cannot use trick for finding the directory
+script directory - 
+/usr/share/jampal/scripts
+ods files - 
+/usr/share/jampal/tools
+mp3.profile - 
+in script dir, also in ~/.jampal also in /etc/jampal, put a default in /etc/jampal this done by the maintainer scripts
+clean up the default mp3.profile 
+for cygwin - create links from /usr/share to actual directory. setup a script that does this.
+to avoid installing a bunch of scripts create a wrapper that calls them based on options.
+mp3lib check if files are in a consistent structure
+all files need /dir/disk/album/file at least, and disk album and file must be writeable. also consistent - under one disk all files at the same level
+step 1 - just jampal, tagbkup, tagupdate
+
+scriptname=`readlink -e "$0"`
+scriptpath=`dirname "$scriptname"`
+
+date in RFC2822 or 822 format - 
+date -R
+
+set up for flash drive
+peter@Ubuntu1004x64:~$ cd proj
+peter@Ubuntu1004x64:~/proj$ ls -l
+total 0
+lrwxrwxrwx 1 peter peter 19 2011-02-21 19:53 host -> /media/sf_3125-home
+lrwxrwxrwx 1 peter peter 22 2011-02-21 19:31 local -> /mnt/ubuntu_proj/local
+peter@Ubuntu1004x64:~/proj$ 
+
+TBD - 
+description in control file
+copyright file
+copyright in all files.
+changelog file
+Build must install scripts, html, man
+rename scripts jam-upd, jam-org, jam-dups, etc.
+mp3lib - checks mentioned above
+man pages - jampal, tagbkup, tagupdate, others ?
+sort out ${misc:Depends}
+Correct classpath for jampal.sh - invoke  java class instead of jar
+add classpaths for installable looks
+postinst prerm etc - see chap 6 debian policy
+use these scripts to install correct jampal option paths for ubuntu in configuration.
+move some spreadsheets, examples etc to another directory?
+
+Build source package 
+dpkg-buildpackage -S -rfakeroot
+It should need my GPG key ?
+
+Build binary package
+fakeroot debian/rules binary
+
+for build see debian maint guide p51.
+
+Test build with pbuilder --
+
+http://manpages.ubuntu.com/manpages/maverick/man1/man2html.1.html
+
+try troffcvt - troff2html ...
+
+icon in /usr/share/pixmaps
+desktop file in /usr/share/applications/XXXX.desktop
+directory file in /usr/share/desktop-directories
+menu in /usr/share/app-install/desktop/applications.menu --NO-- this is for GNOME
+menu package does not seem to be installed.
+It uses  /usr/share/menu/ files to generate menus
+How does it work without being installed? update-menus is the program 
+and menufile is the layout.
+http://alioth.debian.org/docman/view.php/30046/2/menu-one-file.html
+
+checked jedit and audacity
+
+/usr/share/applications/jedit.desktop
+/usr/share/menu/jedit
+/usr/share/pixmap/jedit.xpm
+/usr/share/icons/hicolor/16x16/apps/jedit.png
+/usr/share/icons/hicolor/22x22/apps/jedit.png
+/usr/share/icons/hicolor/48x48/apps/jedit.png
+
+/usr/lib/mime/packages/audacity
+/usr/share/applications/audacity.desktop
+/usr/share/menu/audacity
+/usr/share/pixmaps/audacity16.xpm
+/usr/share/pixmaps/audacity32.xpm
+
+/usr/lib/mime/packages/gnome-mplayer
+/usr/share/applications/gnome-mplayer.desktop
+/usr/share/gconf/schemas/gnome-mplayer.schemas
+/usr/share/gnome-control-center/default-apps/gnome-mplayer.xml
+/usr/share/icons/hicolor/16x16/apps/gnome-mplayer.png
+/usr/share/icons/hicolor/22x22/apps/gnome-mplayer.png
+/usr/share/icons/hicolor/24x24/apps/gnome-mplayer.png
+/usr/share/icons/hicolor/32x32/apps/gnome-mplayer.png
+/usr/share/icons/hicolor/48x48/apps/gnome-mplayer.png
+/usr/share/icons/hicolor/scalable/apps/gnome-mplayer.svg
+/usr/share/menu/gnome-mplayer
+/usr/share/pixmaps/gnome-mplayer.xpm
+
+/usr/share/applications/kde4/kmplayer.desktop
+/usr/share/icons/hicolor/128x128/apps/kmplayer.png
+/usr/share/icons/hicolor/16x16/apps/kmplayer.png
+/usr/share/icons/hicolor/22x22/apps/kmplayer.png
+/usr/share/icons/hicolor/32x32/apps/kmplayer.png
+/usr/share/icons/hicolor/48x48/apps/kmplayer.png
+/usr/share/icons/hicolor/64x64/apps/kmplayer.png
+/usr/share/icons/hicolor/scalable/apps/kmplayer.svgz
+/usr/share/kde4/apps/kmplayer/blip-api.xsl
+/usr/share/kde4/apps/kmplayer/bookmarks.xml
+/usr/share/menu/kmplayer
+/usr/share/kde4/apps/kmplayer/youtube.xsl
+/usr/share/kde4/config/kmplayerrc
+/usr/share/kde4/services/kmplayer_part.desktop
+
+
+New License
+
+    This file is part of Jampal.
+
+    Jampal is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Jampal is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Jampal.  If not, see <http://www.gnu.org/licenses/>.
+
+    
+tritonus_mp3-0.3.6.jar - MpegAudioFileWriter - MpegAudioFileReader MpegFormatConversionProvider
+
+Changelog has version (e.g. lucid) for ubuntu or unstable for debian
+
+remove , ${misc:Depends} from control
+
+GPG key
+gpg --gen-key -t rsa -b <bits either 1024,2048 or 4096>
+
+gpg --gen-key
+
+peter@Ubuntu1004x64:~/proj/local/jampal/jampal-1.27$ gpg  --gen-key
+gpg (GnuPG) 1.4.10; Copyright (C) 2008 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 
+Requested keysize is 2048 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 
+Key does not expire at all
+Is this correct? (y/N) y
+
+You need a user ID to identify your key; the software constructs the user ID
+from the Real Name, Comment and Email Address in this form:
+    "Heinrich Heine (Der Dichter) <heinrichh@duesseldorf.de>"
+
+Real name: Peter Bennett <pgbennett@users.sourceforge.net>
+Invalid character in name
+Real name: Peter Bennett
+Email address: <pgbennett@users.sourceforge.net>
+Not a valid email address
+Email address: pgbennett@users.sourceforge.net
+Comment: 
+You selected this USER-ID:
+    "Peter Bennett <pgbennett@users.sourceforge.net>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+You need a Passphrase to protect your secret key.
+
+gpg: gpg-agent is not available in this session
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+
+Not enough random bytes available.  Please do some other work to give
+the OS a chance to collect more entropy! (Need 284 more bytes)
+
+
+qqqq
+
+
+
+.....................+++++
+...............+++++
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+
+Not enough random bytes available.  Please do some other work to give
+the OS a chance to collect more entropy! (Need 92 more bytes)
+...................+++++
+
+Not enough random bytes available.  Please do some other work to give
+the OS a chance to collect more entropy! (Need 128 more bytes)
++++++
+gpg: /home/peter/.gnupg/trustdb.gpg: trustdb created
+gpg: key CD2A2FB7 marked as ultimately trusted
+public and secret key created and signed.
+
+gpg: checking the trustdb
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+pub   2048R/CD2A2FB7 2011-03-19
+      Key fingerprint = 427E 6099 B9D4 CB5A D248  340C C713 51EC CD2A 2FB7
+uid                  Peter Bennett <pgbennett@users.sourceforge.net>
+sub   2048R/BCC53A03 2011-03-19
+
+watch cat /proc/sys/kernel/random/entropy_avail
+needs to be above 60. try ls -R / then after a while do some internet searches.
+
+Build source package --
+dpkg-buildpackage -S -rfakeroot
+
+In your home directory create a file called .Xresources and add the following line
+*multiClickTime: 500
+Then from the commandline execute
+xrdb ~/.Xresources
+
+
+sudo dpkg -i package_name.deb
+
+update-mime-database /usr/share/mime
+
+
+man page fonts
+
+
+program name - bold everywhere
+Fixed parts of command in synopsis - bold
+arguments - italics
+file names - italics
+macro names and error codes - bold
+reference to another man page bold
+(acronyms small typeface)
+
+.B Bold 
+.BI Bold alternating with italics 
+.BR Bold alternating with Roman 
+.I Italics 
+.IB Italics alternating with bold 
+.IR Italics alternating with Roman 
+.RB Roman alternating with bold 
+.RI Roman alternating with italics 
+.SM Small (scaled 9/10 of the regular size) 
+.SB Small bold (not small alternating with bold) 
+\fB - bold \fI - italic \fR - roman \fP - previous
+
+.PP      Begin a new paragraph and reset prevailing indent.
+.RS [i]  Start relative indent - optional i - inches
+.RE      End of relative indent
+.HP      Hanging indent paragraph
+.br      Line break
+
+
+Check dependencies for awk, dos2unix, any others
+
+ cleanup-if report is empty do not display it or offer to run it
+ If there are moves it should be run anyway
+ Done - tested.
+ playlist - confirm name of library being used at start of run
+ Done - tested.
+ give an error message if no song selected for playlist.
+ Done - tested.
+ Need to remove playlist directory on error
+Done - to be tested
+ Update installation instructions
+ Create generic linux package with make install
+Test generic linux package with make install
+ generic zipfile package - include scripts? What directory structure?
+ windows install package - exclude scripts
+jampal_package.sh - fix and test
+ remove if [[ $? != 0 ]]; then echo ERROR; exit 2; fi  - replace with set -e
+  done
+ document what to do if cleanup fails
+ test cleanup with wrong file structure
+  done
+ test cleanup with duplicate song from misc into 201
+  done
+test looks with cygwin also with generic build for unix.
+test install from generic build for unix
+test all installs
+test all scripts - test tagbkup_cd
+ copy my playlist scripts to examples
+ fix scripts/examples
+ test build with pbuilder
+ check dependencies
+ make sure license is somewhere. COPYING file.
+Done - to test
+ NO asx edit spreadsheet split start / end times
+Make sure cygwin tar and linux tar have correct dir structure
+ mention multi thread for mp3lame
+ document playlist_search_setup
+ source compare versions to document changes
+ checked up to end of jampal.mp3 with kdiff
+what happened to asx_edit.ods?
+don't include linux executables with generic?
+ make sure I build without freetts for ubuntu
+ test playlistcd for looping of sh
+ tag editor in Linux shows very large text box for alternate album.
+ why was a directory ~/Music/temp created under the home directory?
+ changed ~ to $HOME in scripts
+Test 32 bit machine
+Support for complete removal - remove config etc but not mp3, not libs
+
+uploading package
+dput ppa:pgbennett/ppa name.changes
+Need to name version of package for each distro
+e.g. ppa1~intrepid1 
+use date -R to get date
+use ppa00~lucid maverick natty oneiric
+
+lintian -i -I --show-overrides *.changes > lintian.out
+
+2 source zips - one complete, one dfsg
+http://www.debian.org/doc/manuals/developers-reference/best-pkging-practices.html#bpp-origtargz
+ it is not a sufficient reason for omitting a file that it is used only when building on MS-DOS.
+
+Ubuntu -  main, restricted, universe and multiverse
+Debian - main, contrib, non free
+
+Adding new entries with "reportbug"
+You can use reportbug (apt-get install reportbug):
+
+$ reportbug --email username@domain.tld wnpp
+Using 'Your Name <username@domain.tld>' as your from address.
+Getting status for wnpp...
+Querying Debian bug tracking system for reports on wnpp
+(Use ? for help at prompts.)
+...
+
+You will see a list of reported bugs against WNPP which you should read to prevent a second report for the same package.
+
+After the buglist you are asked for the request type:
+
+What sort of request is this?
+
+1 ITP This is an "Intent To Package". Please submit a package description
+along with copyright and URL in such a report.
+
+Choose the request type: 
+
+After your selection you will be asked for the package name:
+
+Choose the request type: x
+Please enter the proposed package name: PACKAGENAME
+Checking status database...
+
+.If your request type is ITP (1) or RFP (4) you are asked for a short description and then for some information about the package:
+
+Please briefly describe this package; this should be an appropriate short description for the eventual package:
+> A DESCRIPTION
+
+Subject: ITP: PACKAGENAME -- A DESCRIPTION
+Package: wnpp
+Version: N/A; reported 2002-01-30
+Severity: wishlist
+
+* Package name : PACKAGENAME
+Version : x.y.z
+Upstream Author : Name <somebody@some.org>
+* URL : http://www.some.org/
+* License : (GPL, LGPL, BSD, MIT/X, etc.)
+Description : A DESCRIPTION
+
+To reconfigure, re-run reportbug with the "--
+configure" option.
+
+Below the "Description" line you should give more information about the package.
+
+If you want to provide additional information, please wait to
+receive the bug tracking number via email; you may then send any extra
+information to n@bugs.debian.org (e.g. 999999@bugs.debian.org), where n is the bug number.  Normally you
+will receive an acknowledgement via email including the bug report number
+within an hour; if you haven't received a confirmation, then the bug reporting process failed at some point (reportbug or MTA failure, BTS maintenance, etc.).
+
+Wrong icon in launcher
+https://wiki.ubuntu.com/Unity
+add to desktop file  StartupWMClass=pgbennett-jampal-Jampal
+need to logoff and logon again for it to take effect
+WM_CLASS(STRING) = "sun-awt-X11-XFramePeer", "pgbennett-jampal-Jampal"
+use xprop to find out
+
+Use java-wrappers.sh ? Makes it more debian or ubuntu dependent..
+empty library - playlist fails
+
+Testing setup 
+link /usr/bin/jampal to test jampal.sh
+put jampal.jar, jampal_environment.properties and jampal_initial.properties in trunk
+
+
+Future
+Document how to convert wma to mp3
+document convert_asx.sh
+document wavtrim.sh 
+document how to share linux / windows.
+document wavtrim mention multi thread
+Freetts expects mbrola voices to be each under its own directory,
+under mbrola.base system property
+FreeTTS hangs in linux
+use vbscript for speech
+Default voices.txt to espeak for GUI.
+Fix memory leak - repeated change of looks causes out of memory in 64 bit system
+Increase default memory size for 64bit, or for all, to 512M
+
+I am packaging Jampal for  Ubuntu. Jampal is an mp3 song library management system and player.  It can
+1. Organize a very large library of songs
+2. Perform updating of tags, supporting more frames than other systems, also a flexible way of updating large numbers of tags
+3. Organize and sort songs according to standard or custom fields
+4. Create and play playlists of songs.
+5. Voice synthesized song announcements.
+6. Transferring playlists to player or disk, optionally with voice announcements.
+7. Backup of tags.
+Many other capabilities
+
+needs-packaging
+
+Bug #795993 
+
+Uploaded to http://revu.ubuntuwire.com/p/jampal
+Bug at https://bugs.launchpad.net/ubuntu/+bug/795993
+
+
+wget http://sourceforge.net/projects/jampal/files/jampal/02.01.05/jampal-source-02.01.05.tar.gz/download
+mv download jampal-source-02.01.05.tar.gz
+
+s/+dfsg.*//
+ opts=dversionmangle=s/\.dfsg\.\d+$// \
+
