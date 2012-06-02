@@ -7,3 +7,4 @@ mixer-gain-percent=100
 cepstral-path=
 speech-rate=0
 mbrola-prog=mbrola
+browser=firefox
