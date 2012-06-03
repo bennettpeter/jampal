@@ -102,12 +102,12 @@ fi
 if [[ "$playlist_datetime" != "" ]] ; then
     sort=N
     echo Setting -nosort for playlist
-    if [[ "$cover" == album ]] ; then
-        cover=
-    else
-        cover=none
-        echo Setting -none for playlist
-    fi
+#    if [[ "$cover" == album ]] ; then
+#        cover=
+#    else
+#        cover=none
+#        echo Setting -none for playlist
+#    fi
 fi
 
 if [[ "$LIBRARYTYPE" != L && "$LIBRARYTYPE" != P ]]; then echo "ERROR - invalid library type $LIBRARYTYPE"; exit 2; fi

@@ -2165,7 +2165,8 @@ WindowListener, ListSelectionListener {
                 desktop = Desktop.getDesktop();
             }
             catch(Exception ex) {
-                Logger.getLogger(Jampal.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Jampal.class.getName()).log(Level.INFO,
+                        "Desktop API is not available:" +  ex.toString());
                 desktop = null;
             }
             Runtime runtime = Runtime.getRuntime();
