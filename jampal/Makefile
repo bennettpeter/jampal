@@ -21,8 +21,8 @@
 #
 #
 
-# FREETTS is only used in Cygwin builds or non-debian unix
-FREETTS_HOME=/opt/freetts
+# FREETTS is used in Cygwin, Ubuntu or non-debian unix
+FREETTS_HOME=/usr/share/java
 
 all: jampal.jar
 
@@ -110,12 +110,12 @@ make_basic: src/*/*/*.java src/*/*/*/*.java src/*/*/*/*/*.java
        build/classes/org/tritonus/sampled/convert/javalayer/MpegFormatConversionProvider.java
 	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
        build/classes/org/tritonus/sampled/file/mpeg/MpegAudioFileReader.java
-	if [ "${DEBIAN_BUILD}" != Y -a -f "${FREETTS_HOME}/lib/freetts.jar" ] ; then \
+	if [ "${DEBIAN_BUILD}" != Y -a -f "${FREETTS_HOME}/freetts.jar" ] ; then \
        "${JAVA_PATH}"javac -g -d build/classes \
-       -sourcepath build/classes -classpath "${FREETTS_HOME}/lib/freetts.jar" \
+       -sourcepath build/classes -classpath "${FREETTS_HOME}/freetts.jar" \
        build/classes/pgbennett/speech/BatchSpeaker.java ; fi
-	if [ "${DEBIAN_BUILD}" != Y -a -f "${FREETTS_HOME}/lib/freetts.jar" ] ; then \
+	if [ "${DEBIAN_BUILD}" != Y -a -f "${FREETTS_HOME}/freetts.jar" ] ; then \
        "${JAVA_PATH}"javac -g -d build/classes \
-       -sourcepath build/classes -classpath ${FREETTS_HOME}/lib/freetts.jar \
+       -sourcepath build/classes -classpath ${FREETTS_HOME}/freetts.jar \
        build/classes/pgbennett/speech/FreeTTSSpeaker.java ; fi
 	echo yes > make_basic
