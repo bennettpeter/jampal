@@ -156,3 +156,9 @@ testing: all
 checkroot:
 	test $$(id -u) = 0
 
+# Make windows package
+windows:
+	cd jampal && make all
+	cd tagbkup && make windows
+	cd html && make all
+

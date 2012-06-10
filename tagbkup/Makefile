@@ -39,7 +39,8 @@ INSTALL = /usr/bin/install
 STRIP = strip
 
 #LIBS = -lmsvcrt40
-CC = g++
+GCC_CMD ?= g++
+CC = $(GCC_CMD)
 #CFLAGS =  -O2 -Wall -I /usr/include/mingw32
 CFLAGS =  -O2 -Wall ${option}
 
@@ -66,6 +67,7 @@ tagbkup: *.cpp *.c
 clean: 
 	$(RM) -f $(OBJS) tagbkup tagbkupxx.cpp tagbkup.exe core OS libgcc_s_dw2-1.dll
 	rm -rf ../unix_build/tagbkup
+	rm  -f libgcc_s_dw2-1.dll libstdc++-6.dll
 
 distclean: clean
 
@@ -78,4 +80,21 @@ install: tagbkup
 
 uninstall:
 	rm -f $(bindir)/tagbkup
+
+mingw_cygwin_cmd := /Products/mingw/bin/g++
+mingw_cygwin_path := /Products/mingw/bin
+mingw_linux_cmd := "wine ~/.wine/drive_c/MinGW/bin/g++"
+mingw_linux_path := ~/.wine/drive_c/MinGW/bin
+windows:
+	basename `uname -o` > OS
+	if [ `cat OS` = Cygwin ] ; then \
+        GCC_CMD=$(mingw_cygwin_cmd) ; \
+        GCC_PATH=$(mingw_cygwin_path) ; \
+    else \
+        GCC_CMD=$(mingw_linux_cmd) ; \
+        GCC_PATH=$(mingw_linux_path) ; \
+    fi ; \
+    export GCC_CMD ; \
+    make clean && make all; \
+    cp "$$GCC_PATH/libgcc_s_dw2-1.dll" "$$GCC_PATH/libstdc++-6.dll" .
 
