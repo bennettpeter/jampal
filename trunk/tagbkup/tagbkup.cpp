@@ -104,17 +104,15 @@ int main(int argc, char *argv[], char * /*envp*/ []) {
     fprintf(stderr,"tagbkup Version **UNSTABLE** (c) 2004-2010 Peter G. Bennett\n");
 #ifdef __CYGWIN32__
 	fprintf(stderr,"Cygwin version, ");
-#endif
-#ifdef _MSC_VER
-	fprintf(stderr,"Win32 version, ");
-#endif
-#ifdef OS_Linux
+#elif defined (_MSC_VER) || defined (__MINGW32__)
+	fprintf(stderr,"Win32 version.\n");
+#elif defined (OS_Linux)
 	fprintf(stderr,"Linux version, ");
-#endif
-#ifdef CPU_x86_64
-    fprintf(stderr,"64 bit.\n");
-#else
-    fprintf(stderr,"32 bit.\n");
+    #ifdef CPU_x86_64
+        fprintf(stderr,"64 bit.\n");
+    #else
+        fprintf(stderr,"32 bit.\n");
+    #endif
 #endif
     // Last parameter is backup dir
     pBkupDir = argv[argc-1];
@@ -134,7 +132,7 @@ int main(int argc, char *argv[], char * /*envp*/ []) {
                 IsOutFileGlob=1;
             else {
 
-		        #ifdef _MSC_VER
+		        #if defined (_MSC_VER) || defined (__MINGW32__)
 	                mkdir(pBkupDir);
 		        #else
 			        mkdir(pBkupDir,S_IRWXU|S_IRWXG|S_IRWXO);
@@ -354,7 +352,7 @@ void mkdir_f(char *fileName) {
     for(;*pIn;pIn++,pOut++) {
         if (pOut !=dirName) {
             if (*pIn == '/' || *pIn == '\\') {
-				#ifdef _MSC_VER
+				#if defined (_MSC_VER) || defined (__MINGW32__)
 	                mkdir(dirName);
 				#else
 					mkdir(dirName,S_IRWXU|S_IRWXG|S_IRWXO);
