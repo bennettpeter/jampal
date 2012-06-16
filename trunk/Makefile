@@ -21,7 +21,6 @@
 #
 #
 
-# VERSION ?= $(shell read VERSION && echo $$VERSION)
 VERSION := $(shell cat VERSION)
 
 all: 
@@ -42,7 +41,9 @@ clean:
 	rm -f jampal.jar jampal_environment.properties jampal_initial.properties
 	# Files created by Netbeans
 	rm -rf build dist
-
+	# from windows target
+	rm -rf windows_package
+	rm -f jampal-windows-setup-*.exe
 
 install: 
 	cd jampal && make install
@@ -157,8 +158,44 @@ checkroot:
 	test $$(id -u) = 0
 
 # Make windows package
+inno_cygwin_cmd := "C:/Program Files (x86)/Inno Setup 5/iscc"
+inno_linux_cmd := "C:\Program Files (x86)\Inno Setup 5\ISCC"
+inno_linux_wine := wine
 windows:
 	cd jampal && make all
 	cd tagbkup && make windows
 	cd html && make all
+	mkdir -p windows_package
+	cp -p jampal/jampal.jar \
+    jampal/jampal.ico \
+    jampal/jampal_environment.properties_* \
+    jampal/jampal_initial.properties_* \
+    windows_package
+	cp -p tagbkup/tagbkup.exe windows_package/
+	cp -p tagbkup/*.dll windows_package/
+	cp -p misc/windows-32/mbrola.exe windows_package/
+	cp -p misc/mbrola*.txt windows_package/
+	cp -p misc/COPYING windows_package/
+	mkdir -p windows_package/doc/
+	cp -upr html/user_doc/* windows_package/doc/
+	# mkdir -p windows_package/scripts/examples
+	# cp -upr scripts/* windows_package/scripts
+	# rm -rf `find windows_package/scripts -name 'CVS' -o -name '.svn'`
+	mkdir -p windows_package/utility
+	cp -up utility/* windows_package/utility
+	cp -up looks/*.jar windows_package
+	cp -up jampal/src/pgbennett/speech/ptts.vbs windows_package
+	cp -up jampal/jampal.iss windows_package/jampal.iss
+	unix2dos windows_package/jampal.iss
+	basename `uname -o` > OS
+	if [ `cat OS` = Cygwin ] ; then \
+        INNO_CMD=$(inno_cygwin_cmd) ; \
+        WINE= ; \
+    else \
+        INNO_CMD=$(inno_linux_cmd) ; \
+        WINE=wine ; \
+    fi ; \
+    $$WINE "$$INNO_CMD" windows_package/jampal.iss
+	mv -f windows_package/Output/setup.exe jampal-windows-setup-$(VERSION).exe
+
 
