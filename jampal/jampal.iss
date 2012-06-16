@@ -42,8 +42,8 @@ Source: "ptts.vbs"; DestDir: "{app}"; Flags: ignoreversion; Components: utilitie
 Source: "mbrola*"; DestDir: "{app}"; Flags: ignoreversion; Components: jampal utilities
 Source: "COPYING"; DestDir: "{app}"; Flags: ignoreversion; Components: jampal utilities
 Source: "tagbkup.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: utilities
-Source: "libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion; Components: utilities
-Source: "tagbkup_cygwin.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: utilities
+Source: "*.dll"; DestDir: "{app}"; Flags: ignoreversion; Components: utilities
+;Source: "tagbkup_cygwin.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: utilities
 Source: "doc\*"; DestDir: "{app}\doc"; Flags: recursesubdirs ignoreversion; Components: jampal utilities
 ;Source: "scripts\*"; DestDir: "{app}\scripts"; Flags: recursesubdirs ignoreversion; Components: jampal utilities
 ;2000 Source: "Microsoft-English-TTS-51.msi"; DestDir: "{app}"; Flags: deleteafterinstall ignoreversion; Components: tts; MinVersion: 4.1.1998,4.0; OnlyBelowVersion: 5.01,5.01
