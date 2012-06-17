@@ -110,14 +110,13 @@ make_basic: src/*/*/*.java src/*/*/*/*.java src/*/*/*/*/*.java
        build/classes/org/tritonus/sampled/convert/javalayer/MpegFormatConversionProvider.java
 	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
        build/classes/org/tritonus/sampled/file/mpeg/MpegAudioFileReader.java
-	# if [ "${DEBIAN_BUILD}" != Y -a -f "${FREETTS_HOME}/freetts.jar" ] ; then 
-	if [ -f "${FREETTS_HOME}/freetts.jar" ] ; then \
-       "${JAVA_PATH}"javac -g -d build/classes \
-       -sourcepath build/classes -classpath "${FREETTS_HOME}/freetts.jar" \
-       build/classes/pgbennett/speech/BatchSpeaker.java ; fi
-	# if [ "${DEBIAN_BUILD}" != Y -a -f "${FREETTS_HOME}/freetts.jar" ] ; then 
-	if [ -f "${FREETTS_HOME}/freetts.jar" ] ; then \
-       "${JAVA_PATH}"javac -g -d build/classes \
-       -sourcepath build/classes -classpath ${FREETTS_HOME}/freetts.jar \
-       build/classes/pgbennett/speech/FreeTTSSpeaker.java ; fi
+	# freetts does not work, hangs so not including it
+#	if [ -f "${FREETTS_HOME}/freetts.jar" ] ; then \
+#       "${JAVA_PATH}"javac -g -d build/classes \
+#       -sourcepath build/classes -classpath "${FREETTS_HOME}/freetts.jar" \
+#       build/classes/pgbennett/speech/BatchSpeaker.java ; fi
+#	if [ -f "${FREETTS_HOME}/freetts.jar" ] ; then \
+#       "${JAVA_PATH}"javac -g -d build/classes \
+#       -sourcepath build/classes -classpath ${FREETTS_HOME}/freetts.jar \
+#       build/classes/pgbennett/speech/FreeTTSSpeaker.java ; fi
 	echo yes > make_basic

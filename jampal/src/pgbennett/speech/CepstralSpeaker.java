@@ -31,8 +31,8 @@ public class CepstralSpeaker implements SpeechInterface {
     Process process;
     
     String path;
-
-    
+    boolean isWine;
+   
     
     /** Creates a new instance of CepstralSpeaker */
     public CepstralSpeaker()  {
@@ -40,11 +40,18 @@ public class CepstralSpeaker implements SpeechInterface {
     
     public void setPath(String path) {
         this.path = path;
+        isWine=false;
+        if (this.path.startsWith("wine:")) {
+            isWine = true;
+            this.path = this.path.substring(5);
+        }
     }
 
     public boolean close() {
-        outWriter.flush();
-        outWriter.close();
+        if (outWriter != null) {
+            outWriter.flush();
+            outWriter.close();
+        }
         return true;
     }
     
@@ -52,11 +59,14 @@ public class CepstralSpeaker implements SpeechInterface {
 
     public boolean init() {
         String command;
+        Vector cmdVec = new Vector();
         if (path==null)
             command="swift";
-        else
+        else {
+            if (isWine)
+                cmdVec.add("wine");
             command=path+File.separator+"bin"+File.separator+"swift";
-        Vector cmdVec = new Vector();
+        }
         cmdVec.add(command);
         if (voice != null && voice.length()>0) {
             cmdVec.add("-n");
