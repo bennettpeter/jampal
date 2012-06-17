@@ -230,8 +230,11 @@ case $engine in
         rm -f "$streamfile1" "$streamfile2"
         ;;
     Cepstral)
-        cepstral[0]="$CEPSTRAL_HOME/bin/swift"
-        index=0
+        index=-1
+        if [[ "$CEPSTRAL_WINE" == Y ]] ; then
+            cepstral[++index]="wine"
+        fi
+        cepstral[++index]="$CEPSTRAL_HOME/bin/swift"
         cparm=
         while (( $# != 0 )); do
             case $1 in

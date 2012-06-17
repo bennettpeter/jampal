@@ -50,7 +50,9 @@ import pgbennett.speech.*;
  */
 class VoicePage {
     
-    String [] engines = {"eSpeak", "Microsoft", "Cepstral", "FreeTTS", "None"};
+    String [] engines = {"eSpeak", "Microsoft", "Cepstral", "None"};
+    // FreeTTS removed - it hangs the system and does not work
+//    String [] engines = {"eSpeak", "Microsoft", "Cepstral", "FreeTTS", "None"};
 
     JComboBox langComboBox;
     JComboBox engineComboBox;
@@ -166,25 +168,25 @@ class VoicePage {
         //voiceMatrix.add(voices);
 
         // FreeTTS
-        try {
-//            voices = FreeTTSSpeaker.getVoices();
-            Class freeTTSSpeakerClass = Class.forName("pgbennett.speech.FreeTTSSpeaker");
-            SpeechInterface speaker = (SpeechInterface)freeTTSSpeakerClass.newInstance();
-            voices = speaker.getVoiceList();
-        }
-        catch (Throwable th) {
-            // th.printStackTrace();
-            System.err.println("VoicesPage.loadVoices " + th.toString());
-            voices = new String[0];
-        }
-        voiceComboBox[3] = new JComboBox(voices);
-        voiceComboBox[3].insertItemAt("", 0);
-        //voiceMatrix.add(voices);
+//        try {
+////            voices = FreeTTSSpeaker.getVoices();
+//            Class freeTTSSpeakerClass = Class.forName("pgbennett.speech.FreeTTSSpeaker");
+//            SpeechInterface speaker = (SpeechInterface)freeTTSSpeakerClass.newInstance();
+//            voices = speaker.getVoiceList();
+//        }
+//        catch (Throwable th) {
+//            // th.printStackTrace();
+//            System.err.println("VoicesPage.loadVoices " + th.toString());
+//            voices = new String[0];
+//        }
+//        voiceComboBox[3] = new JComboBox(voices);
+//        voiceComboBox[3].insertItemAt("", 0);
+//        //voiceMatrix.add(voices);
         
         // None
         voices = new String[0];
-        voiceComboBox[4] = new JComboBox(voices);
-        voiceComboBox[4].insertItemAt("", 0);
+        voiceComboBox[3] = new JComboBox(voices);
+        voiceComboBox[3].insertItemAt("", 0);
         //voiceMatrix.add(voices);
     
     }
