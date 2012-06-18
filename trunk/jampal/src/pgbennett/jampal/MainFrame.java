@@ -44,7 +44,7 @@ WindowListener, ListSelectionListener {
     
     static final String[] AboutText = {
         "Jampal Version " + Jampal.version,
-        "Copyright (c) Peter Bennett, 2004-2011",
+        "Copyright (c) Peter Bennett, 2004-2012",
         " ",
         "Jampal is free software: you can redistribute it and/or modify "
         + "it under the terms of the GNU General Public License as published by "
