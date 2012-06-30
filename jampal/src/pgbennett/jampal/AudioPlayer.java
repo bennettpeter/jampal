@@ -588,6 +588,8 @@ public class AudioPlayer implements Runnable {
                 }
                 try {
                     waitFor.join();
+//                    System.gc(); //***TEST***
+//                    Thread.sleep(5000); //***TEST***
                 }
                 catch(InterruptedException ex) {
                     
@@ -600,6 +602,9 @@ public class AudioPlayer implements Runnable {
             state = 'P';
             if (fullAnnouncement.length()>0) {
                 try {
+                    String strWaitIime = Jampal.initialProperties.getProperty("announce-wait","0");
+                    int waitTime = Integer.parseInt(strWaitIime);
+                    Thread.sleep(waitTime);
                     announce = new Announce(fullAnnouncement.toString());
                     announce.start();
                     if (!mainFrame.continuousMenuItem.isSelected()&&state=='P')
@@ -902,7 +907,7 @@ public class AudioPlayer implements Runnable {
         public void run() {
             // sleep 2 secs in case the next song wants the line
             try {
-                Thread.sleep(2000);
+                Thread.sleep(2000); //2000 
             }
             catch (InterruptedException ex) {
                 
