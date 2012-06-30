@@ -107,6 +107,12 @@
             install wine and install Cepstral under wine. Then 
             type wine: in front of the path, and jampal will invoke it with wine. For example type this:
             <code>wine:/home/yourname/.wine/drive_c/Program Files (x86)/Cepstral</code>
+            <p>
+            If you find that the announcement works on only the first song, make sure 
+            that you have not seleced Continuous Plyaing in the Play menu
+            and specify a "Wait Before Speech" value of 5000.
+            <p>
+            The preferred way to use Cepstral is to purchase a Linux version.
           </p>
           <p>
             <i>ESpeak Program</i><br>
@@ -118,6 +124,13 @@
             <i>espeak-data Path</i><br>
             If you use ESpeak as a speech engine for any languages, you must
             enter the location of the espeak-data directory.
+          </p>
+          <p>
+            <i>Wait Before Speech</i><br>
+            Specifying a value here will cause the program to pause the specified
+            number of milliseconds before generating speech. When using Cepstral
+            for Windows with wine it may be necessary to specify a value of 
+            around 5000 here, otherwise only the first song may be announced.
           </p>
           <p>
             <b>Voices Tab</b>
