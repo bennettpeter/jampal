@@ -117,6 +117,7 @@ source: clean
 	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_windows.tar.gz \
 		misc/windows-32 ptts
 	rm -f package/source/jampal-$(VERSION)
+	cp -f package/source/jampal-source-$(VERSION).tar.gz package/source/jampal_$(VERSION)+dfsg1.orig.tar.gz
 
 
 unix:
