@@ -2171,6 +2171,8 @@ WindowListener, ListSelectionListener {
             }
             Runtime runtime = Runtime.getRuntime();
             String browser = Jampal.initialProperties.getProperty("browser");
+            if (desktop == null && browser == null)
+                throw new Exception("Unable to find browser");
             if (helpFileStr != null) {
                 File helpFile = new File(helpFileStr);
                 if (!helpFile.isFile())
