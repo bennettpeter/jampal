@@ -1,4 +1,6 @@
 #!/bin/bash
+echo This is obsolete - use make instead
+exit 2
 set -e
 export OS=`uname -s`
 
