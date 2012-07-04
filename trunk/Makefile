@@ -36,7 +36,7 @@ clean:
 	rm -rf build_doc
 	rm -f utility/*.jmp
 	rm -rf unix_build
-	rm -rf package/source
+	rm -rf package
 	# files from testing target
 	rm -f jampal.jar jampal_environment.properties jampal_initial.properties
 	# Files created by Netbeans
