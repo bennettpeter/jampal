@@ -958,11 +958,11 @@ int CopyTag(char *pOutputFile, char *pInputFile) {
         }
     }
 
-    if (result<=0 && IsOK) 
+    if (result<=0 && IsOK) {
         IsOK=GetTagSize(fpIn,&tagsize);
-
-    if (tagsize == 0)
-        fprintf(std_err,"Warning - no tag on file %s\n",pInputFile);
+        if (tagsize == 0)
+            fprintf(std_err,"Warning - no tag on file %s\n",pInputFile);
+    }
 
     if (result<=0 && IsOK) {
         fseek(fpIn,0,SEEK_SET);
@@ -1215,7 +1215,10 @@ int GetTagSize(FILE *fpIn, size_t *pTagSize) {
         }
     }
 
-    if (memcmp(work,"ID3",3)==0
+//    if (memcmp(work,"ID3",3)==0
+    if (work[0] == 'I'
+        && work[1] =='D'
+        && work[2] == '3'
         && work[3] != 255
         && work[4] != 255
         && work[6] < 128
@@ -1228,8 +1231,8 @@ int GetTagSize(FILE *fpIn, size_t *pTagSize) {
                 + (size_t) work[7] * 128 * 128
                 + (size_t) work[6] * 128 * 128 * 128 + 10;
     }
-    return IsOK;
 
+    return IsOK;
 }
 
 
