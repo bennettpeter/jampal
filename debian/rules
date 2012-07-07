@@ -18,7 +18,7 @@ export DH_OPTIONS
 
 # Used by some of the upstream make files to exclude
 # things from the build
-export DEBIAN_BUILD=Y
+export DEBIAN_BUILD := Y
 UPSTRMVERSION1 := $(shell dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' '|cut -f1 -d+)
 UPSTRMVERSION2 := $(shell dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' '|cut -f1 -d-)
 VERSION := $(shell dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' ')
@@ -26,9 +26,9 @@ VERSION := $(shell dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' ')
 %:
 	dh $@
 
-get-orig-source:
-	wget --content-disposition \
-		http://sourceforge.net/projects/jampal/files/jampal/$(UPSTRMVERSION1)/jampal-source-$(UPSTRMVERSION1).tar.gz/download
+get-orig-source: jampal-source-$(UPSTRMVERSION1).tar.gz
+	#wget --content-disposition \
+	#	http://sourceforge.net/projects/jampal/files/jampal/$(UPSTRMVERSION1)/jampal-source-$(UPSTRMVERSION1).tar.gz/download
 	# mv download jampal-source-$(UPSTRMVERSION1).tar.gz
 	tar xf jampal-source-$(UPSTRMVERSION1).tar.gz
 	rm -rf jampal-$(UPSTRMVERSION1)/looks
@@ -37,4 +37,8 @@ get-orig-source:
 	mv jampal-$(UPSTRMVERSION1) jampal-$(UPSTRMVERSION1)-orig
 	tar -czf jampal_$(UPSTRMVERSION2).orig.tar.gz jampal-$(UPSTRMVERSION1)-orig
 	rm -rf jampal-source-$(UPSTRMVERSION1).tar.gz jampal-$(UPSTRMVERSION1)-orig
+
+jampal-source-$(UPSTRMVERSION1).tar.gz:
+	wget --content-disposition \
+		http://sourceforge.net/projects/jampal/files/jampal/$(UPSTRMVERSION1)/jampal-source-$(UPSTRMVERSION1).tar.gz/download
 
