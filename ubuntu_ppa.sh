@@ -1,4 +1,6 @@
 #!/bin/bash
+echo This is obsolete - use copysource.sh and dpkg-buildpackage instead
+exit 2
 
 set -e
 

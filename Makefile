@@ -100,7 +100,7 @@ distclean: clean
 
 source: clean
 	# Make source appear under a jampal-version directory
-	# Exclude debian ubuntu and package directories
+	# Exclude debian debian_sf and package directories
 	mkdir -p package/source
 	ln -fs ../.. package/source/jampal-$(VERSION)
 	cd package/source && echo jampal-${VERSION}/* | \
@@ -114,7 +114,7 @@ source: clean
 		tar -c -z --exclude-vcs --exclude=**/notes.txt --exclude=misc/windows-32 --exclude=misc/windows-32 -f jampal-source-$(VERSION).tar.gz \
 		`cat source_filelist.txt`
 	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_debian.tar.gz \
-		debian ubuntu
+		debian debian_sf
 	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_windows.tar.gz \
 		misc/windows-32 ptts
 	rm -f package/source/jampal-$(VERSION)
