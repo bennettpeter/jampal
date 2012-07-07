@@ -603,7 +603,13 @@ public class AudioPlayer implements Runnable {
             if (fullAnnouncement.length()>0) {
                 try {
                     String strWaitIime = Jampal.initialProperties.getProperty("announce-wait","0");
-                    int waitTime = Integer.parseInt(strWaitIime);
+                    int waitTime = 0;
+                    try {
+                        waitTime = Integer.parseInt(strWaitIime);
+                    }
+                    catch(Exception ex) {
+                        waitTime = 0;
+                    }
                     Thread.sleep(waitTime);
                     announce = new Announce(fullAnnouncement.toString());
                     announce.start();
