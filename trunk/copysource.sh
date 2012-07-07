@@ -44,6 +44,7 @@ cd ~/proj/jampal
 
 rm -rf $sourcedir/
 tar xf jampal_$UPSTRMVERSION2.orig.tar.gz
+mv -f ${sourcedir}-orig ${sourcedir}
 
 rsync -aC $scriptpath/$system $sourcedir/
 
