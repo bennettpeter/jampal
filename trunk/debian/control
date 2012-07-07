@@ -3,7 +3,7 @@ Section: sound
 Priority: optional
 Maintainer: Peter Bennett <pgbennett@comcast.net>
 Build-Depends: debhelper (>= 8.0.0~),openjdk-6-jdk, rman, rsync
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3.1
 Homepage: http://jampal.sourceforge.net
 
 Package: jampal
