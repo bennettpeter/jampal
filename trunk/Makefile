@@ -67,9 +67,10 @@ install:
 	rm -f utility/*.jmp
 	install -m644 -p utility/* ${DESTDIR}/usr/share/jampal/utility/
 #	MISC
+	if [ "`echo looks/*.jar`" != "looks/*.jar" ] ; then \
+		install -m644 looks/*.jar ${DESTDIR}/usr/share/jampal/ ; fi
 #	If not building a debian package add the looks files and COPYING
 	if [ "${DEBIAN_BUILD}" != Y ] ; then \
-		install -m644 looks/*.jar ${DESTDIR}/usr/share/jampal/ ; \
 		install -m644 misc/COPYING ${DESTDIR}/usr/share/jampal/ ; fi
 #	CYGWIN
 	basename `uname -o` > OS
@@ -105,7 +106,7 @@ source: clean
 	cd package/source && echo jampal-${VERSION}/* | \
            sed "s@ jampal-${VERSION}/package @ @;\
            s@ jampal-${VERSION}/debian @ @;\
-           s@ jampal-${VERSION}/ubuntu @ @;\
+           s@ jampal-${VERSION}/debian_sf @ @;\
            s@ jampal-${VERSION}/ptts @ @;\
            s@ jampal-${VERSION}/notes.txt @ @" \
           > source_filelist.txt
@@ -117,7 +118,8 @@ source: clean
 	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_windows.tar.gz \
 		misc/windows-32 ptts
 	rm -f package/source/jampal-$(VERSION)
-	cp -f package/source/jampal-source-$(VERSION).tar.gz package/source/jampal_$(VERSION)+dfsg1.orig.tar.gz
+	# cp -f package/source/jampal-source-$(VERSION).tar.gz package/source/jampal_$(VERSION)+dfsg1.orig.tar.gz
+	cp -f package/source/jampal-source-$(VERSION).tar.gz ../
 
 
 unix:
@@ -135,6 +137,7 @@ unix:
 	mkdir -p package/generic
 	cd unix_build && tar -c -z --exclude-vcs \
         -f  ../package/generic/jampal-build-`cat ../OS`-`arch`-$(VERSION).tar.gz *
+	cp -f package/generic/jampal-build-`cat OS`-`arch`-$(VERSION).tar.gz ../
 
 testing: all
 	# Installs jar and properties into source directory for debug and test
@@ -197,6 +200,6 @@ windows:
         WINE=wine ; \
     fi ; \
     $$WINE "$$INNO_CMD" windows_package/jampal.iss
-	mv -f windows_package/Output/setup.exe jampal-windows-setup-$(VERSION).exe
+	mv -f windows_package/Output/setup.exe ../jampal-windows-setup-$(VERSION).exe
 
 

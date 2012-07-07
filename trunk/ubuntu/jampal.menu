@@ -1,3 +1,0 @@
-?package(jampal):needs="X11" section="Applications/Sound" \
-  icon="/usr/share/pixmaps/jampal.xpm" \
-  title="jampal" command="/usr/bin/jampal open"
