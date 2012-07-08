@@ -1,0 +1,3 @@
+# Enviroment properties for unix / linux / cygwin testing
+# This file is renamed to jampal_environment.properties in those systems
+helpFile = ./html/user_doc/summary.html

@@ -1,0 +1,11 @@
+# Microsoft Developer Studio Generated Dependency File, included by ptts.mak
+
+.\ptts.cpp : \
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sapi.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sapiddk.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\spdebug.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sperror.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sphelper.h"\
+	"..\..\..\..\progra~1\micros~4\vc98\include\basetsd.h"\
+	".\ptts.h"\
+	

@@ -1,0 +1,46 @@
+
+.DUMMY {
+color: green;
+	   text-decoration: blink;
+	   font-weight: bold;
+	   eeky-eek: gimp rules;
+}
+
+
+  :link { text-decoration:none; }
+  :visited { text-decoration:none; }
+  :link:active,:visited:active { text-decoration:none; }
+  :link:hover,:visited:hover { text-decoration:underline; color:#0066FF; }
+
+  BODY, P, DIV, TD, TH, TR, FORM, OL, UL, LI, INPUT, TEXTAREA, SELECT {font-family: Verdana, Arial, Geneva, sans-serif; font-size: 11pt; }
+  H2 {font-family: Verdana, Arial, Geneva, sans-serif; font-size: 14pt; }
+  B {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt; }
+  PRE,TT { font-family: lucida console,courier,sans-serif; font-size: 12pt; }
+
+  .smfc0n {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #000000;}
+  .smfc0b {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #000000;}
+  .smfc1n {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #FFFFFF;}
+  .smfc1b {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #FFFFFF;}
+
+  .mdfc0n {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #000000;}
+  .mdfc0b {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #000000;}
+  .mdfc1n {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #FFFFFF;}
+  .mdfc1b {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #FFFFFF;}
+  .mdfc3b {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #CC0033;}
+  .mdfc4b {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #333399;}
+  .mdfc2b {font-family: verdana,arial,helvetica,sans-serif; font-size: 11pt;  color: #8e8e8e;}
+  .lgfc0n {font-family: verdana,arial,helvetica,sans-serif; font-size: 14pt; color: #000000;}
+  .lgfc0b {font-family: verdana,arial,helvetica,sans-serif; font-size: 14pt; color: #000000;}
+  .lgfc4b {font-family: verdana,arial,helvetica,sans-serif; font-size: 14pt; color: #0000CC;}
+  .xlgfc1n {font-family: verdana,arial,helvetica,sans-serif; font-size: 14pt; color: #FFFFFF;}
+  .xlgfc1b {font-family: verdana,arial,helvetica,sans-serif; font-size: 14pt; color: #FFFFFF;}
+  .xlgfc1n {font-family: verdana,arial,helvetica,sans-serif; font-size: 14pt; color: #FFFFFF;}
+  .xlgfc1b {font-family: verdana,arial,helvetica,sans-serif; font-size: 14pt; color: #FFFFFF;}
+  .xlgfc2b {font-family: verdana,arial,helvetica,sans-serif; font-size: 14pt; color: #003399;}
+
+  .osdn-search {font-size: 11pt; font-family: verdana, arial, sans-serif;}
+  .osdn-button {margin-top: 1px; margin-bottom: 1px;}
+  select.osdn-search {text-align: center;}
+  .osdn-navtext {color: #FFFFFF;font-family: verdana, arial, sans-serif;font-size: 11pt;}
+  .osdn-foottext {color: #666666; font-family: verdana, arial, sans-serif; font-size: 11pt; text-align: center;}
+  

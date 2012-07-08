@@ -1,0 +1,12 @@
+# Initial properties for windows x64 systems
+# This should be installed as jampal_initial.properties in those systems
+# Currently the mechanism is not in place so the windows version is used
+espeak-data=C\:\\Program Files (x86)\\eSpeak\\espeak-data
+espeak-prog=C\:\\Program Files (x86)\\eSpeak\\command_line\\espeak
+mbrola-path=C\:\\Products\\mbrola
+mixer-gain-percent=100
+cepstral-path=C\:\\Program Files (x86)\\Cepstral
+speech-rate=0
+mbrola-prog=C\:\\Products\\mbrola\\mbrola.exe
+default-speech-engine=Microsoft
+

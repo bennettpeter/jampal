@@ -1,0 +1,47 @@
+# Jampal configuration file for CYGWIN
+# If using CYGWIN, all paths must be set up so that the
+# path is compatible with Windows. This means creating links
+# for example ln -s C:/Music /Music makes the /Music directory compatible.
+# Use this for "Program Files" ln -s "C:/Program Files" "/Program Files"
+# Do this for all directories mentioned here
+# The setup_cygwon.sh script does some of these.
+# The following must be changed to match your setup
+
+export OPENOFFICE="/Program Files/OpenOffice.org 3/program/soffice.exe"
+export JAVA_COMMAND="/Program Files/Java/jdk1.6.0_18/bin/java"
+export FREETTS_HOME="/Products/freetts"
+export MBROLA_HOME="/Products/mbrola"
+export MBROLA_PROGRAM="/Products/mbrola/mbrola.exe"
+export CEPSTRAL_HOME="/Program Files/Cepstral"
+export CDROM=/r
+export SOXPATH=
+export ESPEAK_PROGRAM="/Program Files/eSpeak/command_line/espeak"
+myprofile=`echo "$USERPROFILE"|sed "s@^.:@@;s@\\\\\\\\@/@g"`
+export JAMPAL_USER_DIR="$myprofile/.jampal"
+export FREETTSPATH=$JAMPAL_HOME/../freetts/lib/freetts.jar
+# Specify here the base location for your music files 
+basedir="$myprofile/Music"
+
+# The following settings can be left as is or customized
+
+# Location for your jampal library files
+export LIBDIR="$basedir/library"
+# Location for new music files (optional)
+export NEXTFILES="$basedir/next"
+# Customize here with the name of your main library. It should reside in 
+# LIBDIR specified above.
+export MAINLIBNAME=default
+# Location for temporary files for play list CDs
+export TEMPDIR="$basedir/temp"
+# Location for music files
+export MAINDIR="$basedir/CD"
+# Playlists are generated here
+export PLAYLISTCD="$LIBDIR/playlists"
+# Playlist CD images are created here
+export CDSTAGING="$TEMPDIR/playlist-cd"
+# Tag bakups are stored here by tagbkup
+export TAGBKUP="$basedir/tagbkup"
+# Rejected songs are stored here
+export REJECTPATH="$basedir/reject"
+
+
