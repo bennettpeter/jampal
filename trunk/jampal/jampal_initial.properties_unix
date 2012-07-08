@@ -8,3 +8,5 @@ cepstral-path=
 speech-rate=0
 mbrola-prog=mbrola
 browser=x-www-browser
+default-speech-engine=eSpeak
+

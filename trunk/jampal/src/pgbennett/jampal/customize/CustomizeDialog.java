@@ -136,8 +136,10 @@ public class CustomizeDialog extends javax.swing.JDialog {
         // MIXER
         Mixer.Info[] aInfos = AudioSystem.getMixerInfo();
         currentValue = Jampal.initialProperties.getProperty("mixer-name");
-        if (currentValue == null)
-            currentValue = "Java Sound Audio Engine";
+        if (currentValue == null) {
+            Mixer defaultMixer = AudioSystem.getMixer(null);
+            currentValue = defaultMixer.getMixerInfo().getName();
+        }
         currentIndex = -1;
         int iy = -1;
         for (ix = 0; ix < aInfos.length; ix++)
@@ -572,16 +574,16 @@ public class CustomizeDialog extends javax.swing.JDialog {
         }
         // MIXER
         newValue = (String) mixerNameComboBox.getSelectedItem();
-        if (newValue==null) {
-            customizePane.setSelectedIndex(GENERAL_PANEL);
-            JOptionPane.showMessageDialog(this,
-                    "Please Select a value for Mixer",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+//        if (newValue==null) {
+//            customizePane.setSelectedIndex(GENERAL_PANEL);
+//            JOptionPane.showMessageDialog(this,
+//                    "Please Select a value for Mixer",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
         currentValue = Jampal.initialProperties.getProperty("mixer-name");
-        if (!newValue.equals(currentValue)) {
+        if (newValue != null && !newValue.equals(currentValue)) {
             if (doUpdate) {
                 Jampal.initialProperties.setProperty("mixer-name", newValue);
                 mustSaveJampal = true;
