@@ -8,3 +8,5 @@ mixer-gain-percent=100
 cepstral-path=C\:\\Program Files (x86)\\Cepstral
 speech-rate=0
 mbrola-prog=C\:\\Products\\mbrola\\mbrola.exe
+default-speech-engine=Microsoft
+

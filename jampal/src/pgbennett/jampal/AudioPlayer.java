@@ -966,10 +966,10 @@ public class AudioPlayer implements Runnable {
                             newVoice = voiceSettings[1];
                         }
                     }
-//                    if (newEngine == null) {
-//                        newEngine = Jampal.initialProperties.getProperty("speech-engine");
-//                        newVoice = Jampal.initialProperties.getProperty("voice");
-//                    }
+                    if (newEngine == null) {
+                        newEngine = Jampal.initialProperties.getProperty("default-speech-engine");
+                        newVoice = "";
+                    }
                     if (newVoice.length() == 0 && "eSpeak".equals(newEngine)) {
                         if (announcementLanguage.length() == 3) {
                             newVoice = mainFrame.library.attributes.shortLangMap.get(announcementLanguage);
