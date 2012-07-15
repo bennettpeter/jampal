@@ -113,9 +113,9 @@ source: clean
 	cd package/source && \
 		tar -c -z --exclude-vcs --exclude=**/notes.txt --exclude=misc/windows-32 --exclude=misc/windows-32 -f jampal-source-$(VERSION).tar.gz \
 		`cat source_filelist.txt`
-	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_debian.tar.gz \
+	tar -c -z --exclude-vcs -f package/source/jampal-debian-source-$(VERSION).tar.gz \
 		debian debian_sf
-	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_windows.tar.gz \
+	tar -c -z --exclude-vcs -f package/source/jampal-windows-source-$(VERSION).tar.gz \
 		misc/windows-32 ptts
 	rm -f package/source/jampal-$(VERSION)
 	# cp -f package/source/jampal-source-$(VERSION).tar.gz package/source/jampal_$(VERSION)+dfsg1.orig.tar.gz
