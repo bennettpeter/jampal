@@ -4,3 +4,14 @@
  Main-Class: pgbennett.jampal.Jampal
 -Class-Path: /usr/share/java/freetts.jar /usr/share/java/looks.jar /usr/share/java/squareness.jar ../freetts/lib/freetts.jar liquidlnf.jar looks-2.3.0.jar napkinlaf-1.2.jar squareness.jar InfoNodeilf-gpl.jar lipstikLF-1.1.jar nimrodlf.j16.jar PgsLookAndFeel.jar
 +Class-Path: /usr/share/java/looks.jar /usr/share/java/squareness.jar liquidlnf.jar looks-2.3.0.jar napkinlaf-1.2.jar squareness.jar InfoNodeilf-gpl.jar lipstikLF-1.1.jar nimrodlf.j16.jar PgsLookAndFeel.jar
+--- a/tagbkup/Makefile
++++ b/tagbkup/Makefile
+@@ -43,6 +43,8 @@
+ CC = $(GCC_CMD)
+ #CFLAGS =  -O2 -Wall -I /usr/include/mingw32
+ CFLAGS =  -O2 -Wall ${option}
++CFLAGS = `dpkg-buildflags --get CFLAGS`
++CFLAGS += `dpkg-buildflags --get CPPFLAGS`
+ 
+ all: tagbkup
+ 
