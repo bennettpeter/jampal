@@ -17,3 +17,12 @@ Patches suggested by linitan warning messages
  
  all: tagbkup
  
+@@ -58,7 +61,7 @@
+ tagbkup: *.cpp *.c
+ 	basename `uname -o` > OS
+ 	sed -e "s/\*\*UNSTABLE\*\*/`cat ../VERSION`/" tagbkup.cpp > tagbkupxx.cpp
+-	$(CC) $(CFLAGS) -D OS_`cat OS` -D CPU_`uname -m` -o tagbkup tagbkupxx.cpp nullmp3.cpp mp3tech.c $(LIBS)
++	$(CC) $(CFLAGS) $(LDFLAGS) -D OS_`cat OS` -D CPU_`uname -m` -o tagbkup tagbkupxx.cpp nullmp3.cpp mp3tech.c $(LIBS)
+ 
+ 
+ #tagbkup: $(OBJS)
