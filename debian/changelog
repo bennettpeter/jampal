@@ -1,8 +1,10 @@
 jampal (02.01.06+dfsg1-1) unstable; urgency=low
 
-  * Update release
+  * Update release (Closes: #683541) 
 
     New Upstream version (02.01.06)
+
+    Change to use default jdk and jre as requested by Ubuntu
 
  -- Peter Bennett <pgbennett@comcast.net>  Sat, 07 Jul 2012 11:31:07 -0400
 
