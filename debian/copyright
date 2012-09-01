@@ -2,10 +2,11 @@ Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=174
 Upstream-Name: jampal
 Upstream-Contact: Peter Bennett <pgbennett@comcast.net>
 Source: http://sourceforge.net/projects/jampal/files/
- Source is reformatted to exclude precompiled jar files in the looks directory.
- Debian source is the upstream source with looks directory and its contents
- removed. The command "debian/rules get-orig-source" retrieves the source and
- removes the looks directory.
+ Source is reformatted to exclude precompiled jar files in the looks directory,
+ also to exclude jlayer and tritonus source. These are all available as 
+ separate packages in Debian.
+ The command "debian/rules get-orig-source" retrieves the source and
+ removes the looks directory, jlayer and Tritonus source.
 
 Files: *
 Copyright: 2004-2011 Peter Bennett <pgbennett@comcast.net>
@@ -13,11 +14,6 @@ License: GPL-3+
 
 Files: jampal/src/javazoom/*
 Copyright: 1993, 1994 Tobias Bading (bading@cs.tu-berlin.de)
-License: GPL-2+
-
-Files: jampal/src/org/tritonus/*
-Copyright: 1999 - 2002 Matthias Pfisterer <Matthias.Pfisterer@gmx.de>
-           1999 - 2000 by Florian Bomers <florian@bome.com>
 License: GPL-2+
 
 Files: jampal/src/pgbennett/id3/*
