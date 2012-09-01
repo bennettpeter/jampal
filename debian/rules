@@ -32,6 +32,8 @@ get-orig-source: jampal-source-$(UPSTRMVERSION1).tar.gz
 	# mv download jampal-source-$(UPSTRMVERSION1).tar.gz
 	tar xf jampal-source-$(UPSTRMVERSION1).tar.gz
 	rm -rf jampal-$(UPSTRMVERSION1)/looks
+	rm -rf jampal-$(UPSTRMVERSION1)/jampal/src/org/tritonus
+	rm -rf jampal-$(UPSTRMVERSION1)/jampal/src/javazoom/jl
 	# rename top level directory as recommended in 
 	# Debian Developers reference 6.7.8.2 Repackaged upstream source
 	mv jampal-$(UPSTRMVERSION1) jampal-$(UPSTRMVERSION1)-orig
