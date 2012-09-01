@@ -554,4 +554,11 @@ I have a program (jampal) for playing mp3 files that uses javazoom. javazoom cla
  *   MPEG/audio committee.  For further information, please contact   
  *   Davis Pan, 508-493-2241, e-mail: pan@3d.enet.dec.com             
 
+/home/peter/proj/jampal.svn.sourceforge.net/svnroot/jampal/trunk/jampal/src/javazoom/jl/decoder/huffcodetab.java
+
+Versions downloaded from http://www.mp3-tech.org/programmer/decoding.html
+cpp version with copyright notice - http://www.codeforge.com/article/91214 (mapl2135.zip)
+
+Package: libjlayer-java (1.0.1-1) 
+Package: libtritonus-java (20070428-8) 
 
