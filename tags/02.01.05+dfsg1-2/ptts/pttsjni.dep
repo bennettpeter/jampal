@@ -1,0 +1,20 @@
+# Microsoft Developer Studio Generated Dependency File, included by pttsjni.mak
+
+.\ptts.cpp : \
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sapi.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sapiddk.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\spdebug.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sperror.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sphelper.h"\
+	"..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\ptts.h"\
+	
+
+.\Speaker.cpp : \
+	"..\..\..\..\products\j2sdk1.4.2_13\include\jni.h"\
+	"..\..\..\..\products\j2sdk1.4.2_13\include\win32\jni_md.h"\
+	"..\..\..\..\program files\microsoft speech sdk 5.1\include\sapi.h"\
+	"..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	".\pgbennett_speech_Speaker.h"\
+	".\ptts.h"\
+	
