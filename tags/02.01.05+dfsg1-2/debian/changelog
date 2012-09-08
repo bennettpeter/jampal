@@ -5,6 +5,8 @@ jampal (02.01.05+dfsg1-2) unstable; urgency=low
   * Added dependencies to two packages that supply the services
     previously supplied by the tritonus and javalayer source code.
 
+ -- Peter Bennett <pgbennett@comcast.net>  Sat, 08 Sep 2012 11:50:01 -0400
+
 jampal (02.01.05+dfsg1-1) unstable; urgency=low
 
   * Initial release (Closes: #626991)
