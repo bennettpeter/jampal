@@ -1,3 +1,4 @@
+Patches to fix Bug #685839
 --- a/jampal/Makefile
 +++ b/jampal/Makefile
 @@ -92,7 +92,8 @@
