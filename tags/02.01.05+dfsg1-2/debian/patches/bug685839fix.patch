@@ -30,12 +30,12 @@ Patches to fix Bug #685839
 +    #   build/classes/org/tritonus/sampled/convert/javalayer/MpegFormatConversionProvider.java
 +	# "${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
 +    #   build/classes/org/tritonus/sampled/file/mpeg/MpegAudioFileReader.java
- 	# freetts does not work, hangs so not including it
- #	if [ -f "${FREETTS_HOME}/freetts.jar" ] ; then \
- #       "${JAVA_PATH}"javac -g -d build/classes \
+	if [ "${DEBIAN_BUILD}" != Y -a -f "${FREETTS_HOME}/lib/freetts.jar" ] ; then \
+       "${JAVA_PATH}"javac -g -d build/classes \
+       -sourcepath build/classes -classpath "${FREETTS_HOME}/lib/freetts.jar" \
 --- a/jampal/src/META-INF/MANIFEST.MF
 +++ b/jampal/src/META-INF/MANIFEST.MF
 @@ -1,2 +1,2 @@
  Main-Class: pgbennett.jampal.Jampal
--Class-Path: /usr/share/java/freetts.jar /usr/share/java/looks.jar /usr/share/java/squareness.jar ../freetts/lib/freetts.jar liquidlnf.jar looks-2.3.0.jar napkinlaf-1.2.jar squareness.jar InfoNodeilf-gpl.jar lipstikLF-1.1.jar nimrodlf.j16.jar PgsLookAndFeel.jar
+-Class-Path: ../freetts/lib/freetts.jar liquidlnf.jar looks-2.3.0.jar napkinlaf-1.2.jar squareness.jar InfoNodeilf-gpl.jar lipstikLF-1.1.jar nimrodlf.j16.jar PgsLookAndFeel.jar
 +Class-Path: /usr/share/java/tritonus_mp3.jar /usr/share/java/tritonus_share.jar /usr/share/java/jl.jar /usr/share/java/looks.jar /usr/share/java/squareness.jar liquidlnf.jar looks-2.3.0.jar napkinlaf-1.2.jar squareness.jar InfoNodeilf-gpl.jar lipstikLF-1.1.jar nimrodlf.j16.jar PgsLookAndFeel.jar
