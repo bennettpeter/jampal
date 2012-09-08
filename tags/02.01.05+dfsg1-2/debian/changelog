@@ -1,3 +1,10 @@
+jampal (02.01.05+dfsg1-2) unstable; urgency=low
+
+  * Removed tritonus and javalayer source code which has been
+    reported as partially copyrighted, closes: #685839
+  * Added dependencies to two packages that supply the services
+    previously supplied by the tritonus and javalayer source code.
+
 jampal (02.01.05+dfsg1-1) unstable; urgency=low
 
   * Initial release (Closes: #626991)

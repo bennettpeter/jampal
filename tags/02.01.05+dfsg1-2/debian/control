@@ -2,14 +2,16 @@ Source: jampal
 Section: sound
 Priority: optional
 Maintainer: Peter Bennett <pgbennett@comcast.net>
-Build-Depends: debhelper (>= 8.0.0~),openjdk-6-jdk, rman, rsync
+Build-Depends: debhelper (>= 8.0.0~),openjdk-6-jdk, rman, rsync,
+ libtritonus-java, libjlayer-java
 Standards-Version: 3.9.2
 Homepage: http://jampal.sourceforge.net
 
 Package: jampal
 Architecture: all
 Depends: ${misc:Depends}, tagbkup,
- openjdk-6-jre | java6-runtime, sox, gawk
+ openjdk-6-jre | java6-runtime, sox, gawk,
+ libtritonus-java, libjlayer-java
 Recommends: espeak
 Suggests: mbrola
 Description: mp3 song library management system and player
