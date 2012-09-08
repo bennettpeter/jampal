@@ -33,6 +33,7 @@ sourcedir=jampal-$UPSTRMVERSION1-orig
 
 if [[ ! -f package/source/jampal_$UPSTRMVERSION2.orig.tar.gz ]] ; then
     debian/rules get-orig-source
+    mkdir -p package/source
     mv jampal_$UPSTRMVERSION2.orig.tar.gz package/source
 fi
 
