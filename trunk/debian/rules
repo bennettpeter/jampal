@@ -27,7 +27,8 @@ VERSION := $(shell dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' ')
 	dh $@
 
 override_dh_auto_clean:
-	rm -rf jampal-source-$(UPSTRMVERSION1).tar.gz jampal-$(UPSTRMVERSION1)-orig
+	rm -rf jampal-source-$(UPSTRMVERSION1).tar.gz jampal-$(UPSTRMVERSION1)-orig \
+      jampal_$(UPSTRMVERSION2).orig.tar.gz
 	dh_auto_clean
 
 get-orig-source: jampal-source-$(UPSTRMVERSION1).tar.gz
