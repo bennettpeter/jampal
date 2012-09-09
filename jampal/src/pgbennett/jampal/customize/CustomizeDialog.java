@@ -136,10 +136,8 @@ public class CustomizeDialog extends javax.swing.JDialog {
         // MIXER
         Mixer.Info[] aInfos = AudioSystem.getMixerInfo();
         currentValue = Jampal.initialProperties.getProperty("mixer-name");
-        if (currentValue == null) {
-            Mixer defaultMixer = AudioSystem.getMixer(null);
-            currentValue = defaultMixer.getMixerInfo().getName();
-        }
+        if (currentValue == null)
+            currentValue = "Java Sound Audio Engine";
         currentIndex = -1;
         int iy = -1;
         for (ix = 0; ix < aInfos.length; ix++)
@@ -181,15 +179,12 @@ public class CustomizeDialog extends javax.swing.JDialog {
         currentValue = Jampal.initialProperties.getProperty("espeak-data");
         currentValue = Jampal.getESpeakData(currentValue);
         eSpeakDataTextField.setText(currentValue);
-        // ANNOUNCE WAIT
-        currentValue = Jampal.initialProperties.getProperty("announce-wait");
-        announceWaitTextField.setText(currentValue);
 
         // SPEECH ENGINE
-//        currentValue = Jampal.initialProperties.getProperty("speech-engine");
-//        if (currentValue == null) {
-//            currentValue = "None";
-//        }
+        currentValue = Jampal.initialProperties.getProperty("speech-engine");
+        if (currentValue == null) {
+            currentValue = "None";
+        }
 //        speechEngineComboBox.setSelectedItem(currentValue);
         // VOICE - do not ned to do because the above combo box action does it
 //        setupVoice();
@@ -574,16 +569,16 @@ public class CustomizeDialog extends javax.swing.JDialog {
         }
         // MIXER
         newValue = (String) mixerNameComboBox.getSelectedItem();
-//        if (newValue==null) {
-//            customizePane.setSelectedIndex(GENERAL_PANEL);
-//            JOptionPane.showMessageDialog(this,
-//                    "Please Select a value for Mixer",
-//                    "Error",
-//                    JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        }
+        if (newValue==null) {
+            customizePane.setSelectedIndex(GENERAL_PANEL);
+            JOptionPane.showMessageDialog(this,
+                    "Please Select a value for Mixer",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         currentValue = Jampal.initialProperties.getProperty("mixer-name");
-        if (newValue != null && !newValue.equals(currentValue)) {
+        if (!newValue.equals(currentValue)) {
             if (doUpdate) {
                 Jampal.initialProperties.setProperty("mixer-name", newValue);
                 mustSaveJampal = true;
@@ -732,17 +727,6 @@ public class CustomizeDialog extends javax.swing.JDialog {
             }
 //        }
 
-        // ANNOUNCE WAIT
-        currentValue = Jampal.initialProperties.getProperty("announce-wait");
-        newValue = announceWaitTextField.getText();
-        if (doUpdate) {
-            if (newValue != null && !newValue.equals(currentValue)) {
-                Jampal.initialProperties.setProperty("announce-wait", newValue);
-                mustSaveJampal = true;
-                System.setProperty("espeak.data", newValue);
-            }
-        }
-            
         // LIBRARY - SPEECH TEMPLATE
         currentValue = libraryProperties.getProperty("speechtemplate");
         newValue = speechTemplate.getText();
@@ -1081,8 +1065,6 @@ public class CustomizeDialog extends javax.swing.JDialog {
         eSpeakDataTextField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         mbrolaProgTextField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        announceWaitTextField = new javax.swing.JTextField();
         voicesPanel = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         voicesScrollPane = new javax.swing.JScrollPane();
@@ -1200,6 +1182,8 @@ public class CustomizeDialog extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 99.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 5);
@@ -1293,7 +1277,6 @@ public class CustomizeDialog extends javax.swing.JDialog {
         generalPanel.add(jLabel10, gridBagConstraints);
 
         cepstralPathTextField.setToolTipText("Cepstral Home Directory"); // NOI18N
-        cepstralPathTextField.setPreferredSize(new java.awt.Dimension(320, 28));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
@@ -1313,7 +1296,6 @@ public class CustomizeDialog extends javax.swing.JDialog {
         generalPanel.add(jLabel14, gridBagConstraints);
 
         eSpeakProgTextField.setToolTipText("eSpeak command including path if necessary.");
-        eSpeakProgTextField.setPreferredSize(new java.awt.Dimension(320, 28));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 9;
@@ -1358,34 +1340,6 @@ public class CustomizeDialog extends javax.swing.JDialog {
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 5);
         generalPanel.add(mbrolaProgTextField, gridBagConstraints);
-
-        jLabel7.setText("Wait before speech (ms)");
-        jLabel7.setMaximumSize(new java.awt.Dimension(168, 18));
-        jLabel7.setMinimumSize(new java.awt.Dimension(168, 18));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 5);
-        generalPanel.add(jLabel7, gridBagConstraints);
-
-        announceWaitTextField.setToolTipText("Number of milliseconds to wait before generating speech");
-        announceWaitTextField.setMaximumSize(null);
-        announceWaitTextField.setMinimumSize(null);
-        announceWaitTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                announceWaitTextFieldActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 5, 2, 5);
-        generalPanel.add(announceWaitTextField, gridBagConstraints);
 
         customizePane.addTab("General", generalPanel);
 
@@ -2169,12 +2123,7 @@ public class CustomizeDialog extends javax.swing.JDialog {
             voicePage.loadVoices();
     }//GEN-LAST:event_customizePaneStateChanged
 
-    private void announceWaitTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_announceWaitTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_announceWaitTextFieldActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JTextField announceWaitTextField;
     javax.swing.JButton cancelButton;
     javax.swing.JRadioButton caseDefaultRadioButton;
     javax.swing.JRadioButton caseNoRadioButton;
@@ -2210,7 +2159,6 @@ public class CustomizeDialog extends javax.swing.JDialog {
     javax.swing.JLabel jLabel4;
     javax.swing.JLabel jLabel5;
     javax.swing.JLabel jLabel6;
-    javax.swing.JLabel jLabel7;
     javax.swing.JLabel jLabel8;
     javax.swing.JPanel jPanel1;
     javax.swing.JComboBox landfComboBox;

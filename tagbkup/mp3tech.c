@@ -33,10 +33,6 @@
 	#define uint unsigned int
 #endif
 
-#ifdef __MINGW32__
-	#define uint unsigned int
-#endif
-
 
 int layer_tab[4]= {0, 3, 2, 1};
 

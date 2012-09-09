@@ -112,11 +112,7 @@ public class TransferObject implements Serializable {
         for (ix=0; ix<colCount; ix++)  {
             boolean found=false;
             for (ix2=0; ix2<attributes.numLibraryCol; ix2++) {
-//                if (colTag[ix].equals(attributes.colId[ix2])) {
-                // a null colTag[ix] occurs with loading m3j file.
-                // set it as found true because we do not want it in the 
-                // colsInOldNoNew list
-                if (colTag[ix]== null || colTag[ix].equals(attributes.colId[ix2])) {
+                if (colTag[ix].equals(attributes.colId[ix2])) {
                     found=true;
                     break;
                 }

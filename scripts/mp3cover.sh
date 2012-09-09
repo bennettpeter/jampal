@@ -34,7 +34,7 @@ if [[ "$1" = "" ]]; then
     exit 2
 fi
 
-if [[ "$OPENOFFICE" != "" && ! -x `which "$OPENOFFICE"` ]] ; then
+if [[ "$OPENOFFICE" != "" && ! -x `which $OPENOFFICE` ]] ; then
     echo "This requires Open Office or Libre Office installed and on the path" >&2
     echo "Please install soffice or update ~/.jampal/jampal.conf" >&2
     exit 2
@@ -102,12 +102,12 @@ fi
 if [[ "$playlist_datetime" != "" ]] ; then
     sort=N
     echo Setting -nosort for playlist
-#    if [[ "$cover" == album ]] ; then
-#        cover=
-#    else
-#        cover=none
-#        echo Setting -none for playlist
-#    fi
+    if [[ "$cover" == album ]] ; then
+        cover=
+    else
+        cover=none
+        echo Setting -none for playlist
+    fi
 fi
 
 if [[ "$LIBRARYTYPE" != L && "$LIBRARYTYPE" != P ]]; then echo "ERROR - invalid library type $LIBRARYTYPE"; exit 2; fi

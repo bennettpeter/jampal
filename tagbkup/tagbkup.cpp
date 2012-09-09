@@ -104,15 +104,17 @@ int main(int argc, char *argv[], char * /*envp*/ []) {
     fprintf(stderr,"tagbkup Version **UNSTABLE** (c) 2004-2010 Peter G. Bennett\n");
 #ifdef __CYGWIN32__
 	fprintf(stderr,"Cygwin version, ");
-#elif defined (_MSC_VER) || defined (__MINGW32__)
-	fprintf(stderr,"Win32 version.\n");
-#elif defined (OS_Linux)
+#endif
+#ifdef _MSC_VER
+	fprintf(stderr,"Win32 version, ");
+#endif
+#ifdef OS_Linux
 	fprintf(stderr,"Linux version, ");
-    #ifdef CPU_x86_64
-        fprintf(stderr,"64 bit.\n");
-    #else
-        fprintf(stderr,"32 bit.\n");
-    #endif
+#endif
+#ifdef CPU_x86_64
+    fprintf(stderr,"64 bit.\n");
+#else
+    fprintf(stderr,"32 bit.\n");
 #endif
     // Last parameter is backup dir
     pBkupDir = argv[argc-1];
@@ -132,7 +134,7 @@ int main(int argc, char *argv[], char * /*envp*/ []) {
                 IsOutFileGlob=1;
             else {
 
-		        #if defined (_MSC_VER) || defined (__MINGW32__)
+		        #ifdef _MSC_VER
 	                mkdir(pBkupDir);
 		        #else
 			        mkdir(pBkupDir,S_IRWXU|S_IRWXG|S_IRWXO);
@@ -352,7 +354,7 @@ void mkdir_f(char *fileName) {
     for(;*pIn;pIn++,pOut++) {
         if (pOut !=dirName) {
             if (*pIn == '/' || *pIn == '\\') {
-				#if defined (_MSC_VER) || defined (__MINGW32__)
+				#ifdef _MSC_VER
 	                mkdir(dirName);
 				#else
 					mkdir(dirName,S_IRWXU|S_IRWXG|S_IRWXO);
@@ -958,11 +960,11 @@ int CopyTag(char *pOutputFile, char *pInputFile) {
         }
     }
 
-    if (result<=0 && IsOK) {
+    if (result<=0 && IsOK) 
         IsOK=GetTagSize(fpIn,&tagsize);
-        if (tagsize == 0)
-            fprintf(std_err,"Warning - no tag on file %s\n",pInputFile);
-    }
+
+    if (tagsize == 0)
+        fprintf(std_err,"Warning - no tag on file %s\n",pInputFile);
 
     if (result<=0 && IsOK) {
         fseek(fpIn,0,SEEK_SET);
@@ -1215,10 +1217,7 @@ int GetTagSize(FILE *fpIn, size_t *pTagSize) {
         }
     }
 
-//    if (memcmp(work,"ID3",3)==0
-    if (work[0] == 'I'
-        && work[1] =='D'
-        && work[2] == '3'
+    if (memcmp(work,"ID3",3)==0
         && work[3] != 255
         && work[4] != 255
         && work[6] < 128
@@ -1231,8 +1230,8 @@ int GetTagSize(FILE *fpIn, size_t *pTagSize) {
                 + (size_t) work[7] * 128 * 128
                 + (size_t) work[6] * 128 * 128 * 128 + 10;
     }
-
     return IsOK;
+
 }
 
 

@@ -268,7 +268,7 @@ function process(record,counter) {
         }
         if (engine == "") {
             print "ERROR No speech engine found. Language " mylang " or other."
-            print "Select a speech engine in Jampal Edit, Customize, Voices tab."
+            print "Select a speech engine in Jampal GUI."
             exit 99
         }
         if (engine == "eSpeak" && voice == "" && mylang != "")

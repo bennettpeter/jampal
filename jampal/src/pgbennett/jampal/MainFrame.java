@@ -1,5 +1,5 @@
 package pgbennett.jampal;
-
+ 
 /*
     Copyright 2004 Peter Bennett
  
@@ -44,7 +44,7 @@ WindowListener, ListSelectionListener {
     
     static final String[] AboutText = {
         "Jampal Version " + Jampal.version,
-        "Copyright (c) Peter Bennett, 2004-2012",
+        "Copyright (c) Peter Bennett, 2004-2011",
         " ",
         "Jampal is free software: you can redistribute it and/or modify "
         + "it under the terms of the GNU General Public License as published by "
@@ -2142,6 +2142,7 @@ WindowListener, ListSelectionListener {
                 File abstractPath = new File(helpFileStr);
                 helpFileStr = abstractPath.getCanonicalPath();
             }
+            Desktop desktop = Desktop.getDesktop();
 //            if (File.separatorChar == '/')
 //                helpFileStr = "file:///usr/share/doc/jampal/html/summary.html";
 //            if (helpFileStr == null) {
@@ -2160,56 +2161,26 @@ WindowListener, ListSelectionListener {
 //                }
 //            }
             URI uri;
-            Desktop desktop = null;
-            try {
-                desktop = Desktop.getDesktop();
-            }
-            catch(Exception ex) {
-                Logger.getLogger(Jampal.class.getName()).log(Level.INFO,
-                        "Desktop API is not available:" +  ex.toString());
-                desktop = null;
-            }
-            Runtime runtime = Runtime.getRuntime();
-            String browser = Jampal.initialProperties.getProperty("browser");
-            if (desktop == null && browser == null)
-                throw new Exception("Unable to find browser");
-            if (helpFileStr != null) {
-                File helpFile = new File(helpFileStr);
-                if (!helpFile.isFile())
-                    helpFileStr=null;
-            }
             if (helpFileStr != null) {
                 File uriFile = new File(helpFileStr);
                 uri = uriFile.toURI();
-                if (desktop != null) {
-                    try {
-                        desktop.browse(uri);
-                    } catch (Exception ex) {
-                        Logger.getLogger(Jampal.class.getName()).log(Level.SEVERE, null, ex);
-                        helpFileStr=null;
-                    }
+                try {
+                    desktop.browse(uri);
+                } catch (Exception ex) {
+                    Logger.getLogger(Jampal.class.getName()).log(Level.SEVERE, null, ex);
+                    helpFileStr=null;
                 }
-                else {
-                    String cmdArray[] = {browser,uri.toString()}; 
-                    runtime.exec(cmdArray);
-                }
-            
             }
             if (helpFileStr == null) {
                 helpFileStr = "http://jampal.sourceforge.net";
                 uri = new URI(helpFileStr);
-                if (desktop != null)
-                    desktop.browse(uri);
-                else {
-                    String cmdArray[] = {browser,uri.toString()}; 
-                    runtime.exec(cmdArray);
-                }
+                desktop.browse(uri);                                              
             }
         } catch (Exception ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(frame,
-            "Please browse help at http://jampal.sourceforge.net",
             "Unable to display help",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
         }
     }                                              

@@ -238,13 +238,6 @@ public class Jampal {
                 initialProperties.setProperty("speech-rate","0");
                 save();
             }
-
-            String browser = initialProperties.getProperty("browser");
-            if (browser==null && File.separatorChar == '/') {
-                initialProperties.setProperty("browser","x-www-browser");
-                save();
-            }
-            
             
             if (args.length > 0)
                 initialLibraryNames = args;

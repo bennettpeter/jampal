@@ -21,6 +21,7 @@
 #
 #
 
+# VERSION ?= $(shell read VERSION && echo $$VERSION)
 VERSION := $(shell cat VERSION)
 
 all: 
@@ -36,14 +37,12 @@ clean:
 	rm -rf build_doc
 	rm -f utility/*.jmp
 	rm -rf unix_build
-	rm -rf package
+	rm -rf package/source
 	# files from testing target
 	rm -f jampal.jar jampal_environment.properties jampal_initial.properties
 	# Files created by Netbeans
 	rm -rf build dist
-	# from windows target
-	rm -rf windows_package
-	rm -f jampal-windows-setup-*.exe
+
 
 install: 
 	cd jampal && make install
@@ -67,10 +66,9 @@ install:
 	rm -f utility/*.jmp
 	install -m644 -p utility/* ${DESTDIR}/usr/share/jampal/utility/
 #	MISC
-	if [ "`echo looks/*.jar`" != "looks/*.jar" ] ; then \
-		install -m644 looks/*.jar ${DESTDIR}/usr/share/jampal/ ; fi
 #	If not building a debian package add the looks files and COPYING
 	if [ "${DEBIAN_BUILD}" != Y ] ; then \
+		install -m644 looks/*.jar ${DESTDIR}/usr/share/jampal/ ; \
 		install -m644 misc/COPYING ${DESTDIR}/usr/share/jampal/ ; fi
 #	CYGWIN
 	basename `uname -o` > OS
@@ -100,26 +98,24 @@ distclean: clean
 
 source: clean
 	# Make source appear under a jampal-version directory
-	# Exclude debian debian_sf and package directories
+	# Exclude debian ubuntu and package directories
 	mkdir -p package/source
 	ln -fs ../.. package/source/jampal-$(VERSION)
 	cd package/source && echo jampal-${VERSION}/* | \
            sed "s@ jampal-${VERSION}/package @ @;\
            s@ jampal-${VERSION}/debian @ @;\
-           s@ jampal-${VERSION}/debian_sf @ @;\
+           s@ jampal-${VERSION}/ubuntu @ @;\
            s@ jampal-${VERSION}/ptts @ @;\
            s@ jampal-${VERSION}/notes.txt @ @" \
           > source_filelist.txt
 	cd package/source && \
 		tar -c -z --exclude-vcs --exclude=**/notes.txt --exclude=misc/windows-32 --exclude=misc/windows-32 -f jampal-source-$(VERSION).tar.gz \
 		`cat source_filelist.txt`
-	tar -c -z --exclude-vcs -f package/source/jampal-debian-source-$(VERSION).tar.gz \
-		debian debian_sf
-	tar -c -z --exclude-vcs -f package/source/jampal-windows-source-$(VERSION).tar.gz \
+	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_debian.tar.gz \
+		debian ubuntu
+	tar -c -z --exclude-vcs -f package/source/jampal-source-$(VERSION)_windows.tar.gz \
 		misc/windows-32 ptts
 	rm -f package/source/jampal-$(VERSION)
-	# cp -f package/source/jampal-source-$(VERSION).tar.gz package/source/jampal_$(VERSION)+dfsg1.orig.tar.gz
-	cp -f package/source/jampal-source-$(VERSION).tar.gz ../
 
 
 unix:
@@ -130,14 +126,12 @@ unix:
 	cd html && make unix
 	rsync -aC man scripts utility looks \
 		Makefile misc VERSION unix_build/
-	cp -p misc/windows-32/mbrola.exe unix_build/misc/windows-32/
 	mkdir -p unix_build/jampal/src/pgbennett/speech/
 	cp jampal/src/pgbennett/speech/ptts.vbs unix_build/jampal/src/pgbennett/speech/
 	basename `uname -o` > OS
 	mkdir -p package/generic
 	cd unix_build && tar -c -z --exclude-vcs \
         -f  ../package/generic/jampal-build-`cat ../OS`-`arch`-$(VERSION).tar.gz *
-	cp -f package/generic/jampal-build-`cat OS`-`arch`-$(VERSION).tar.gz ../
 
 testing: all
 	# Installs jar and properties into source directory for debug and test
@@ -160,46 +154,4 @@ testing: all
 # check if we are logged in as root
 checkroot:
 	test $$(id -u) = 0
-
-# Make windows package
-inno_cygwin_cmd := "C:/Program Files (x86)/Inno Setup 5/iscc"
-inno_linux_cmd := "C:\Program Files (x86)\Inno Setup 5\ISCC"
-inno_linux_wine := wine
-windows:
-	cd jampal && make all
-	cd tagbkup && make windows
-	cd html && make all
-	mkdir -p windows_package
-	cp -p jampal/jampal.jar \
-    jampal/jampal.ico \
-    jampal/jampal_environment.properties_* \
-    jampal/jampal_initial.properties_* \
-    windows_package
-	cp -p tagbkup/tagbkup.exe windows_package/
-	cp -p tagbkup/*.dll windows_package/
-	cp -p misc/windows-32/mbrola.exe windows_package/
-	cp -p misc/mbrola*.txt windows_package/
-	cp -p misc/COPYING windows_package/
-	mkdir -p windows_package/doc/
-	cp -upr html/user_doc/* windows_package/doc/
-	# mkdir -p windows_package/scripts/examples
-	# cp -upr scripts/* windows_package/scripts
-	# rm -rf `find windows_package/scripts -name 'CVS' -o -name '.svn'`
-	mkdir -p windows_package/utility
-	cp -up utility/* windows_package/utility
-	cp -up looks/*.jar windows_package
-	cp -up jampal/src/pgbennett/speech/ptts.vbs windows_package
-	cp -up jampal/jampal.iss windows_package/jampal.iss
-	unix2dos windows_package/jampal.iss
-	basename `uname -o` > OS
-	if [ `cat OS` = Cygwin ] ; then \
-        INNO_CMD=$(inno_cygwin_cmd) ; \
-        WINE= ; \
-    else \
-        INNO_CMD=$(inno_linux_cmd) ; \
-        WINE=wine ; \
-    fi ; \
-    $$WINE "$$INNO_CMD" windows_package/jampal.iss
-	mv -f windows_package/Output/setup.exe ../jampal-windows-setup-$(VERSION).exe
-
 

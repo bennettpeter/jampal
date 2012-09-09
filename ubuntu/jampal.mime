@@ -1,0 +1,2 @@
+application/jampal; jampal open '%s'; description="Jampal mp3 library"; test=test -n "$DISPLAY"; nametemplate=%s.jampal
+

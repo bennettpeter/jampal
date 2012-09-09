@@ -1,12 +1,8 @@
 
 # To use freetts you need to rebuild jampal.jar and set this
 export FREETTS_HOME="/opt/freetts"
-# If you purchase CEPSTRAL voices for linux set this
+# If you purchase CEPSTRAL voices set this
 export CEPSTRAL_HOME="/opt/swift"
-# If you run CEPSTRAL voices for windows under wine set this
-#export CEPSTRAL_HOME="/home/peter/.wine/drive_c/Program Files (x86)/Cepstral"
-#export CEPSTRAL_WINE=Y
-
 
 # Do not change these settings unless you have special requirements
 export OPENOFFICE="soffice"
