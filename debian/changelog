@@ -1,4 +1,4 @@
-jampal (02.01.05+dfsg1-2) unstable; urgency=low
+jampal (02.01.05+dfsg2-1) unstable; urgency=low
 
   * Removed tritonus and javalayer source code which has been
     reported as partially copyrighted, closes: #685839
