@@ -11,7 +11,7 @@ jampal (02.01.06+dfsg1-2) unstable; urgency=low
   * Change to use default jdk and jre as requested by Ubuntu, 
     closes: #683541
   * Removed tritonus and javalayer source code which has been
-    reported as partially copyrighted, closes: #685839, #687727
+    reported as partially copyrighted, closes: #685839
   * Added dependencies to two packages that supply the services
     previously supplied by the tritonus and javalayer source code.
 
