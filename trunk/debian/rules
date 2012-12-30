@@ -32,18 +32,16 @@ override_dh_auto_clean:
 	dh_auto_clean
 
 get-orig-source: jampal-source-$(UPSTRMVERSION1).tar.gz
-	#wget --content-disposition \
-	#	http://sourceforge.net/projects/jampal/files/jampal/$(UPSTRMVERSION1)/jampal-source-$(UPSTRMVERSION1).tar.gz/download
-	# mv download jampal-source-$(UPSTRMVERSION1).tar.gz
 	tar xf jampal-source-$(UPSTRMVERSION1).tar.gz
 	rm -rf jampal-$(UPSTRMVERSION1)/looks
 	rm -rf jampal-$(UPSTRMVERSION1)/jampal/src/org/tritonus
 	rm -rf jampal-$(UPSTRMVERSION1)/jampal/src/javazoom/jl
 	# rename top level directory as recommended in 
 	# Debian Developers reference 6.7.8.2 Repackaged upstream source
-	mv jampal-$(UPSTRMVERSION1) jampal-$(UPSTRMVERSION1)-orig
+	rm -rf jampal-$(UPSTRMVERSION1)-orig
+	mv -f jampal-$(UPSTRMVERSION1) jampal-$(UPSTRMVERSION1)-orig
 	tar -czf jampal_$(UPSTRMVERSION2).orig.tar.gz jampal-$(UPSTRMVERSION1)-orig
-	# rm -rf jampal-source-$(UPSTRMVERSION1).tar.gz jampal-$(UPSTRMVERSION1)-orig
+	rm -rf jampal-$(UPSTRMVERSION1)-orig
 
 jampal-source-$(UPSTRMVERSION1).tar.gz:
 	wget --content-disposition \

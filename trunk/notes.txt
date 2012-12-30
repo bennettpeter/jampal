@@ -562,3 +562,10 @@ cpp version with copyright notice - http://www.codeforge.com/article/91214 (mapl
 Package: libjlayer-java (1.0.1-1) 
 Package: libtritonus-java (20070428-8) 
 
+
+Bug
+playlistcd loses files and hangs if the last song of the disk is the follow on to a file with jampal = F
+See 120722_1747_008
+
+
+

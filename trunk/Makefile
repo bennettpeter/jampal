@@ -37,6 +37,7 @@ clean:
 	rm -f utility/*.jmp
 	rm -rf unix_build
 	rm -rf package
+	rm -f jampal-source-$(VERSION).tar.gz
 	# files from testing target
 	rm -f jampal.jar jampal_environment.properties jampal_initial.properties
 	# Files created by Netbeans
@@ -120,6 +121,7 @@ source: clean
 	rm -f package/source/jampal-$(VERSION)
 	# cp -f package/source/jampal-source-$(VERSION).tar.gz package/source/jampal_$(VERSION)+dfsg1.orig.tar.gz
 	cp -f package/source/jampal-source-$(VERSION).tar.gz ../
+	cp -f package/source/jampal-source-$(VERSION).tar.gz ./
 
 
 unix:
