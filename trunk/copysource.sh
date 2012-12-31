@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-set -x
+
 scriptname=`readlink -e "$0"`
 scriptpath=`dirname "$scriptname"`
 
