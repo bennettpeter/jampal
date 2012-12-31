@@ -63,7 +63,7 @@ S)
     ;;
 P)
     newfile=~/proj/jampal/$sourcedir/debian/changelog_new
-    echo "jampal (${DEBIANVERSION}ubuntu0) $ubuntuversion; urgency=low" > $newfile
+    echo "jampal (${DEBIANVERSION}${ubuntuversion}1) $ubuntuversion; urgency=low" > $newfile
     echo "" >> $newfile
     echo "  * Update release for ppa" >> $newfile
     echo "" >> $newfile
