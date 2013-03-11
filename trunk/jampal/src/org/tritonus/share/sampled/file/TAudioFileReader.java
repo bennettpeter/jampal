@@ -413,8 +413,6 @@ public abstract class TAudioFileReader
  */
 	
 /* 
- * Copyright (C) 1988-1991 Apple Computer, Inc.
- * All rights reserved.
  *
  * Machine-independent I/O routines for IEEE floating-point numbers.
  *
