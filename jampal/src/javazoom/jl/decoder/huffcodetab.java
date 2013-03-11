@@ -6,13 +6,6 @@
  * 04/19/97 : Adapted from the ISO MPEG Audio Subgroup Software Simulation
  *  Group's public c source for its MPEG audio decoder. Miscellaneous
  *  changes by Jeff Tsay (ctsay@pasteur.eecs.berkeley.edu).
- *-----------------------------------------------------------------------
- * Copyright (c) 1991 MPEG/audio software simulation group, All Rights Reserved
- * MPEG/audio coding/decoding software, work in progress              
- *   NOT for public distribution until verified and approved by the   
- *   MPEG/audio committee.  For further information, please contact   
- *   Davis Pan, 508-493-2241, e-mail: pan@3d.enet.dec.com             
- *                                                                    
  * VERSION 4.1                                                        
  *   changes made since last update:                                  
  *   date   programmers         comment                        
