@@ -1,0 +1,25 @@
+jampal (02.01.06+dfsg1-2) unstable; urgency=low
+
+  * New Upstream release (02.01.06)
+  * Re-introduce to Debian, closes: #690274
+  * Remove unneeded freetts.jar entries from classpath in manifest
+      (lintian reported)
+  * Compile-time hardening - added dpkg-buildflags (lintian reported)
+  * Updated Standards Version to 3.9.3.1
+  * Updated get-orig-source to use a separate target for the source so
+      that rerunning does not need to retrieve the source again.
+  * Change to use default jdk and jre as requested by Ubuntu, 
+    closes: #683541
+  * Removed tritonus and javalayer source code which has been
+    reported as partially copyrighted, closes: #685839
+  * Added dependencies to two packages that supply the services
+    previously supplied by the tritonus and javalayer source code.
+
+ -- Peter Bennett <pgbennett@comcast.net>  Sun, 02 Sep 2012 09:33:07 -0400
+
+jampal (02.01.05+dfsg1-1) unstable; urgency=low
+
+  * Initial release (Closes: #626991)
+
+ -- Peter Bennett <pgbennett@comcast.net>  Sat, 09 Jul 2011 20:04:14 -0400
+

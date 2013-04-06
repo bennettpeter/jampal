@@ -1,0 +1,49 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+#
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+#
+# Modified to make a template file for a multi-binary package with separated
+# build-arch and build-indep targets  by Bill Allombert 2001
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+# Used by some of the upstream make files to exclude
+# things from the build
+export DEBIAN_BUILD := Y
+UPSTRMVERSION1 := $(shell dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' '|cut -f1 -d+)
+UPSTRMVERSION2 := $(shell dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' '|cut -f1 -d-)
+VERSION := $(shell dpkg-parsechangelog|egrep '^Version:'|cut -f2 -d' ')
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf jampal-source-$(UPSTRMVERSION1).tar.gz jampal-$(UPSTRMVERSION1)-orig \
+      jampal_$(UPSTRMVERSION2).orig.tar.gz
+	dh_auto_clean
+
+get-orig-source: jampal-source-$(UPSTRMVERSION1).tar.gz
+	tar xf jampal-source-$(UPSTRMVERSION1).tar.gz
+	rm -rf jampal-$(UPSTRMVERSION1)/looks
+	rm -rf jampal-$(UPSTRMVERSION1)/jampal/src/org/tritonus
+	rm -rf jampal-$(UPSTRMVERSION1)/jampal/src/javazoom/jl
+	# rename top level directory as recommended in 
+	# Debian Developers reference 6.7.8.2 Repackaged upstream source
+	rm -rf jampal-$(UPSTRMVERSION1)-orig
+	mv -f jampal-$(UPSTRMVERSION1) jampal-$(UPSTRMVERSION1)-orig
+	tar -czf jampal_$(UPSTRMVERSION2).orig.tar.gz jampal-$(UPSTRMVERSION1)-orig
+	rm -rf jampal-$(UPSTRMVERSION1)-orig
+
+jampal-source-$(UPSTRMVERSION1).tar.gz:
+	wget --content-disposition \
+		http://sourceforge.net/projects/jampal/files/jampal/$(UPSTRMVERSION1)/jampal-source-$(UPSTRMVERSION1).tar.gz/download
+

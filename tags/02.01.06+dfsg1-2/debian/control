@@ -1,0 +1,32 @@
+Source: jampal
+Section: sound
+Priority: optional
+Maintainer: Peter Bennett <pgbennett@comcast.net>
+Build-Depends: debhelper (>= 8.0.0~),default-jdk, rman, rsync, 
+ libtritonus-java, libjlayer-java
+Standards-Version: 3.9.3.1
+Homepage: http://jampal.sourceforge.net
+
+Package: jampal
+Architecture: all
+Depends: ${misc:Depends}, tagbkup, default-jre, sox, gawk,
+ libtritonus-java, libjlayer-java
+Recommends: espeak
+Suggests: mbrola
+Description: mp3 song library management system and player
+ Jampal stores and organizes a large library of songs. It is a jukebox and tag
+ editor. The song library is based on the IDV3v2 standard and is customizable.
+ Text to speech voice synthesis to announce song names is an option. There are
+ utilities to rename and organize the song files by album, artist and song, and
+ to generate playlists from criteria you choose. Generated play lists can be
+ burned to CD or written to an mp3 player. Song announcements can be added to
+ songs written to CD or player.
+
+Package: tagbkup
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: back up and restore mp3 tags
+ tagbkup backs up and restores mp3 song tags without having to back up the
+ entire mp3 file. If you customize your tags using a program like jampal, you
+ only need to back up your songs once, and back up the tags separately on a
+ regular basis. tagbkup also can copy tags or remove tags from mp3 files.

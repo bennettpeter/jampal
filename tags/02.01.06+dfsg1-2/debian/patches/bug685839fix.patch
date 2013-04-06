@@ -1,0 +1,41 @@
+Patches to fix Bug #685839
+--- a/jampal/Makefile
++++ b/jampal/Makefile
+@@ -92,7 +92,8 @@
+ 	cd build/classes && "${JAVA_PATH}"jar cmf META-INF/MANIFEST.MF \
+         "../../jampal.jar" *
+ 
+-make_basic: src/*/*/*.java src/*/*/*/*.java src/*/*/*/*/*.java
++make_basic: src/*/*/*.java src/*/*/*/*.java
++	# Removed src/*/*/*/*/*.java
+ 	mkdir -p build/classes
+ 	rm -f src/pgbennett/jampal/*.jmp
+ 	# Copy Source
+@@ -104,12 +105,15 @@
+ 	# compiler will pull in needed other modules from the source tree and compile
+ 	# them as well
+ 	"${JAVA_PATH}"java -version
+-	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes build/classes/pgbennett/jampal/Jampal.java
+-	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes build/classes/pgbennett/id3/TagUpdate.java
+-	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
+-       build/classes/org/tritonus/sampled/convert/javalayer/MpegFormatConversionProvider.java
+-	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
+-       build/classes/org/tritonus/sampled/file/mpeg/MpegAudioFileReader.java
++	"${JAVA_PATH}"javac -g -classpath /usr/share/java/tritonus_mp3.jar \
++      -d build/classes -sourcepath build/classes build/classes/pgbennett/jampal/Jampal.java
++	"${JAVA_PATH}"javac -g -classpath /usr/share/java/tritonus_mp3.jar \
++      -d build/classes -sourcepath build/classes build/classes/pgbennett/id3/TagUpdate.java
++	# excluding these because we get the from a dependent package instead
++	# "${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
++    #   build/classes/org/tritonus/sampled/convert/javalayer/MpegFormatConversionProvider.java
++	# "${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
++    #   build/classes/org/tritonus/sampled/file/mpeg/MpegAudioFileReader.java
+ 	# freetts does not work, hangs so not including it
+ #	if [ -f "${FREETTS_HOME}/freetts.jar" ] ; then \
+ #       "${JAVA_PATH}"javac -g -d build/classes \
+--- a/jampal/src/META-INF/MANIFEST.MF
++++ b/jampal/src/META-INF/MANIFEST.MF
+@@ -1,2 +1,2 @@
+ Main-Class: pgbennett.jampal.Jampal
+-Class-Path: /usr/share/java/looks.jar /usr/share/java/squareness.jar liquidlnf.jar looks-2.3.0.jar napkinlaf-1.2.jar squareness.jar InfoNodeilf-gpl.jar lipstikLF-1.1.jar nimrodlf.j16.jar PgsLookAndFeel.jar
++Class-Path: /usr/share/java/tritonus_mp3.jar /usr/share/java/tritonus_share.jar /usr/share/java/jl.jar /usr/share/java/looks.jar /usr/share/java/squareness.jar liquidlnf.jar looks-2.3.0.jar napkinlaf-1.2.jar squareness.jar InfoNodeilf-gpl.jar lipstikLF-1.1.jar nimrodlf.j16.jar PgsLookAndFeel.jar
