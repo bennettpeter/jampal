@@ -216,7 +216,7 @@ $1 == "A" || $1 == "A0" || LIBRARYTYPE == "P" {
     || (playlist_datetime == "" && match(JFILENAME,diskser)!=0) \
     || diskser=="") {
         album=ALBUM
-        if (ID3V2TAGTXXXDirectory != "")
+        if (ID3V2TAGTXXXDirectory != "" && cover=="diralbum")
             album = ID3V2TAGTXXXDirectory
         if (cover=="artistalbum")
             album=ARTIST " - " album
@@ -334,7 +334,7 @@ $1 == "A" || $1 == "A0" || LIBRARYTYPE == "P" {
     || (playlist_datetime == "" && match(JFILENAME,diskser)!=0) \
     || diskser=="") {
         album=ALBUM
-        if (ID3V2TAGTXXXDirectory != "")
+        if (ID3V2TAGTXXXDirectory != "" && cover=="diralbum")
             album = ID3V2TAGTXXXDirectory
         if (cover=="artistalbum")
             album=ARTIST " - " album
