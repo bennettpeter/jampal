@@ -80,8 +80,10 @@ if [[ -f package/source/jampal-source-${VERSION}.tar.gz ]] ; then
 fi
 
 cd ~/proj/jampal/$sourcedir
-./debian/rules get-orig-source
-mv jampal_$UPSTRMVERSION2.orig.tar.gz ..
+if [[ ! -f ../jampal_$UPSTRMVERSION2.orig.tar.gz ]] ; then
+    ./debian/rules get-orig-source
+    mv jampal_$UPSTRMVERSION2.orig.tar.gz ..
+fi
 cd ..
 tar xf jampal_$UPSTRMVERSION2.orig.tar.gz
 mv -f ${sourcedir}-orig/* ${sourcedir}/
