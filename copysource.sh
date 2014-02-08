@@ -9,12 +9,13 @@ cd $scriptpath
 
 buildtype=$1
 ubuntuversion=$2
+downloadsource=$3
 
 if [[ "$buildtype" == "" || "$buildtype$ubuntuversion" == P ]] ; then
     echo "Parameters:"
     echo "1 Build type (M=Debian mentors, S=Debian Sourceforge, P=Ubuntu PPA)"
     echo "2 Ubuntu version required if P was selected"
-    echo "To prevent downloading the source run make source before this"
+    echo "3 Y to download source"
     exit 2;
 fi
 
@@ -23,16 +24,14 @@ system="$1"
 export VERSION=`cat VERSION`
 echo Copy new version of jampal $VERSION from host to local
 
-# do not make source - download it
-# make source
-
-rm -rf ~/proj/jampal/jampal-$VERSION/*
-# rm -rf ~/proj/jampal/jampal-source-$VERSION*
-# rm -rf ~/proj/jampal/jampal_$VERSION*
-mkdir -p ~/proj/jampal
-
 # UPSTRMVERSION1 does not have the dfsg1 in it e.g. jampal_02.01.06
 UPSTRMVERSION1=`dpkg-parsechangelog |egrep '^Version:'|cut -f2 -d' '|cut -f1 -d+`
+if [[ "$VERSION" != "$UPSTRMVERSION1" ]] ; then
+    echo "ERROR"
+    echo "ERROR Please fix version in debian/changelog. Changelog has $UPSTRMVERSION1, VERSION has $VERSION"
+    echo "ERROR"
+    exit 2
+fi
 # UPSTRMVERSION2 does have the dfsg1 in it e.g. jampal_02.01.06+dfsg1
 UPSTRMVERSION2=`dpkg-parsechangelog |egrep '^Version:'|cut -f2 -d' '|cut -f1 -d-`
 # DEBIANVERSION does have the dfsg1-x in it e.g. jampal_02.01.06+dfsg1-2
@@ -40,16 +39,19 @@ DEBIANVERSION=`dpkg-parsechangelog |egrep '^Version:'|cut -f2 -d' '`
 tarfile=jampal_$UPSTRMVERSION2.orig.tar.gz
 sourcedir=jampal-$UPSTRMVERSION1
 
+make clean
+
+# make source if not downloading it
+if [[ "$downloadsource" != Y ]] ; then
+    make source
+fi
+
+rm -rf ~/proj/jampal/jampal-$VERSION/*
+mkdir -p ~/proj/jampal
+
 if [[ -f package/source/jampal-source-$UPSTRMVERSION1.tar.gz ]] ; then
     cp package/source/jampal-source-$UPSTRMVERSION1.tar.gz ./
 fi
-#debian/rules get-orig-source
-#mkdir -p package/source
-#cp jampal_$UPSTRMVERSION2.orig.tar.gz package/source
-
-#cp package/source/jampal_$UPSTRMVERSION2.orig.tar.gz \
-#  ~/proj/jampal/jampal_$UPSTRMVERSION2.orig.tar.gz
-# cd ~/proj/jampal
 
 rm -rf ~/proj/jampal/$sourcedir/
 rm -rf ~/proj/jampal/${sourcedir}-orig
@@ -79,12 +81,9 @@ fi
 
 cd ~/proj/jampal/$sourcedir
 ./debian/rules get-orig-source
-
 mv jampal_$UPSTRMVERSION2.orig.tar.gz ..
-
 cd ..
 tar xf jampal_$UPSTRMVERSION2.orig.tar.gz
-
 mv -f ${sourcedir}-orig/* ${sourcedir}/
 rmdir ${sourcedir}-orig
 
