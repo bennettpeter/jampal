@@ -567,5 +567,7 @@ Bug
 playlistcd loses files and hangs if the last song of the disk is the follow on to a file with jampal = F
 See 120722_1747_008
 
+To Do
+Validate cannot find songs if the artist name changed, e.g. four jack & a jill, cornelia
 
 
