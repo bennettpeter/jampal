@@ -15,6 +15,9 @@ if [[ "$buildtype" == "" || "$buildtype$ubuntuversion" == P ]] ; then
     echo "Parameters:"
     echo "1 Build type (M=Debian mentors, S=Debian Sourceforge, P=Ubuntu PPA)"
     echo "2 Ubuntu version required if P was selected"
+    echo "  12.04 - precise"
+    echo "  14.04 - trusty"
+    echo "  15.04 - vivid"
     echo "3 Y to download source"
     exit 2;
 fi
@@ -92,5 +95,7 @@ rmdir ${sourcedir}-orig
 if [[ "$buildtype" == S ]] ; then
     rsync -aC $scriptpath/looks $sourcedir/
 fi
+
+echo Now use dpkg-buildpackage to build
 
 
