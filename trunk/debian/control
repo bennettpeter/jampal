@@ -2,14 +2,14 @@ Source: jampal
 Section: sound
 Priority: optional
 Maintainer: Peter Bennett <pgbennett@comcast.net>
-Build-Depends: debhelper (>= 8.0.0~),default-jdk, rman, rsync, 
+Build-Depends: debhelper (>= 8.0.0~),default-jdk | openjdk-7-jdk, rman, rsync, 
  libtritonus-java, libjlayer-java
 Standards-Version: 3.9.3.1
 Homepage: http://jampal.sourceforge.net
 
 Package: jampal
 Architecture: all
-Depends: ${misc:Depends}, tagbkup, default-jre, sox, gawk,
+Depends: ${misc:Depends}, tagbkup, default-jre | openjdk-7-jre, sox, gawk,
  libtritonus-java, libjlayer-java
 Recommends: espeak
 Suggests: mbrola

@@ -104,11 +104,11 @@ make_basic: src/*/*/*.java src/*/*/*/*.java src/*/*/*/*/*.java
 	# compiler will pull in needed other modules from the source tree and compile
 	# them as well
 	"${JAVA_PATH}"java -version
-	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes build/classes/pgbennett/jampal/Jampal.java
-	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes build/classes/pgbennett/id3/TagUpdate.java
-	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
+	"${JAVA_PATH}"javac -g -source 1.6 -target 1.6 -d build/classes -sourcepath build/classes build/classes/pgbennett/jampal/Jampal.java
+	"${JAVA_PATH}"javac -g -source 1.6 -target 1.6 -d build/classes -sourcepath build/classes build/classes/pgbennett/id3/TagUpdate.java
+	"${JAVA_PATH}"javac -g -source 1.6 -target 1.6 -d build/classes -sourcepath build/classes \
        build/classes/org/tritonus/sampled/convert/javalayer/MpegFormatConversionProvider.java
-	"${JAVA_PATH}"javac -g -d build/classes -sourcepath build/classes \
+	"${JAVA_PATH}"javac -g -source 1.6 -target 1.6 -d build/classes -sourcepath build/classes \
        build/classes/org/tritonus/sampled/file/mpeg/MpegAudioFileReader.java
 	# freetts does not work, hangs so not including it
 #	if [ -f "${FREETTS_HOME}/freetts.jar" ] ; then \

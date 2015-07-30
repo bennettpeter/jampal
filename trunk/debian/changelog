@@ -1,3 +1,9 @@
+jampal (02.01.06.199+dfsg1-1) unstable; urgency=low
+
+  * Allow java version 7
+
+ -- Peter Bennett <pgbennett@comcast.net>  Sun, 26 Jul 2015 15:26:11 -0400
+
 jampal (02.01.06.196+dfsg1-1) unstable; urgency=low
 
   * Misc minor fixes
