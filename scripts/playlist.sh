@@ -283,14 +283,14 @@ cat /dev/null > "$extract"
 
 echo select ...
 echo $conditions
-rc=0
-echo $conditions | grep "[^=]=[^=]" || rc=$?
-
-if [[ "$rc" = 0 ]] ; then
-    echo "ERROR use == not = for testing equal values"
-    rm -rf "$diskdir" || rc=$?
-    exit 2
-fi
+#rc=0
+# Removed thios checke because it fails with >= or != or <= which are valid
+#echo $conditions | grep "[^=]=[^=]" || rc=$?
+#if [[ "$rc" = 0 ]] ; then
+#    echo "ERROR use == not = for testing equal values"
+#    rm -rf "$diskdir" || rc=$?
+#    exit 2
+#fi
 
 awk '
 
