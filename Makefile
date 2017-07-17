@@ -21,9 +21,10 @@
 #
 #
 
-VERSION := $(shell cat VERSION)
+VERSION := $(shell git describe --dirty|sed s/^v//)
 
 all: 
+	echo $(VERSION) > VERSION
 	cd jampal && make all
 	cd tagbkup && make all
 	cd html && make all

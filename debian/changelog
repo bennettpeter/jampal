@@ -1,3 +1,9 @@
+jampal (2.2-dirty) unstable; urgency=low
+
+  * Update playlist to allow for more than 999 songs per directory.
+
+ -- Peter Bennett <pgbennett@comcast.net>  Mon, 17 Jul 2017 12:35:19 -0400
+
 jampal (02.01.06.199+dfsg1-1) unstable; urgency=low
 
   * Allow java version 7

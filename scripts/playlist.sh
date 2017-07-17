@@ -195,6 +195,7 @@ echo dirchange="'"$dirchange"'" >> "$diskdir/cdparms.profile"
 echo appendseq="'"$appendseq"'" >> "$diskdir/cdparms.profile"
 echo cdstaging="'"$cdstaging"'" >> "$diskdir/cdparms.profile"
 echo customtag="'"$customtag"'" >> "$diskdir/cdparms.profile"
+echo tracksperdir="'"$tracksperdir"'" >> "$diskdir/cdparms.profile"
 
 libsort=$diskdir/libsort.jmp
 libnum=$diskdir/libnum.jmp
@@ -416,7 +417,8 @@ function process(record,counter) {
         fileNumber+=increment
     else
         fileNumber++
-    DUMMY=sprintf("%3.3d:%3.3d:%3.3d:%3.3d",disknum,dirnum,fileNumber,counter)
+    trackwidth=length(tracksperdir)
+    DUMMY=sprintf("%3.3d:%3.3d:%*.*d:%3.3d",disknum,dirnum,trackwidth,trackwidth,fileNumber,counter)
     # Clear out the record so we can build it up from scratch
     $0=""
     $1=status
@@ -545,10 +547,6 @@ END {
     disknum=$start_disknum \
     "$extsort" 
 
-
-
-
-
 (
     . "$TEMPDIR/$template.profile"
     if [[ "$LIBRARYDATANAME" = `basename "$LIBRARYDATANAME"` ]]; then
@@ -557,8 +555,8 @@ END {
     cp -f "$cdsource" "$LIBRARYDATANAME"
 #     echo cdsource="'"$LIBRARYDATANAME"'" >> "$diskdir/cdparms.profile"
 #   cdsource is kept as a backup in case somebody messes up the playlist
-
 )
+
 echo "results in $diskdir"
 echo "Launching jampal ..."
 

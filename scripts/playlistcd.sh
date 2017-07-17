@@ -165,8 +165,11 @@ fi
 
 ret=0
 awk -v "tempdir=$TEMPDIR" -v disknum=$disknum \
-    -v tagbkup=$tagbkup -v "voicesfile=$voicesfile" -v "languagesfile=$scriptpath/ISO-639-2_utf-8.txt" \
-    -v "customtag=$customtag" '
+    -v tagbkup=$tagbkup -v "voicesfile=$voicesfile" \
+    -v "languagesfile=$scriptpath/ISO-639-2_utf-8.txt" \
+    -v "customtag=$customtag" \
+    -v "tracksperdir=$tracksperdir" \
+    '
 
 # This program is called twice, pass1=1 and pass2=2
 
@@ -250,7 +253,8 @@ function process(record,counter) {
 #    sub(/^[A-Z0-9][0-9][0-9] /,"",musicname)
     musicname = substr(TITLE,1,24) " - " substr(ARTIST,1,25) ".mp3"
     musicname = removeDiacritics(musicname)
-    outfilename=staging "/" dirname "/" sprintf("%3.3d ",filenum) musicname
+    trackwidth=length(tracksperdir)
+    outfilename=staging "/" dirname "/" sprintf("%*.*d ",trackwidth,trackwidth,filenum) musicname
 
     musicdone=0
     if (announce == "Y") {
@@ -389,7 +393,8 @@ function process(record,counter) {
                 else {
                     #command = "mv " tempdir  "/title.mp3 \"" staging "/" dirname "/" sprintf("%3.3d ",filenum-1) "title.mp3\""
                     #print command | "/bin/sh"
-                    if (system( "mv " tempdir  "/title.mp3 \"" staging "/" dirname "/" sprintf("%3.3d ",filenum-1) "title.mp3\"")) {
+                    trackwidth=length(tracksperdir)
+                    if (system( "mv " tempdir  "/title.mp3 \"" staging "/" dirname "/" sprintf("%*.*d ",trackwidth,trackwidth,filenum-1) "title.mp3\"")) {
                         print "mv title.mp3 error" > "/dev/stderr"
                         exitcode=2
                     }
