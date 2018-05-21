@@ -340,6 +340,10 @@ public class CustomizeDialog extends javax.swing.JDialog {
                 Logger.getLogger(CustomizeDialog.class.getName()).log(Level.INFO, ex.toString());
                 continue;
             }
+            catch (NoClassDefFoundError ex) {
+                Logger.getLogger(CustomizeDialog.class.getName()).log(Level.INFO, ex.toString());
+                continue;
+            }
             lookAndFeelValues [ix++] = new UIManager.LookAndFeelInfo(names[ix2],classes[ix2]);
         }
     }
