@@ -27,7 +27,7 @@
 
 // $ od -Ax -t x4 -v -w  "C:\proj\tagbkup\very_short.mp3"
 
-int nullMp3[] = {
+unsigned int nullMp3[] = {
 // use od -t x4 -w32 small.mp3
 0xc018e2ff,0x000092ea,0x01580200,0x00000040,0x3f0c8200,0x555801f0,0xcf16acc4,0x122530f1,
 0xa0e49f1e,0xe0ff4ff3,0x1cc46260,0x04e0ffff,0xff052164,0xc080fdff,0x80c5b1c5,0xffffbf11,
