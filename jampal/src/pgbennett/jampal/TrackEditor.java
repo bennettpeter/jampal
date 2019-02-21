@@ -191,6 +191,7 @@ public class TrackEditor implements ItemListener, ActionListener, Runnable{
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             widgetsPanel.setOpaque(true); //content panes must be opaque
+            scrollPane.getVerticalScrollBar().setUnitIncrement(32);
             dialog.setContentPane(scrollPane);
 
             // Generic dialog controls

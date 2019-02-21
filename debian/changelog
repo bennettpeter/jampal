@@ -1,3 +1,9 @@
+jampal (2.2-4) unstable; urgency=low
+
+  * Update scroll bar increment or track editor.
+
+ -- Peter Bennett <pgbennett@comcast.net>  Thu, 21 Feb 2019 11:50:46 -0500
+
 jampal (2.2-dirty) unstable; urgency=low
 
   * Update playlist to allow for more than 999 songs per directory.
